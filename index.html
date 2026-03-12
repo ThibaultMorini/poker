@@ -458,7 +458,7 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCArDoFDlTynQgXyNNtjBKgHi4rEgK8QXA",
@@ -476,19 +476,6 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
 
   let _fbUid = null;
   let _fbListener = null;
-
-  // Handle redirect result on page load
-  getRedirectResult(auth).then(result => {
-    if(result && result.user) {
-      _showToast('Connecté : ' + result.user.displayName);
-      // Auto-push after login
-      setTimeout(()=>window._fbPush && window._fbPush(), 500);
-    }
-  }).catch(e => {
-    if(e.code === 'auth/unauthorized-domain') {
-      console.warn('Domain not authorized in Firebase. Add thibaultmorini.github.io to authorized domains.');
-    }
-  });
 
   // Auth state
   onAuthStateChanged(auth, user => {
@@ -547,12 +534,18 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
   window._fbPush = async function(){
     if(!_fbUid){
       try {
-        await signInWithRedirect(auth, provider);
-        // Page will redirect and come back — push will happen after redirect via onAuthStateChanged
-        return;
+        await signInWithPopup(auth, provider);
       } catch(e){
         console.error('Auth error:', e.code, e.message);
-        _showToast('Erreur auth: ' + e.code);
+        if(e.code === 'auth/popup-blocked') {
+          _showToast('⚠ Autorise les popups pour ce site');
+        } else if(e.code === 'auth/unauthorized-domain') {
+          _showToast('⚠ Domaine non autorisé dans Firebase');
+        } else if(e.code === 'auth/popup-closed-by-user') {
+          _showToast('Connexion annulée');
+        } else {
+          _showToast('Erreur: ' + e.code);
+        }
         return;
       }
     }
