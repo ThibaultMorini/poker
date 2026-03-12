@@ -592,10 +592,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
 
 
 
-    <label class="hbtn" title="Import JSON" style="cursor:pointer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP
-      <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
-    </label>
+
 
 
 
@@ -742,7 +739,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
 <!-- IO MODAL -->
 <div class="io-modal" id="io-modal">
   <div class="io-box">
-    <div class="io-head">IMPORT / EXPORT <button class="io-close" id="io-close-btn">✕</button></div>
+    <div class="io-head">IMP / EXP <button class="io-close" id="io-close-btn">✕</button></div>
     <div class="io-section">
       <div class="io-section-title">EXPORTER</div>
       <div class="io-row">
@@ -793,7 +790,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>RANGES
   </button>
   <button class="mnav-btn mnav-quiz-btn" id="mnav-quiz">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>QUIZ
   </button>
   <button class="mnav-btn" id="mnav-cat">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>CATÉG.
@@ -2489,17 +2486,48 @@ document.addEventListener('touchstart',e=>{
   setTimeout(()=>tip.style.display='none',1400);
 },{passive:true});
 
-// Swipe to change position
-let _swipeX=0;
-document.getElementById('main').addEventListener('touchstart',e=>{_swipeX=e.touches[0].clientX;},{passive:true});
+// Swipe LEFT/RIGHT to change position, scroll UP to cycle situation
+let _swipeX=0, _swipeY=0;
+document.getElementById('main').addEventListener('touchstart',e=>{
+  _swipeX=e.touches[0].clientX;
+  _swipeY=e.touches[0].clientY;
+},{passive:true});
 document.getElementById('main').addEventListener('touchend',e=>{
   if(!_isMobile())return;
   const dx=e.changedTouches[0].clientX-_swipeX;
-  if(Math.abs(dx)<60)return;
-  const order=['utg','hj','co','btn','sb','bb'];
-  const idx=order.indexOf(_mPos);
-  if(dx<0&&idx<5)_mSwitchPos(order[idx+1]);
-  if(dx>0&&idx>0)_mSwitchPos(order[idx-1]);
+  const dy=e.changedTouches[0].clientY-_swipeY;
+  const absDx=Math.abs(dx), absDy=Math.abs(dy);
+
+  // Horizontal swipe → change position
+  if(absDx>60 && absDx>absDy){
+    const order=['utg','hj','co','btn','sb','bb'];
+    const idx=order.indexOf(_mPos);
+    if(dx<0&&idx<5)_mSwitchPos(order[idx+1]);
+    if(dx>0&&idx>0)_mSwitchPos(order[idx-1]);
+    return;
+  }
+
+  // Swipe UP → next situation (within same position)
+  if(absDy>60 && absDy>absDx && dy<0){
+    const sits=_M_SITS[_mPos]||[];
+    if(sits.length<=1) return;
+    const idx=sits.findIndex(s=>s.bid===_mSit);
+    const next=sits[(idx+1)%sits.length];
+    _mSwitchSit(next.bid);
+    showToast(next.label);
+    return;
+  }
+
+  // Swipe DOWN → previous situation
+  if(absDy>60 && absDy>absDx && dy>0){
+    const sits=_M_SITS[_mPos]||[];
+    if(sits.length<=1) return;
+    const idx=sits.findIndex(s=>s.bid===_mSit);
+    const prev=sits[(idx-1+sits.length)%sits.length];
+    _mSwitchSit(prev.bid);
+    showToast(prev.label);
+    return;
+  }
 },{passive:true});
 
 function _mOpenCatSheet(){
@@ -2525,8 +2553,8 @@ function _mCloseCatSheet(){ document.getElementById('m-cat-sheet').style.display
   // Add quiz + IO buttons to header-right
   const hr = hdr.querySelector('.header-right');
   if(hr){
-    const qBtn=document.createElement('button');qBtn.className='hbtn';qBtn.style.cssText='border-color:rgba(250,204,21,.35);color:#fde68a';qBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ';qBtn.addEventListener('click',openQuiz);hr.insertBefore(qBtn,hr.firstChild);
-    const ioBtn=document.createElement('button');ioBtn.className='hbtn';ioBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 16 12 21 17 16"/><line x1="12" y1="21" x2="12" y2="9"/><polyline points="7 8 12 3 17 8"/></svg>I/O';ioBtn.addEventListener('click',openIOModal);hr.insertBefore(ioBtn,hr.children[1]||hr.firstChild);
+    const qBtn=document.createElement('button');qBtn.className='hbtn';qBtn.style.cssText='border-color:rgba(250,204,21,.35);color:#fde68a';qBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>QUIZ';qBtn.addEventListener('click',openQuiz);hr.insertBefore(qBtn,hr.firstChild);
+    const ioBtn=document.createElement('button');ioBtn.className='hbtn';ioBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP/EXP';ioBtn.addEventListener('click',openIOModal);hr.insertBefore(ioBtn,hr.children[1]||hr.firstChild);
   }
 })();
 
