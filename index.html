@@ -82,15 +82,15 @@
     border: 1px solid var(--border2); border-radius: 3px; padding: 3px 8px;
   }
   .hbtn {
-    display: flex; align-items: center; gap: 5px;
+    display: flex; align-items: center; gap: 6px;
     padding: 4px 10px; background: transparent;
     border: 1px solid var(--border2); border-radius: 4px;
     color: var(--text2); font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
     cursor: pointer; transition: all 0.15s; white-space: nowrap;
   }
   .hbtn:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,170,0.05); }
-  .hbtn svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .hbtn svg { width: 14px; height: 14px; flex-shrink: 0; }
   .hbtn.active { border-color: rgba(234,179,8,.5); color: #fde68a; background: rgba(234,179,8,0.07); }
 
   /* ── TAB BAR ── */
@@ -359,55 +359,55 @@
 /* ─── QUIZ OVERLAY ─── */
 .quiz-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:13000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
 .quiz-overlay.open{display:flex}
-.quiz-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;width:500px;max-width:96vw;box-shadow:0 30px 80px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow-y:auto}
+.quiz-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:34px;width:700px;max-width:96vw;box-shadow:0 30px 80px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:18px;max-height:90vh;overflow-y:auto}
 .quiz-header{display:flex;align-items:center;justify-content:space-between}
-.quiz-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.15em}
+.quiz-title{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.15em}
 .quiz-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1}
 .quiz-score-bar{display:flex;gap:12px;align-items:center}
 .quiz-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
 .quiz-stat-val{font-size:22px;font-weight:700;color:var(--text)}
 .quiz-stat-val.green{color:#4ade80}.quiz-stat-val.red{color:#f87171}.quiz-stat-val.acc{color:var(--accent)}
-.quiz-stat-lbl{font-size:9px;color:var(--text3);letter-spacing:.08em}
+.quiz-stat-lbl{font-size:11px;color:var(--text3);letter-spacing:.08em}
 .quiz-sep{flex:1;height:1px;background:var(--border2)}
 .quiz-progress{height:3px;background:var(--border2);border-radius:2px;overflow:hidden}
 .quiz-progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease;width:0%}
-.quiz-scenario{text-align:center;font-size:11px;color:var(--text2);letter-spacing:.05em;padding:6px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.quiz-scenario{text-align:center;font-size:13px;color:var(--text2);letter-spacing:.05em;padding:6px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .quiz-hand-display{text-align:center;font-size:52px;font-weight:700;color:var(--text);padding:8px 0;text-shadow:0 0 30px rgba(0,212,170,.3);transition:all .2s}
 .quiz-hand-display.flash-ok{color:#4ade80;text-shadow:0 0 40px rgba(74,222,128,.5)}
 .quiz-hand-display.flash-ko{color:#f87171;text-shadow:0 0 40px rgba(248,113,113,.5)}
-.quiz-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
-.quiz-btn{padding:10px 8px;border-radius:5px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;border:1px solid;transition:all .1s;text-align:center;user-select:none}
+.quiz-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.quiz-btn{padding:9px 14px;border-radius:5px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.06em;border:1px solid;transition:all .1s;text-align:center;user-select:none}
 .quiz-btn:hover{filter:brightness(1.2);transform:scale(1.03)}
 .quiz-btn.b-ok{box-shadow:0 0 0 2px #4ade80,0 0 20px rgba(74,222,128,.4)}
 .quiz-btn.b-ko{box-shadow:0 0 0 2px #f87171;opacity:.5}
-.quiz-feedback{text-align:center;font-size:11px;min-height:16px;letter-spacing:.05em}
+.quiz-feedback{text-align:center;font-size:13px;min-height:16px;letter-spacing:.05em}
 .quiz-feedback.ok{color:#4ade80}.quiz-feedback.ko{color:#f87171}
 .quiz-config{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.quiz-config-label{font-size:9px;color:var(--text3);letter-spacing:.06em;flex-shrink:0}
-.quiz-config-chip{padding:3px 10px;border-radius:10px;border:1px solid var(--border2);font-size:9px;color:var(--text2);cursor:pointer;transition:all .15s;letter-spacing:.05em}
+.quiz-config-label{font-size:12px;color:var(--text3);letter-spacing:.06em;flex-shrink:0}
+.quiz-config-chip{padding:5px 13px;border-radius:10px;border:1px solid var(--border2);font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;letter-spacing:.05em}
 .quiz-config-chip.on{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.4);color:var(--accent)}
-.quiz-start-btn{width:100%;padding:10px;border-radius:5px;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.quiz-start-btn{width:100%;padding:13px;border-radius:5px;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .15s}
 .quiz-start-btn:hover{background:rgba(0,212,170,.22)}
 .quiz-result-box{display:none;flex-direction:column;gap:14px;align-items:center}
 .quiz-result-box.open{display:flex}
 .quiz-result-score{font-size:42px;font-weight:700;color:var(--accent)}
-.quiz-result-msg{font-size:12px;color:var(--text2);text-align:center}
+.quiz-result-msg{font-size:14px;color:var(--text2);text-align:center}
 
 /* ─── IO MODAL ─── */
 .io-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:12500;display:none;align-items:center;justify-content:center}
 .io-modal.open{display:flex}
-.io-box{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:22px;width:440px;max-width:96vw;box-shadow:0 20px 60px rgba(0,0,0,.9);font-family:'IBM Plex Mono',monospace}
-.io-head{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.io-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:34px;width:700px;max-width:96vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.9);font-family:'IBM Plex Mono',monospace}
+.io-head{font-size:16px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
 .io-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px}
-.io-section{margin-bottom:14px}
-.io-section-title{font-size:9px;color:var(--text3);letter-spacing:.1em;margin-bottom:8px}
-.io-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px}
-.io-btn{padding:6px 14px;border-radius:4px;border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;cursor:pointer;transition:all .15s;background:var(--surface2)}
+.io-section{margin-bottom:18px}
+.io-section-title{font-size:12px;color:var(--text3);letter-spacing:.1em;margin-bottom:8px}
+.io-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.io-btn{padding:9px 20px;border-radius:5px;border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;cursor:pointer;transition:all .15s;background:var(--surface2)}
 .io-btn:hover{border-color:var(--accent);color:var(--accent)}
 .io-btn.imp{border-color:rgba(250,204,21,.4);color:#fde68a}
-.io-note{font-size:9px;color:var(--text3);line-height:1.6;margin-top:4px}
-textarea.io-ta{width:100%;height:80px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px;resize:vertical;outline:none;margin-top:6px}
-textarea.io-ta:focus{border-color:var(--accent)}
+.io-note{font-size:12px;color:var(--text3);line-height:1.6;margin-top:4px}
+textarea.io-ta{width:100%;height:110px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px;resize:vertical;outline:none;margin-top:6px}
+textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
 
 /* ─── MOBILE ─── */
 #mobile-nav,#mobile-pos-bar,#mobile-sit-bar,#mobile-legend{display:none}
@@ -453,6 +453,130 @@ textarea.io-ta:focus{border-color:var(--accent)}
 .mleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 </style>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCArDoFDlTynQgXyNNtjBKgHi4rEgK8QXA",
+    authDomain: "poker-b3744.firebaseapp.com",
+    projectId: "poker-b3744",
+    storageBucket: "poker-b3744.firebasestorage.app",
+    messagingSenderId: "325200510938",
+    appId: "1:325200510938:web:77e149570612c354548ae3"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  let _fbUid = null;
+  let _fbListener = null;
+
+  // Handle redirect result on page load
+  getRedirectResult(auth).then(result => {
+    if(result && result.user) {
+      _showToast('Connecté : ' + result.user.displayName);
+      // Auto-push after login
+      setTimeout(()=>window._fbPush && window._fbPush(), 500);
+    }
+  }).catch(e => {
+    if(e.code === 'auth/unauthorized-domain') {
+      console.warn('Domain not authorized in Firebase. Add thibaultmorini.github.io to authorized domains.');
+    }
+  });
+
+  // Auth state
+  onAuthStateChanged(auth, user => {
+    if(user){
+      _fbUid = user.uid;
+      _updateSyncBtn(true, user.displayName);
+      _startListener();
+    } else {
+      _fbUid = null;
+      _updateSyncBtn(false, null);
+      if(_fbListener){ _fbListener(); _fbListener=null; }
+    }
+  });
+
+  function _updateSyncBtn(loggedIn, name){
+    const btn = document.getElementById('fb-sync-btn');
+    const status = document.getElementById('fb-sync-status');
+    if(!btn) return;
+    if(loggedIn){
+      btn.textContent = '↑ PUSH';
+      btn.style.borderColor = 'rgba(0,212,170,.4)';
+      btn.style.color = 'var(--accent)';
+      if(status) status.textContent = '● ' + (name||'connecté');
+    } else {
+      btn.textContent = '🔗 SYNC';
+      btn.style.borderColor = 'var(--border2)';
+      btn.style.color = 'var(--text2)';
+      if(status) status.textContent = 'non connecté';
+    }
+  }
+
+  // Listen for remote changes (pull)
+  function _startListener(){
+    if(!_fbUid) return;
+    if(_fbListener){ _fbListener(); }
+    const ref = doc(db, 'users', _fbUid, 'data', 'ranges');
+    _fbListener = onSnapshot(ref, snap => {
+      if(!snap.exists()) return;
+      const data = snap.data();
+      if(!data || !data.edits) return;
+      // Only apply if different from local (avoid loop)
+      const remote = JSON.stringify(data.edits);
+      const local = JSON.stringify(edits);
+      if(remote === local) return;
+      edits = data.edits;
+      // Also save to localStorage
+      localStorage.setItem('rm_edits', JSON.stringify(edits));
+      if(typeof _activeCat !== 'undefined') localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
+      // Rebuild UI
+      if(typeof buildPanels === 'function') buildPanels();
+      _showToast('↓ Ranges synchronisées depuis le cloud');
+    });
+  }
+
+  // Push to Firebase
+  window._fbPush = async function(){
+    if(!_fbUid){
+      try {
+        await signInWithRedirect(auth, provider);
+        // Page will redirect and come back — push will happen after redirect via onAuthStateChanged
+        return;
+      } catch(e){
+        console.error('Auth error:', e.code, e.message);
+        _showToast('Erreur auth: ' + e.code);
+        return;
+      }
+    }
+    try {
+      const ref = doc(db, 'users', _fbUid, 'data', 'ranges');
+      await setDoc(ref, { edits: edits, updatedAt: new Date().toISOString() });
+      _showToast('↑ Ranges sauvegardées dans le cloud ✓');
+    } catch(e){
+      console.error(e);
+      _showToast('Erreur sync Firebase');
+    }
+  };
+
+  window._fbSignOut = async function(){
+    await signOut(auth);
+    _showToast('Déconnecté');
+  };
+
+  function _showToast(msg){
+    if(typeof showToast === 'function') showToast(msg);
+    else console.log(msg);
+  }
+  </script>
+
 </head>
 <body>
 
@@ -465,22 +589,13 @@ textarea.io-ta:focus{border-color:var(--accent)}
 
   <div class="header-right">
 
-    <button class="hbtn" onclick="exportPNG()" title="Export PNG">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PNG
-    </button>
 
-    <button class="hbtn" onclick="exportJSON()" title="Export JSON">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>JSON
-    </button>
 
-    <label class="hbtn" title="Import JSON" style="cursor:pointer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP
-      <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
-    </label>
 
-    <button class="hbtn" onclick="autoFit()" title="Auto-fit (F)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>FIT
-    </button>
+
+
+
+
 
     <button class="hbtn" id="edit-btn" onclick="toggleEdit()" title="Mode édition (E)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>ÉDITER
@@ -611,13 +726,13 @@ textarea.io-ta:focus{border-color:var(--accent)}
       <div class="quiz-hand-display" id="qz-hand">??</div>
       <div class="quiz-btns" id="qz-btns"></div>
       <div class="quiz-feedback" id="qz-fb"></div>
-      <button id="qz-next" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
+      <button id="qz-next" style="padding:10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
     </div>
     <div class="quiz-result-box" id="qz-result">
       <div class="quiz-result-score" id="qz-score">—</div>
       <div class="quiz-result-msg" id="qz-msg">—</div>
       <button class="quiz-start-btn" id="quiz-replay-btn" style="max-width:200px">↺ REJOUER</button>
-      <button id="quiz-reconfig-btn" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer">CONFIG</button>
+      <button id="quiz-reconfig-btn" style="padding:9px 18px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:12px;cursor:pointer">CONFIG</button>
     </div>
   </div>
 </div>
@@ -646,17 +761,28 @@ textarea.io-ta:focus{border-color:var(--accent)}
       <div class="io-note">Ou colle du texte PioSolver :</div>
       <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
       <div class="io-row" style="margin-top:8px">
-        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none">
           <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option>
           <option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
         </select>
-        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none">
           <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option>
           <option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
         </select>
         <button class="io-btn" id="io-paste-btn">Appliquer</button>
       </div>
     </div>
+
+    <div class="io-section">
+      <div class="io-section-title">☁ CLOUD SYNC</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <button class="io-btn" id="fb-sync-btn" onclick="window._fbPush&&window._fbPush()" style="border-color:var(--border2);color:var(--text2)">🔗 SYNC</button>
+        <span id="fb-sync-status" style="font-family:IBM Plex Mono,monospace;font-size:12px;color:var(--text3)">non connecté</span>
+        <button class="io-btn" onclick="window._fbSignOut&&window._fbSignOut()" style="font-size:12px;padding:7px 12px;opacity:.5">déco</button>
+      </div>
+      <div class="io-note">Connecte-toi avec Google → tes ranges se synchronisent automatiquement entre PC et mobile.</div>
+    </div>
+
   </div>
 </div>
 
