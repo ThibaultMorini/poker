@@ -347,343 +347,146 @@
   /* ── LAYOUT ── */
   .sections-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; width:100%; }
 
-  /* ── CATEGORY BAR ── */
-  .cat-bar {
-    display: flex; align-items: center; height: 30px;
-    background: #0d1015; border-bottom: 1px solid var(--border);
-    flex-shrink: 0; padding: 0 14px; gap: 6px; overflow-x: auto;
-  }
-  .cat-bar::-webkit-scrollbar { height: 2px; }
-  .cat-bar::-webkit-scrollbar-thumb { background: var(--border2); }
-  .cat-label { font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text3); letter-spacing:0.08em; margin-right:4px; flex-shrink:0; }
-  .cat-chip {
-    font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:600;
-    padding:2px 10px; border-radius:10px; border:1px solid var(--border2);
-    color:var(--text3); background:transparent; cursor:pointer;
-    transition:all 0.15s; white-space:nowrap; flex-shrink:0; letter-spacing:0.05em;
-  }
-  .cat-chip:hover { border-color:var(--accent); color:var(--accent); }
-  .cat-chip.active { background:rgba(0,212,170,0.12); border-color:rgba(0,212,170,0.5); color:var(--accent); }
-  .cat-chip-add {
-    font-family:'IBM Plex Mono',monospace; font-size:10px;
-    padding:2px 8px; border-radius:10px; border:1px dashed var(--border2);
-    color:var(--text3); background:transparent; cursor:pointer;
-    transition:all 0.15s; white-space:nowrap; flex-shrink:0;
-  }
-  .cat-chip-add:hover { border-color:var(--accent); color:var(--accent); }
+/* ─── CATEGORY BAR ─── */
+.cat-bar{display:flex;align-items:center;height:30px;background:#0d1015;border-bottom:1px solid var(--border);flex-shrink:0;padding:0 14px;gap:6px;overflow-x:auto;}
+.cat-bar::-webkit-scrollbar{height:2px}.cat-bar::-webkit-scrollbar-thumb{background:var(--border2)}
+.cat-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.08em;margin-right:4px;flex-shrink:0}
+.cat-chip{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;border:1px solid var(--border2);color:var(--text3);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;letter-spacing:.05em}
+.cat-chip:hover,.cat-chip-add:hover{border-color:var(--accent);color:var(--accent)}
+.cat-chip.active{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.5);color:var(--accent)}
+.cat-chip-add{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:10px;border:1px dashed var(--border2);color:var(--text3);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
 
-  /* ── QUIZ OVERLAY ── */
-  .quiz-overlay {
-    position:fixed; inset:0; background:rgba(0,0,0,0.92);
-    z-index:13000; display:none; flex-direction:column;
-    align-items:center; justify-content:center;
-    font-family:'IBM Plex Mono',monospace;
-  }
-  .quiz-overlay.open { display:flex; }
-  .quiz-box {
-    background:var(--surface); border:1px solid var(--border2);
-    border-radius:10px; padding:24px 28px; width:500px; max-width:96vw;
-    box-shadow:0 30px 80px rgba(0,0,0,.9);
-    display:flex; flex-direction:column; gap:16px; max-height:90vh; overflow-y:auto;
-  }
-  .quiz-header { display:flex; align-items:center; justify-content:space-between; }
-  .quiz-title { font-size:13px; font-weight:700; color:var(--accent); letter-spacing:0.15em; }
-  .quiz-close { background:none; border:none; color:var(--text3); cursor:pointer; font-size:18px; line-height:1; }
-  .quiz-close:hover { color:var(--text); }
-  .quiz-score-bar { display:flex; gap:12px; align-items:center; }
-  .quiz-stat { display:flex; flex-direction:column; align-items:center; gap:2px; }
-  .quiz-stat-val { font-size:22px; font-weight:700; color:var(--text); }
-  .quiz-stat-val.green { color:#4ade80; }
-  .quiz-stat-val.red { color:#f87171; }
-  .quiz-stat-val.accent { color:var(--accent); }
-  .quiz-stat-lbl { font-size:9px; color:var(--text3); letter-spacing:0.08em; }
-  .quiz-sep { flex:1; height:1px; background:var(--border2); }
-  .quiz-progress { height:3px; background:var(--border2); border-radius:2px; overflow:hidden; }
-  .quiz-progress-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.3s ease; width:0%; }
-  .quiz-scenario { text-align:center; font-size:11px; color:var(--text2); letter-spacing:0.05em; padding:6px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-  .quiz-hand-display { text-align:center; font-size:52px; font-weight:700; color:var(--text); letter-spacing:0.05em; padding:8px 0; text-shadow:0 0 30px rgba(0,212,170,0.3); transition:all 0.2s; }
-  .quiz-hand-display.flash-correct { color:#4ade80; text-shadow:0 0 40px rgba(74,222,128,0.5); }
-  .quiz-hand-display.flash-wrong { color:#f87171; text-shadow:0 0 40px rgba(248,113,113,0.5); }
-  .quiz-btns { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; }
-  .quiz-btn { padding:10px 8px; border-radius:5px; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.06em; border:1px solid; transition:all 0.1s; text-align:center; user-select:none; }
-  .quiz-btn:hover { filter:brightness(1.2); transform:scale(1.03); }
-  .quiz-btn.correct-flash { box-shadow:0 0 0 2px #4ade80, 0 0 20px rgba(74,222,128,0.4); }
-  .quiz-btn.wrong-flash { box-shadow:0 0 0 2px #f87171; opacity:0.5; }
-  .quiz-feedback { text-align:center; font-size:11px; min-height:16px; letter-spacing:0.05em; }
-  .quiz-feedback.ok { color:#4ade80; }
-  .quiz-feedback.ko { color:#f87171; }
-  .quiz-config { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-  .quiz-config-label { font-size:9px; color:var(--text3); letter-spacing:0.06em; flex-shrink:0; }
-  .quiz-config-chip { padding:3px 10px; border-radius:10px; border:1px solid var(--border2); font-size:9px; color:var(--text2); cursor:pointer; transition:all 0.15s; letter-spacing:0.05em; }
-  .quiz-config-chip.on { background:rgba(0,212,170,0.1); border-color:rgba(0,212,170,0.4); color:var(--accent); }
-  .quiz-start-btn { width:100%; padding:10px; border-radius:5px; background:rgba(0,212,170,0.12); border:1px solid rgba(0,212,170,0.4); color:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.1em; cursor:pointer; transition:all 0.15s; }
-  .quiz-start-btn:hover { background:rgba(0,212,170,0.22); }
-  .quiz-result-box { display:none; flex-direction:column; gap:14px; align-items:center; }
-  .quiz-result-box.open { display:flex; }
-  .quiz-result-score { font-size:42px; font-weight:700; color:var(--accent); }
-  .quiz-result-msg { font-size:12px; color:var(--text2); text-align:center; }
+/* ─── QUIZ OVERLAY ─── */
+.quiz-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:13000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
+.quiz-overlay.open{display:flex}
+.quiz-box{background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:24px 28px;width:500px;max-width:96vw;box-shadow:0 30px 80px rgba(0,0,0,.9);display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow-y:auto}
+.quiz-header{display:flex;align-items:center;justify-content:space-between}
+.quiz-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.15em}
+.quiz-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1}
+.quiz-score-bar{display:flex;gap:12px;align-items:center}
+.quiz-stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.quiz-stat-val{font-size:22px;font-weight:700;color:var(--text)}
+.quiz-stat-val.green{color:#4ade80}.quiz-stat-val.red{color:#f87171}.quiz-stat-val.acc{color:var(--accent)}
+.quiz-stat-lbl{font-size:9px;color:var(--text3);letter-spacing:.08em}
+.quiz-sep{flex:1;height:1px;background:var(--border2)}
+.quiz-progress{height:3px;background:var(--border2);border-radius:2px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease;width:0%}
+.quiz-scenario{text-align:center;font-size:11px;color:var(--text2);letter-spacing:.05em;padding:6px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.quiz-hand-display{text-align:center;font-size:52px;font-weight:700;color:var(--text);padding:8px 0;text-shadow:0 0 30px rgba(0,212,170,.3);transition:all .2s}
+.quiz-hand-display.flash-ok{color:#4ade80;text-shadow:0 0 40px rgba(74,222,128,.5)}
+.quiz-hand-display.flash-ko{color:#f87171;text-shadow:0 0 40px rgba(248,113,113,.5)}
+.quiz-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.quiz-btn{padding:10px 8px;border-radius:5px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;border:1px solid;transition:all .1s;text-align:center;user-select:none}
+.quiz-btn:hover{filter:brightness(1.2);transform:scale(1.03)}
+.quiz-btn.b-ok{box-shadow:0 0 0 2px #4ade80,0 0 20px rgba(74,222,128,.4)}
+.quiz-btn.b-ko{box-shadow:0 0 0 2px #f87171;opacity:.5}
+.quiz-feedback{text-align:center;font-size:11px;min-height:16px;letter-spacing:.05em}
+.quiz-feedback.ok{color:#4ade80}.quiz-feedback.ko{color:#f87171}
+.quiz-config{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.quiz-config-label{font-size:9px;color:var(--text3);letter-spacing:.06em;flex-shrink:0}
+.quiz-config-chip{padding:3px 10px;border-radius:10px;border:1px solid var(--border2);font-size:9px;color:var(--text2);cursor:pointer;transition:all .15s;letter-spacing:.05em}
+.quiz-config-chip.on{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.4);color:var(--accent)}
+.quiz-start-btn{width:100%;padding:10px;border-radius:5px;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.quiz-start-btn:hover{background:rgba(0,212,170,.22)}
+.quiz-result-box{display:none;flex-direction:column;gap:14px;align-items:center}
+.quiz-result-box.open{display:flex}
+.quiz-result-score{font-size:42px;font-weight:700;color:var(--accent)}
+.quiz-result-msg{font-size:12px;color:var(--text2);text-align:center}
 
-  /* ── IO MODAL ── */
-  .io-modal { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:12500; display:none; align-items:center; justify-content:center; }
-  .io-modal.open { display:flex; }
-  .io-box { background:var(--surface); border:1px solid var(--border2); border-radius:8px; padding:22px; width:440px; max-width:96vw; box-shadow:0 20px 60px rgba(0,0,0,.9); font-family:'IBM Plex Mono',monospace; }
-  .io-head { font-size:13px; font-weight:700; color:var(--accent); letter-spacing:0.12em; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
-  .io-close { background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px; }
-  .io-close:hover { color:var(--text); }
-  .io-section { margin-bottom:14px; }
-  .io-section-title { font-size:9px; color:var(--text3); letter-spacing:0.1em; margin-bottom:8px; }
-  .io-row { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:6px; }
-  .io-btn { padding:6px 14px; border-radius:4px; border:1px solid var(--border2); color:var(--text2); font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.06em; cursor:pointer; transition:all 0.15s; background:var(--surface2); }
-  .io-btn:hover { border-color:var(--accent); color:var(--accent); }
-  .io-btn.imp { border-color:rgba(250,204,21,0.4); color:#fde68a; }
-  .io-note { font-size:9px; color:var(--text3); line-height:1.6; margin-top:4px; }
-  textarea.io-ta { width:100%; height:80px; background:var(--surface2); border:1px solid var(--border2); border-radius:4px; color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:10px; padding:8px; resize:vertical; outline:none; margin-top:6px; }
-  textarea.io-ta:focus { border-color:var(--accent); }
+/* ─── IO MODAL ─── */
+.io-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:12500;display:none;align-items:center;justify-content:center}
+.io-modal.open{display:flex}
+.io-box{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:22px;width:440px;max-width:96vw;box-shadow:0 20px 60px rgba(0,0,0,.9);font-family:'IBM Plex Mono',monospace}
+.io-head{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.io-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px}
+.io-section{margin-bottom:14px}
+.io-section-title{font-size:9px;color:var(--text3);letter-spacing:.1em;margin-bottom:8px}
+.io-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px}
+.io-btn{padding:6px 14px;border-radius:4px;border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;cursor:pointer;transition:all .15s;background:var(--surface2)}
+.io-btn:hover{border-color:var(--accent);color:var(--accent)}
+.io-btn.imp{border-color:rgba(250,204,21,.4);color:#fde68a}
+.io-note{font-size:9px;color:var(--text3);line-height:1.6;margin-top:4px}
+textarea.io-ta{width:100%;height:80px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px;resize:vertical;outline:none;margin-top:6px}
+textarea.io-ta:focus{border-color:var(--accent)}
 
-
-/* ══════════════════════════════════════════
-   MOBILE STYLES  (≤ 768px)
-   ══════════════════════════════════════════ */
-@media (max-width: 768px) {
-
-  /* Root tweaks */
-  :root {
-    --cell-size: 24px;
-    --cell-font: 7px;
-    --cell-gap: 1px;
-  }
-
-  /* Hide desktop-only elements */
-  .header-legend,
-  .cat-bar,
-  .hbtn:not(#m-show-quiz-hbtn),
-  .edit-banner,
-  .paint-bar,
-  .tab-bar,
-  .header-right { display: none !important; }
-
-  /* ── Mobile header ── */
-  header {
-    height: 52px; padding: 0 14px;
-    justify-content: space-between;
-  }
-  .logo { font-size: 13px; letter-spacing: 0.08em; }
-  .logo-dot { width: 6px; height: 6px; }
-
-  /* Legend pill row hidden — shown in mobile panel instead */
-
-  /* ── Body layout ── */
-  body {
-    height: 100dvh;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* ── Main area scrollable ── */
-  .main {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 80px; /* space for bottom nav */
-  }
-
-  /* ── Tab panels: vertical stack, single column ── */
-  .tab-panel {
-    display: none;
-    flex-direction: column;
-    padding: 10px 10px 16px;
-    gap: 14px;
-    min-height: 100%;
-    align-content: flex-start;
-  }
-  .tab-panel.active { display: flex; }
-
-  /* Sections row becomes vertical */
-  .sections-row {
-    flex-direction: column;
-    gap: 14px;
-    width: 100%;
-  }
-
-  /* ── Range block ── */
-  .range-block {
-    padding: 8px 10px;
-    border-radius: 8px;
-  }
-  .block-title { font-size: 11px; letter-spacing: 0.06em; }
-
-  /* ── Grid: centered, allow horizontal scroll within block ── */
-  .grid-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
-  }
-  .cell {
-    border-radius: 2px;
-    touch-action: manipulation;
-  }
-  .cell:hover { transform: none; } /* disable hover scale on touch */
-  .cell:active { transform: scale(1.1); z-index: 10; }
-
-  /* ── Position header inside panel ── */
-  .pos-diag { display: none; } /* hide on mobile to save space */
-
-  /* ── Mobile tooltip (larger, positioned center) ── */
-  .tooltip {
-    font-size: 16px; padding: 12px 20px;
-    left: 50% !important; transform: translateX(-50%);
-    bottom: 90px; top: auto !important;
-    text-align: center;
-  }
-
-  /* ── Bottom navigation ── */
-  #mobile-nav {
-    display: flex !important;
-  }
-
-  /* ── Mobile position selector (replaces tab-bar) ── */
-  #mobile-pos-bar {
-    display: flex !important;
-  }
-
-  /* ── Mobile legend strip ── */
-  #mobile-legend {
-    display: flex !important;
-  }
-
-  /* Situation selector chips */
-  #mobile-sit-bar {
-    display: flex !important;
-  }
+/* ─── MOBILE ─── */
+#mobile-nav,#mobile-pos-bar,#mobile-sit-bar,#mobile-legend{display:none}
+@media(max-width:768px){
+  :root{--cell-size:24px;--cell-font:7px;--cell-gap:1px}
+  .header-legend,.cat-bar,.edit-banner,.paint-bar,.tab-bar{display:none!important}
+  .header-right .hbtn{display:none!important}
+  header{height:52px;padding:0 14px}
+  .logo{font-size:13px}
+  body{height:100dvh;overflow:hidden}
+  .main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:72px}
+  .tab-panel{display:none;flex-direction:column;padding:8px 8px 16px;gap:12px;align-content:flex-start}
+  .tab-panel.active{display:flex}
+  .sections-row{flex-direction:column;gap:12px;width:100%}
+  .range-block{padding:8px 10px;border-radius:8px}
+  .block-title{font-size:11px}
+  .grid-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cell{border-radius:2px;touch-action:manipulation}
+  .cell:hover{transform:none}
+  .cell:active{transform:scale(1.08);z-index:10}
+  .pos-diag{display:none}
+  .tooltip{font-size:15px;padding:10px 18px;left:50%!important;transform:translateX(-50%);bottom:80px;top:auto!important;text-align:center}
+  #mobile-nav{display:flex!important}
+  #mobile-pos-bar{display:flex!important}
+  #mobile-legend{display:flex!important}
 }
-
-/* ── Always hidden on desktop ── */
-#mobile-nav,
-#mobile-pos-bar,
-#mobile-legend,
-#mobile-sit-bar { display: none; }
-
-/* ══ MOBILE NAV BAR ══ */
-#mobile-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
-  height: 64px;
-  background: #0d1015;
-  border-top: 1px solid var(--border2);
-  align-items: stretch;
-  justify-content: space-around;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.mnav-btn {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 3px; flex: 1; cursor: pointer;
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 600;
-  color: var(--text3); letter-spacing: 0.06em; border: none; background: none;
-  transition: color 0.15s; -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.mnav-btn svg { width: 20px; height: 20px; }
-.mnav-btn.active { color: var(--accent); }
-.mnav-btn.quiz-nav { color: #fde68a; }
-.mnav-btn.quiz-nav.active { color: #fde68a; }
-
-/* ══ MOBILE POSITION BAR ══ */
-#mobile-pos-bar {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 8px;
-  gap: 0;
-  overflow-x: auto;
-  height: 40px;
-  align-items: stretch;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-#mobile-pos-bar::-webkit-scrollbar { display: none; }
-.mpos-btn {
-  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  padding: 0 14px; cursor: pointer;
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 800;
-  color: var(--text3); letter-spacing: 0.1em;
-  border-bottom: 2px solid transparent;
-  transition: all 0.15s; -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.mpos-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-/* ══ MOBILE SITUATION BAR ══ */
-#mobile-sit-bar {
-  padding: 6px 10px;
-  gap: 6px;
-  overflow-x: auto;
-  align-items: center;
-  background: var(--bg);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  flex-wrap: nowrap;
-}
-#mobile-sit-bar::-webkit-scrollbar { display: none; }
-.msit-chip {
-  flex-shrink: 0; padding: 4px 12px; border-radius: 12px;
-  border: 1px solid var(--border2); background: transparent;
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3);
-  cursor: pointer; white-space: nowrap; letter-spacing: 0.04em;
-  -webkit-tap-highlight-color: transparent; user-select: none;
-  transition: all 0.15s;
-}
-.msit-chip.active {
-  background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.4); color: var(--accent);
-}
-
-/* ══ MOBILE LEGEND STRIP ══ */
-#mobile-legend {
-  padding: 6px 10px;
-  gap: 6px; overflow-x: auto; align-items: center;
-  background: var(--bg); border-bottom: 1px solid var(--border);
-  flex-wrap: nowrap; scrollbar-width: none;
-  flex-shrink: 0;
-}
-#mobile-legend::-webkit-scrollbar { display: none; }
-.mleg-item {
-  display: flex; align-items: center; gap: 5px; flex-shrink: 0;
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text2);
-  white-space: nowrap; letter-spacing: 0.03em;
-}
-.mleg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-/* ══ MOBILE HEADER QUIZ BUTTON ══ */
-@media (max-width: 768px) {
-  #m-header-quiz {
-    display: flex !important;
-  }
-}
-#m-header-quiz { display: none; }
+#mobile-nav{position:fixed;bottom:0;left:0;right:0;z-index:500;height:62px;background:#0d1015;border-top:1px solid var(--border2);align-items:stretch;justify-content:space-around;padding-bottom:env(safe-area-inset-bottom,0)}
+.mnav-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:1;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.06em;border:none;background:none;transition:color .15s;-webkit-tap-highlight-color:transparent;user-select:none}
+.mnav-btn svg{width:20px;height:20px}
+.mnav-btn.active{color:var(--accent)}
+.mnav-quiz-btn{color:#fde68a}
+#mobile-pos-bar{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 8px;gap:0;overflow-x:auto;height:40px;align-items:stretch;scrollbar-width:none}
+#mobile-pos-bar::-webkit-scrollbar{display:none}
+.mpos-btn{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:800;color:var(--text3);letter-spacing:.1em;border-bottom:2px solid transparent;transition:all .15s;-webkit-tap-highlight-color:transparent;user-select:none}
+.mpos-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+#mobile-sit-bar{padding:6px 10px;gap:6px;overflow-x:auto;align-items:center;background:var(--bg);scrollbar-width:none;flex-wrap:nowrap}
+#mobile-sit-bar::-webkit-scrollbar{display:none}
+.msit-chip{flex-shrink:0;padding:4px 12px;border-radius:12px;border:1px solid var(--border2);background:transparent;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);cursor:pointer;white-space:nowrap;letter-spacing:.04em;-webkit-tap-highlight-color:transparent;user-select:none;transition:all .15s}
+.msit-chip.active{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.4);color:var(--accent)}
+#mobile-legend{padding:5px 10px;gap:6px;overflow-x:auto;align-items:center;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:nowrap;scrollbar-width:none;flex-shrink:0}
+#mobile-legend::-webkit-scrollbar{display:none}
+.mleg-item{display:flex;align-items:center;gap:5px;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text2);white-space:nowrap}
+.mleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 </style>
-
 </head>
 <body>
 
 <header>
-  <div class="logo"><div class="logo-dot"></div><span id="header-cat-name">Range Manager · 6 Max Cash</span></div>
-  <div class="header-legend" id="header-legend"></div>
+  <div class="logo"><div class="logo-dot"></div>Range Manager · 6 Max</div>
+
+  <div class="header-legend" id="header-legend">
+    <!-- dynamically populated -->
+  </div>
+
   <div class="header-right">
-    <button class="hbtn" onclick="openQuiz()" style="border-color:rgba(250,204,21,0.35);color:#fde68a;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ
+
+    <button class="hbtn" onclick="exportPNG()" title="Export PNG">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>PNG
     </button>
-    <button class="hbtn" onclick="openIOModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 16 12 21 17 16"/><line x1="12" y1="21" x2="12" y2="9"/><polyline points="7 8 12 3 17 8"/></svg>I/O
+
+    <button class="hbtn" onclick="exportJSON()" title="Export JSON">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>JSON
     </button>
-    <button class="hbtn" onclick="autoFit()">
+
+    <label class="hbtn" title="Import JSON" style="cursor:pointer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP
+      <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+    </label>
+
+    <button class="hbtn" onclick="autoFit()" title="Auto-fit (F)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>FIT
     </button>
-    <button class="hbtn" id="edit-btn" onclick="toggleEdit()">
+
+    <button class="hbtn" id="edit-btn" onclick="toggleEdit()" title="Mode édition (E)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>ÉDITER
     </button>
   </div>
 </header>
-<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
 
 <div class="edit-banner" id="edit-banner">
   <div class="edit-banner-txt">MODE ÉDITION — Clic pour changer · Drag pour peindre · Ctrl+Z annuler</div>
@@ -702,50 +505,6 @@
 <div class="tab-bar" id="tab-bar"></div>
 <div class="main" id="main"></div>
 <div class="tooltip" id="tooltip"></div>
-
-<!-- MOBILE: position bar + situation chips + legend strip -->
-<div id="mobile-pos-bar">
-  <div class="mpos-btn active" data-pos="utg" onclick="mSwitchPos('utg')">UTG</div>
-  <div class="mpos-btn" data-pos="hj"  onclick="mSwitchPos('hj')">HJ</div>
-  <div class="mpos-btn" data-pos="co"  onclick="mSwitchPos('co')">CO</div>
-  <div class="mpos-btn" data-pos="btn" onclick="mSwitchPos('btn')">BTN</div>
-  <div class="mpos-btn" data-pos="sb"  onclick="mSwitchPos('sb')">SB</div>
-  <div class="mpos-btn" data-pos="bb"  onclick="mSwitchPos('bb')">BB</div>
-</div>
-<div id="mobile-sit-bar"><!-- filled by JS --></div>
-<div id="mobile-legend"><!-- filled by JS --></div>
-
-<!-- MOBILE: bottom navigation -->
-<nav id="mobile-nav">
-  <button class="mnav-btn active" id="mnav-ranges" onclick="mNavSwitch('ranges')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-      <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-    </svg>RANGES
-  </button>
-  <button class="mnav-btn quiz-nav" id="mnav-quiz" onclick="mNavSwitch('quiz')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"/>
-      <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
-      <line x1="12" y1="17" x2="12.01" y2="17"/>
-    </svg>QUIZ
-  </button>
-  <button class="mnav-btn" id="mnav-cat" onclick="mNavSwitch('cat')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
-    </svg>CATÉG.
-  </button>
-</nav>
-
-<!-- MOBILE CATEGORY SHEET -->
-<div id="mobile-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,0.7);align-items:flex-end;" onclick="mCloseCatSheet()">
-  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2);" onclick="event.stopPropagation()">
-    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.12em;margin-bottom:16px;">CATÉGORIE</div>
-    <div id="mobile-cat-list" style="display:flex;flex-direction:column;gap:10px;"></div>
-    <button onclick="addCat();mCloseCatSheet();" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:0.08em;cursor:pointer;">＋ NOUVELLE CATÉGORIE</button>
-  </div>
-</div>
-
 
 <!-- CONTEXT MENU -->
 <div class="ctx-menu" id="ctx-menu">
@@ -790,935 +549,9 @@
 </div>
 
 <!-- TOAST -->
-
-<!-- QUIZ OVERLAY -->
-<div class="quiz-overlay" id="quiz-overlay">
-  <div class="quiz-box">
-    <div class="quiz-header">
-      <div class="quiz-title">⚡ QUIZ MODE</div>
-      <button class="quiz-close" onclick="closeQuiz()">✕</button>
-    </div>
-    <div id="quiz-config-screen">
-      <div class="quiz-config">
-        <span class="quiz-config-label">POSITION :</span>
-        <div class="quiz-config-chip on" data-qf="pos" data-val="all" onclick="qfPos(this)">TOUT</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="utg" onclick="qfPos(this)">UTG</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="hj" onclick="qfPos(this)">HJ</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="co" onclick="qfPos(this)">CO</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="btn" onclick="qfPos(this)">BTN</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="sb" onclick="qfPos(this)">SB</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="bb" onclick="qfPos(this)">BB</div>
-      </div>
-      <div class="quiz-config" style="margin-top:8px">
-        <span class="quiz-config-label">SITUATION :</span>
-        <div class="quiz-config-chip on" data-qf="sit" data-val="all" onclick="qfSit(this)">TOUT</div>
-        <div class="quiz-config-chip" data-qf="sit" data-val="open" onclick="qfSit(this)">OPEN</div>
-        <div class="quiz-config-chip" data-qf="sit" data-val="vs" onclick="qfSit(this)">VS RAISE</div>
-      </div>
-      <div class="quiz-config" style="margin-top:8px">
-        <span class="quiz-config-label">MAINS :</span>
-        <div class="quiz-config-chip on" data-qf="hand" data-val="border" onclick="qfHand(this)">BORDERLINE</div>
-        <div class="quiz-config-chip" data-qf="hand" data-val="all" onclick="qfHand(this)">TOUTES</div>
-      </div>
-      <button class="quiz-start-btn" onclick="startQuiz()" style="margin-top:8px">▶ COMMENCER</button>
-    </div>
-    <div id="quiz-play-screen" style="display:none;flex-direction:column;gap:12px;">
-      <div class="quiz-score-bar">
-        <div class="quiz-stat"><div class="quiz-stat-val green" id="qz-ok">0</div><div class="quiz-stat-lbl">BON</div></div>
-        <div class="quiz-stat"><div class="quiz-stat-val red" id="qz-ko">0</div><div class="quiz-stat-lbl">ERREUR</div></div>
-        <div class="quiz-sep"></div>
-        <div class="quiz-stat"><div class="quiz-stat-val accent" id="qz-streak">0</div><div class="quiz-stat-lbl">STREAK</div></div>
-        <div class="quiz-stat"><div class="quiz-stat-val" id="qz-n">0/0</div><div class="quiz-stat-lbl">TOTAL</div></div>
-      </div>
-      <div class="quiz-progress"><div class="quiz-progress-fill" id="qz-prog"></div></div>
-      <div class="quiz-scenario" id="qz-sc">—</div>
-      <div class="quiz-hand-display" id="qz-hand">??</div>
-      <div class="quiz-btns" id="qz-btns"></div>
-      <div class="quiz-feedback" id="qz-fb"></div>
-      <button id="qz-next" onclick="nextQ()" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:0.06em;opacity:0.3;">SUIVANT →</button>
-    </div>
-    <div class="quiz-result-box" id="quiz-result-screen">
-      <div class="quiz-result-score" id="qz-score">—</div>
-      <div class="quiz-result-msg" id="qz-msg">—</div>
-      <button class="quiz-start-btn" onclick="startQuiz()" style="max-width:200px">↺ REJOUER</button>
-      <button onclick="showQuizConfig()" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;">CONFIG</button>
-    </div>
-  </div>
-</div>
-
-<!-- IO MODAL -->
-<div class="io-modal" id="io-modal">
-  <div class="io-box">
-    <div class="io-head">IMPORT / EXPORT <button class="io-close" onclick="closeIOModal()">✕</button></div>
-    <div class="io-section">
-      <div class="io-section-title">EXPORTER</div>
-      <div class="io-row">
-        <button class="io-btn" onclick="exportJSON()">↓ JSON</button>
-        <button class="io-btn" onclick="exportPNG()">↓ PNG</button>
-        <button class="io-btn" onclick="exportPio()">↓ PioSolver</button>
-        <button class="io-btn" onclick="exportGTO()">↓ GTO+</button>
-        <button class="io-btn" onclick="exportPT()">↓ PokerTracker</button>
-      </div>
-      <div class="io-note">Export cible la position active (onglet ouvert).</div>
-    </div>
-    <div class="io-section">
-      <div class="io-section-title">IMPORTER</div>
-      <div class="io-row">
-        <label class="io-btn imp" style="cursor:pointer">↑ JSON<input type="file" accept=".json" style="display:none" onchange="importJSON(this)"></label>
-        <label class="io-btn imp" style="cursor:pointer">↑ PioSolver/GTO+<input type="file" accept=".txt,.pio,.gto" style="display:none" onchange="importPioFile(this)"></label>
-      </div>
-      <div class="io-note">Ou colle du texte PioSolver ici :</div>
-      <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
-      <div class="io-row" style="margin-top:8px">
-        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none;">
-          <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option><option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
-        </select>
-        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none;">
-          <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option><option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
-        </select>
-        <button class="io-btn" onclick="importPasteText()">Appliquer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
-
 <script>
-
-// ════════════════════════════════
-// EMBEDDED JSON (ranges.json)
-// ════════════════════════════════
-const EMBEDDED_JSON = {
-  "edits": {
-    "utg-open::K4s": "",
-    "utg-open::K3s": "",
-    "utg-open::Q2s": "",
-    "utg-open::Q3s": "",
-    "utg-open::AQs": "C",
-    "utg-open::QQ": "C",
-    "utg-open::KQo": "O",
-    "utg-open::AQo": "O",
-    "utg-open::KTs": "O",
-    "utg-open::QTs": "O",
-    "utg-open::K9s": "",
-    "utg-open::Q9s": "",
-    "utg-open::J9s": "",
-    "utg-open::T8s": "",
-    "utg-open::97s": "",
-    "utg-open::86s": "",
-    "utg-open::T9s": "O",
-    "utg-open::98s": "O",
-    "utg-open::87s": "O",
-    "utg-open::76s": "O",
-    "utg-open::65s": "",
-    "utg-open::A2s": "C",
-    "utg-open::A3s": "C",
-    "utg-open::A4s": "C",
-    "utg-open::A5s": "C",
-    "utg-open::A6s": "F",
-    "utg-open::A8s": "O",
-    "utg-open::A9s": "O",
-    "hj-open::A9o": "",
-    "hj-open::KTo": "O",
-    "hj-open::QTo": "O",
-    "hj-open::JTo": "",
-    "hj-open::KQo": "O",
-    "hj-open::AQo": "O",
-    "hj-open::AJo": "O",
-    "hj-open::A9s": "O",
-    "hj-open::QQ": "C",
-    "hj-open::JJ": "C",
-    "hj-open::KTs": "O",
-    "hj-open::QTs": "O",
-    "hj-open::K8s": "",
-    "hj-open::Q8s": "",
-    "hj-open::J8s": "",
-    "hj-open::T8s": "",
-    "hj-open::T7s": "",
-    "hj-open::97s": "",
-    "hj-open::96s": "",
-    "hj-open::86s": "",
-    "hj-open::85s": "",
-    "hj-open::75s": "",
-    "hj-open::65s": "",
-    "hj-open::64s": "",
-    "hj-open::54s": "",
-    "hj-open::T9s": "O",
-    "hj-open::J9s": "O",
-    "hj-open::AQs": "C",
-    "hj-open::A3s": "C",
-    "hj-open::A2s": "F",
-    "hj-open::A6s": "F",
-    "hj-vu::KQs": "T",
-    "hj-vu::AJs": "T",
-    "hj-vu::JTs": "T",
-    "hj-vu::T9s": "T",
-    "hj-vu::98s": "T",
-    "hj-vu::A4s": "T",
-    "hj-open::88": "C",
-    "hj-open::98s": "O",
-    "hj-open::87s": "O",
-    "hj-open::76s": "O",
-    "co-open::K7s": "",
-    "co-open::Q7s": "",
-    "co-open::J7s": "",
-    "co-open::T7s": "",
-    "co-open::T6s": "",
-    "co-open::96s": "",
-    "co-open::95s": "",
-    "co-open::85s": "",
-    "co-open::84s": "",
-    "co-open::74s": "",
-    "co-open::64s": "",
-    "co-open::63s": "",
-    "co-open::53s": "",
-    "co-open::54s": "",
-    "co-open::43s": "",
-    "co-open::A5o": "O",
-    "co-open::ATo": "O",
-    "co-open::AJo": "O",
-    "co-open::KQo": "O",
-    "co-open::KJo": "O",
-    "co-open::QJo": "O",
-    "co-open::JJ": "C",
-    "co-open::AQo": "C",
-    "co-open::AQs": "C",
-    "co-open::A8s": "C",
-    "co-open::A6s": "F",
-    "co-open::A7s": "F",
-    "co-open::A9s": "C",
-    "co-open::A2s": "F",
-    "co-open::K9s": "O",
-    "co-open::Q9s": "O",
-    "co-open::J9s": "O",
-    "co-open::J8s": "O",
-    "co-open::T8s": "O",
-    "co-open::QTs": "O",
-    "co-open::97s": "O",
-    "co-open::86s": "O",
-    "co-open::75s": "O",
-    "co-open::76s": "O",
-    "co-open::65s": "O",
-    "co-open::77": "C",
-    "co-open::T9o": "",
-    "co-vuh::QQ": "V",
-    "co-vuh::JTs": "T",
-    "co-vuh::T9s": "T",
-    "co-vuh::98s": "T",
-    "co-vuh::KQs": "T",
-    "co-vuh::AJs": "T",
-    "btn-open::Q6s": "O",
-    "btn-open::J6s": "O",
-    "btn-open::52s": "",
-    "btn-open::42s": "",
-    "btn-open::32s": "",
-    "btn-open::KJo": "O",
-    "btn-open::QJo": "O",
-    "btn-open::QTo": "O",
-    "btn-open::KTo": "O",
-    "btn-open::JTo": "O",
-    "btn-open::ATo": "O",
-    "btn-open::A9o": "O",
-    "btn-open::J8o": "O",
-    "btn-open::Q8o": "O",
-    "btn-open::K8o": "O",
-    "btn-open::K7o": "O",
-    "btn-open::A4o": "O",
-    "btn-open::A3o": "O",
-    "btn-open::A2o": "O",
-    "btn-open::76o": "O",
-    "btn-open::65o": "O",
-    "btn-open::53s": "O",
-    "btn-open::54s": "O",
-    "btn-open::64s": "O",
-    "btn-open::66": "C",
-    "btn-open::75s": "O",
-    "btn-open::74s": "O",
-    "btn-open::85s": "O",
-    "btn-open::86s": "O",
-    "btn-open::96s": "O",
-    "btn-open::97s": "O",
-    "btn-open::T7s": "O",
-    "btn-open::T8s": "O",
-    "btn-open::Q7s": "O",
-    "btn-open::J8s": "O",
-    "btn-open::Q8s": "O",
-    "btn-open::K8s": "O",
-    "btn-open::K4s": "O",
-    "btn-open::K3s": "O",
-    "btn-open::K2s": "O",
-    "btn-open::Q5s": "O",
-    "btn-open::Q4s": "O",
-    "btn-open::Q3s": "O",
-    "btn-open::Q2s": "O",
-    "btn-open::J5s": "O",
-    "btn-open::T5s": "",
-    "btn-open::94s": "",
-    "btn-vuh::QQ": "V",
-    "btn-vuh::KQs": "T",
-    "btn-vuh::AJs": "T",
-    "btn-vuh::ATs": "T",
-    "btn-vuh::A3s": "T",
-    "btn-vuh::A5s": "V",
-    "btn-vuh::JTs": "T",
-    "btn-vuh::TT": "",
-    "btn-vuh::T9s": "T",
-    "btn-vuh::98s": "T",
-    "btn-vuh::87s": "T",
-    "btn-vco::K9s": "",
-    "btn-vco::Q9s": "",
-    "btn-vco::J8s": "",
-    "btn-vco::T7s": "",
-    "btn-vco::96s": "",
-    "btn-vco::T8s": "",
-    "btn-vco::97s": "",
-    "btn-vco::86s": "",
-    "btn-vco::75s": "",
-    "btn-vco::65s": "",
-    "btn-vco::54s": "",
-    "btn-vco::ATs": "T",
-    "btn-vco::A9s": "T",
-    "btn-vco::KJs": "T",
-    "btn-vco::KQo": "T",
-    "btn-vco::T9s": "T",
-    "btn-vco::98s": "T",
-    "btn-vco::87s": "T",
-    "btn-vco::76s": "T",
-    "btn-vco::A5s": "V",
-    "btn-vco::JJ": "V",
-    "sb-open::63s": "O",
-    "sb-open::43s": "O",
-    "sb-open::K8o": "O",
-    "sb-open::A5o": "O",
-    "sb-open::A4o": "O",
-    "sb-open::A3o": "O",
-    "sb-open::A2o": "O",
-    "sb-open::AQs": "C",
-    "sb-open::T8s": "O",
-    "sb-open::97s": "O",
-    "sb-open::77": "C",
-    "sb-open::A5s": "F",
-    "sb-open::A4s": "F",
-    "sb-open::A3s": "F",
-    "sb-open::A2s": "F",
-    "sb-open::K5s": "O",
-    "sb-open::Q6s": "O",
-    "sb-open::Q4s": "O",
-    "sb-open::Q5s": "O",
-    "sb-open::K4s": "O",
-    "sb-open::K3s": "O",
-    "sb-open::Q3s": "O",
-    "sb-open::Q2s": "O",
-    "sb-open::K2s": "O",
-    "sb-open::J5s": "O",
-    "sb-open::J6s": "O",
-    "sb-open::95s": "",
-    "sb-open::87o": "O",
-    "sb-open::98o": "O",
-    "sb-vuh::QQ": "V",
-    "sb-vuh::KQs": "T",
-    "sb-vuh::KJs": "T",
-    "sb-vuh::QJs": "T",
-    "sb-vuh::AJs": "T",
-    "sb-vuh::ATs": "T",
-    "sb-vuh::JTs": "T",
-    "sb-vuh::T9s": "T",
-    "sb-vco::KJs": "T",
-    "sb-vco::KTs": "T",
-    "sb-vco::ATs": "T",
-    "sb-vco::QQ": "V",
-    "sb-vco::AQo": "T",
-    "sb-vco::T8s": "",
-    "sb-vco::97s": "",
-    "sb-vco::86s": "",
-    "sb-vco::75s": "",
-    "sb-vco::64s": "",
-    "sb-vco::53s": "",
-    "sb-vco::T9s": "T",
-    "sb-vco::99": "T",
-    "sb-vbt::QQ": "V",
-    "sb-vbt::KTs": "T",
-    "sb-vbt::A9s": "T",
-    "sb-vbt::K9s": "",
-    "sb-vbt::Q9s": "",
-    "sb-vbt::J8s": "",
-    "sb-vbt::T8s": "",
-    "sb-vbt::T7s": "",
-    "sb-vbt::97s": "",
-    "sb-vbt::96s": "",
-    "sb-vbt::86s": "",
-    "sb-vbt::75s": "",
-    "sb-vbt::65s": "",
-    "sb-vbt::54s": "",
-    "sb-vbt::A2s": "",
-    "sb-vbt::T9s": "T",
-    "sb-vbt::98s": "T",
-    "sb-vbt::88": "T",
-    "sb-vbt::87s": "T",
-    "bb-vuh::A4s": "O",
-    "bb-vuh::K7s": "O",
-    "bb-vuh::K2s": "W",
-    "bb-vuh::K3s": "W",
-    "bb-vuh::K4s": "W",
-    "bb-vuh::K5s": "W",
-    "bb-vuh::K6s": "W",
-    "bb-vuh::Q6s": "W",
-    "bb-vuh::Q5s": "W",
-    "bb-vuh::Q7s": "W",
-    "bb-vuh::J7s": "W",
-    "bb-vuh::T7s": "W",
-    "bb-vuh::96s": "W",
-    "bb-vuh::85s": "W",
-    "bb-vuh::74s": "W",
-    "bb-vuh::63s": "W",
-    "bb-vuh::53s": "W",
-    "bb-vuh::43s": "W",
-    "bb-vuh::32s": "W",
-    "bb-vuh::A9o": "W",
-    "bb-vuh::A8o": "W",
-    "bb-vuh::KTo": "W",
-    "bb-vuh::QTo": "W",
-    "bb-vuh::JTo": "W",
-    "bb-vuh::T9o": "W",
-    "bb-vuh::44": "O",
-    "bb-vuh::33": "O",
-    "bb-vuh::22": "O",
-    "bb-vco::ATs": "T",
-    "bb-vco::KJs": "T",
-    "bb-vco::KQo": "T",
-    "bb-vco::QJs": "O",
-    "bb-vco::T9s": "T",
-    "bb-vco::98s": "O",
-    "bb-vco::A4s": "O",
-    "bb-vco::A3s": "O",
-    "bb-vco::K4s": "O",
-    "bb-vco::K2s": "O",
-    "bb-vco::K3s": "O",
-    "bb-vco::Q5s": "O",
-    "bb-vco::22": "O",
-    "bb-vco::33": "O",
-    "bb-vco::44": "O",
-    "bb-vco::A2o": "W",
-    "bb-vco::A3o": "W",
-    "bb-vco::A4o": "W",
-    "bb-vco::K5o": "W",
-    "bb-vco::K6o": "W",
-    "bb-vco::K7o": "W",
-    "bb-vco::K8o": "W",
-    "bb-vco::J8o": "W",
-    "bb-vco::Q8o": "W",
-    "bb-vco::T8o": "W",
-    "bb-vco::97o": "W",
-    "bb-vco::T7o": "",
-    "bb-vco::87o": "W",
-    "bb-vco::86o": "W",
-    "bb-vco::76o": "W",
-    "bb-vco::75o": "W",
-    "bb-vco::65o": "W",
-    "bb-vco::64o": "W",
-    "bb-vco::54o": "W",
-    "bb-vco::43o": "W",
-    "bb-vco::32s": "W",
-    "bb-vco::42s": "W",
-    "bb-vco::52s": "W",
-    "bb-vco::62s": "W",
-    "bb-vco::72s": "W",
-    "bb-vco::82s": "W",
-    "bb-vco::92s": "W",
-    "bb-vco::T2s": "W",
-    "bb-vco::J2s": "W",
-    "bb-vco::Q2s": "W",
-    "bb-vco::Q3s": "W",
-    "bb-vco::Q4s": "W",
-    "bb-vco::J5s": "W",
-    "bb-vco::J6s": "W",
-    "bb-vco::T6s": "W",
-    "bb-vco::T5s": "W",
-    "bb-vco::95s": "W",
-    "bb-vco::84s": "W",
-    "bb-vco::73s": "W",
-    "bb-vco::83s": "W",
-    "bb-vco::93s": "W",
-    "bb-vco::94s": "W",
-    "bb-vco::T4s": "W",
-    "bb-vco::T3s": "W",
-    "bb-vco::J3s": "W",
-    "bb-vco::J4s": "W",
-    "bb-vco::A5o": "O",
-    "bb-vco::A6o": "O",
-    "bb-vco::J9o": "O",
-    "bb-vco::T9o": "O",
-    "bb-vco::98o": "O",
-    "bb-vbt::K7o": "W",
-    "bb-vbt::Q7o": "W",
-    "bb-vbt::Q6o": "",
-    "bb-vbt::K6o": "W",
-    "bb-vbt::Q5o": "",
-    "bb-vbt::K5o": "W",
-    "bb-vbt::K4o": "W",
-    "bb-vbt::Q4o": "",
-    "bb-vbt::Q3o": "",
-    "bb-vbt::K3o": "W",
-    "bb-vbt::K2o": "W",
-    "bb-vbt::Q2o": "",
-    "bb-vbt::J7o": "W",
-    "bb-vbt::J6o": "",
-    "bb-vbt::T7o": "W",
-    "bb-vbt::T6o": "",
-    "bb-vbt::97o": "W",
-    "bb-vbt::96o": "W",
-    "bb-vbt::86o": "W",
-    "bb-vbt::85o": "W",
-    "bb-vbt::75o": "W",
-    "bb-vbt::54o": "W",
-    "bb-vbt::64o": "W",
-    "bb-vbt::53o": "",
-    "bb-vbt::43o": "W",
-    "bb-vbt::32o": "",
-    "bb-vbt::32s": "W",
-    "bb-vbt::42s": "W",
-    "bb-vbt::52s": "W",
-    "bb-vbt::62s": "W",
-    "bb-vbt::72s": "W",
-    "bb-vbt::82s": "W",
-    "bb-vbt::83s": "W",
-    "bb-vbt::93s": "W",
-    "bb-vbt::94s": "W",
-    "bb-vbt::T4s": "W",
-    "bb-vbt::T5s": "W",
-    "bb-vbt::J4s": "O",
-    "bb-vbt::J3s": "W",
-    "bb-vbt::J2s": "W",
-    "bb-vbt::T2s": "W",
-    "bb-vbt::T3s": "W",
-    "bb-vbt::92s": "W",
-    "bb-vbt::74o": "W",
-    "bb-vbt::22": "O",
-    "bb-vbt::33": "O",
-    "bb-vbt::44": "O",
-    "bb-vbt::A2o": "O",
-    "bb-vbt::J9o": "O",
-    "bb-vbt::T9o": "O",
-    "bb-vbt::88": "O",
-    "bb-vbt::98o": "O",
-    "bb-vbt::87o": "O",
-    "bb-vbt::76o": "O",
-    "bb-vbt::65o": "O",
-    "bb-vbt::K8o": "W",
-    "bb-vbt::Q8o": "W",
-    "bb-vbt::J8o": "W",
-    "bb-vbt::T8o": "W",
-    "bb-vbt::54s": "O",
-    "bb-vbt::65s": "O",
-    "bb-vbt::75s": "O",
-    "bb-vbt::86s": "O",
-    "bb-vbt::97s": "O",
-    "bb-vbt::T8s": "O",
-    "bb-vbt::J8s": "O",
-    "bb-vbt::Q9s": "O",
-    "bb-vbt::A3s": "O",
-    "bb-vbt::A2s": "O",
-    "bb-vbt::Q2s": "O",
-    "bb-vbt::KTs": "T",
-    "bb-vbt::AJo": "T",
-    "bb-vbt::KQo": "T",
-    "bb-vbt::T9s": "T",
-    "bb-vbt::98s": "T",
-    "bb-vsb::A3s": "O",
-    "bb-vsb::A2s": "O",
-    "bb-vsb::A9s": "O",
-    "bb-vsb::Q9s": "O",
-    "bb-vsb::J9s": "O",
-    "bb-vsb::J8s": "O",
-    "bb-vsb::T8s": "O",
-    "bb-vsb::T7s": "O",
-    "bb-vsb::97s": "O",
-    "bb-vsb::96s": "O",
-    "bb-vsb::86s": "O",
-    "bb-vsb::75s": "O",
-    "bb-vsb::65s": "O",
-    "bb-vsb::54s": "O",
-    "bb-vsb::22": "O",
-    "bb-vsb::33": "O",
-    "bb-vsb::44": "O",
-    "bb-vsb::65o": "O",
-    "bb-vsb::76o": "O",
-    "bb-vsb::87o": "O",
-    "bb-vsb::98o": "O",
-    "bb-vsb::T9o": "O",
-    "bb-vsb::J9o": "O",
-    "bb-vsb::J3s": "W",
-    "bb-vsb::J2s": "W",
-    "bb-vsb::T2s": "W",
-    "bb-vsb::T3s": "W",
-    "bb-vsb::T4s": "W",
-    "bb-vsb::T5s": "W",
-    "bb-vsb::94s": "W",
-    "bb-vsb::84s": "O",
-    "bb-vsb::93s": "W",
-    "bb-vsb::83s": "W",
-    "bb-vsb::92s": "W",
-    "bb-vsb::82s": "W",
-    "bb-vsb::73s": "O",
-    "bb-vsb::72s": "W",
-    "bb-vsb::62s": "W",
-    "bb-vsb::52s": "W",
-    "bb-vsb::42s": "W",
-    "bb-vsb::32s": "W",
-    "bb-vsb::43o": "W",
-    "bb-vsb::54o": "W",
-    "bb-vsb::64o": "W",
-    "bb-vsb::74o": "",
-    "bb-vsb::75o": "W",
-    "bb-vsb::85o": "W",
-    "bb-vsb::86o": "W",
-    "bb-vsb::96o": "W",
-    "bb-vsb::97o": "W",
-    "bb-vsb::T7o": "W",
-    "bb-vsb::T8o": "O",
-    "bb-vsb::J8o": "O",
-    "bb-vsb::J7o": "W",
-    "bb-vsb::Q8o": "O",
-    "bb-vsb::Q7o": "W",
-    "bb-vsb::K8o": "O",
-    "bb-vsb::K7o": "W",
-    "bb-vsb::K6o": "W",
-    "bb-vsb::K5o": "W",
-    "bb-vsb::K4o": "W",
-    "bb-vsb::K3o": "W",
-    "bb-vsb::K2o": "W",
-    "bb-vsb::A2o": "O",
-    "bb-vsb::Q2s": "O",
-    "bb-vsb::88": "O",
-    "bb-vsb::98s": "T",
-    "bb-vsb::T9s": "T",
-    "bb-vsb::KQo": "T",
-    "bb-vsb::AJo": "T",
-    "bb-vsb::Q6o": "W",
-    "bb-vsb::J6o": "W",
-    "bb-vsb::T6o": "W",
-    "bb-vsb::Q5o": "W",
-    "bb-vsb::Q4o": "W",
-    "bb-vsb::Q3o": "W",
-    "bb-vsb::Q2o": "W",
-    "bb-vsb::53o": "W",
-    "bb-vsb::32o": "W",
-    "bb-vsb::J4s": "W",
-    "co-open::J5o": "",
-    "co-open::T5o": "",
-    "co-open::94o": "",
-    "co-open::T4o": "",
-    "co-open::95o": "",
-    "co-open::J4o": "",
-    "co-open::T3o": "",
-    "co-open::J3o": "",
-    "co-open::93o": ""
-  },
-  "actions": [
-    {
-      "code": "",
-      "label": "FOLD",
-      "bg": "#181c22",
-      "text": "#4a5260",
-      "border": "#1e2430"
-    },
-    {
-      "code": "O",
-      "label": "OPEN",
-      "bg": "#1c5935",
-      "text": "#ffffff",
-      "border": "#1c5935"
-    },
-    {
-      "code": "C",
-      "label": "OPEN / CALL 3BET",
-      "bg": "#9c3816",
-      "text": "#ffffff",
-      "border": "#9c3816"
-    },
-    {
-      "code": "F",
-      "label": "4BET",
-      "bg": "#7f1d1d",
-      "text": "#ffffff",
-      "border": "#991b1b"
-    },
-    {
-      "code": "T",
-      "label": "3BET",
-      "bg": "#975912",
-      "text": "#ffffff",
-      "border": "#975912"
-    },
-    {
-      "code": "V",
-      "label": "5BET",
-      "bg": "#610000",
-      "text": "#ffffff",
-      "border": "#610000"
-    },
-    {
-      "code": "A",
-      "label": "CALL",
-      "bg": "#14532d",
-      "text": "#ffffff",
-      "border": "#166534"
-    },
-    {
-      "code": "W",
-      "label": "CALL 2x & 2.5x",
-      "bg": "#648e33",
-      "text": "#ffffff",
-      "border": "#648e33"
-    }
-  ],
-  "version": 2
-};
-
-// ════════════════════════════════
-// CATEGORIES
-// ════════════════════════════════
-const DEFAULT_CATS = [
-  {id:'6max-cash', name:'6-MAX CASH GAME', icon:'♠'},
-  {id:'mtt', name:'MTT', icon:'🏆'},
-  {id:'hu', name:'HEADS-UP', icon:'⚔️'},
-];
-let categories = JSON.parse(localStorage.getItem('rm_cats')||'null') || DEFAULT_CATS;
-let activeCategory = localStorage.getItem('rm_active_cat') || '6max-cash';
-
-function buildCatBar(){
-  const bar = document.getElementById('cat-bar');
-  bar.innerHTML = '<span class="cat-label">CATÉGORIE :</span>';
-  categories.forEach(cat=>{
-    const chip = document.createElement('div');
-    chip.className = 'cat-chip'+(cat.id===activeCategory?' active':'');
-    chip.textContent = cat.icon+' '+cat.name;
-    chip.addEventListener('click', ()=>switchCat(cat.id));
-    bar.appendChild(chip);
-  });
-  const add = document.createElement('div');
-  add.className='cat-chip-add'; add.textContent='＋ Nouvelle';
-  add.addEventListener('click', addCat);
-  bar.appendChild(add);
-  const nameEl = document.getElementById('header-cat-name');
-  if(nameEl) nameEl.textContent = 'Range Manager · '+(categories.find(c=>c.id===activeCategory)?.name||'');
-}
-
-function switchCat(id){
-  activeCategory = id;
-  localStorage.setItem('rm_active_cat', id);
-  const stored = localStorage.getItem('rm_edits_'+id);
-  edits = stored ? JSON.parse(stored) : (id==='6max-cash' ? {...EMBEDDED_JSON.edits} : {});
-  buildCatBar();
-  buildLegend(); buildPaintBar(); buildCtxItems(); buildPanels();
-  showToast('Catégorie : '+categories.find(c=>c.id===id)?.name);
-}
-
-function addCat(){
-  const name = prompt('Nom de la catégorie (ex: MTT, HU…)');
-  if(!name) return;
-  const icons=['♣','♥','♦','🎯','⚡','🎲'];
-  const id='cat_'+Date.now();
-  categories.push({id, name:name.toUpperCase(), icon:icons[categories.length%icons.length]});
-  localStorage.setItem('rm_cats', JSON.stringify(categories));
-  switchCat(id);
-}
-
-// ════════════════════════════════
-// QUIZ
-// ════════════════════════════════
-const QZ_SC = [
-  {bid:'utg-open', label:'UTG — Open', fn:h=>utg(h)},
-  {bid:'hj-open',  label:'HJ — Open',  fn:h=>hj(h)},
-  {bid:'hj-vu',    label:'HJ — vs UTG',fn:h=>hj(h,'UTG')},
-  {bid:'co-open',  label:'CO — Open',  fn:h=>co(h)},
-  {bid:'co-vuh',   label:'CO — vs UTG/HJ',fn:h=>co(h,'UTG')},
-  {bid:'btn-open', label:'BTN — Open', fn:h=>btn(h)},
-  {bid:'btn-vuh',  label:'BTN — vs UTG/HJ',fn:h=>btn(h,'UTG')},
-  {bid:'btn-vco',  label:'BTN — vs CO',fn:h=>btn(h,'CO')},
-  {bid:'sb-open',  label:'SB — Open',  fn:h=>sb(h)},
-  {bid:'sb-vuh',   label:'SB — vs UTG/HJ',fn:h=>sb(h,'UTG')},
-  {bid:'sb-vco',   label:'SB — vs CO',fn:h=>sb(h,'CO')},
-  {bid:'sb-vbt',   label:'SB — vs BTN',fn:h=>sb(h,'BTN')},
-  {bid:'bb-vuh',   label:'BB — vs UTG/HJ',fn:h=>bb(h,'UTG')},
-  {bid:'bb-vco',   label:'BB — vs CO',fn:h=>bb(h,'CO')},
-  {bid:'bb-vbt',   label:'BB — vs BTN',fn:h=>bb(h,'BTN')},
-  {bid:'bb-vsb',   label:'BB — vs SB', fn:h=>bb(h,'SB')},
-];
-let qQ=[], qIdx=0, qOk=0, qKo=0, qStreak=0, qTotal=0, qAnswered=false;
-let qPos='all', qSit='all', qHand='border';
-
-function qfPos(el){ document.querySelectorAll('[data-qf="pos"]').forEach(e=>e.classList.remove('on')); el.classList.add('on'); qPos=el.dataset.val; }
-function qfSit(el){ document.querySelectorAll('[data-qf="sit"]').forEach(e=>e.classList.remove('on')); el.classList.add('on'); qSit=el.dataset.val; }
-function qfHand(el){ document.querySelectorAll('[data-qf="hand"]').forEach(e=>e.classList.remove('on')); el.classList.add('on'); qHand=el.dataset.val; }
-
-function openQuiz(){ document.getElementById('quiz-overlay').classList.add('open'); showQuizConfig(); }
-function closeQuiz(){ document.getElementById('quiz-overlay').classList.remove('open'); }
-function showQuizConfig(){
-  document.getElementById('quiz-config-screen').style.display='';
-  document.getElementById('quiz-play-screen').style.display='none';
-  document.getElementById('quiz-result-screen').classList.remove('open');
-}
-
-function startQuiz(){
-  let scs = QZ_SC;
-  if(qPos!=='all') scs = scs.filter(s=>s.bid.startsWith(qPos));
-  if(qSit==='open') scs = scs.filter(s=>s.bid.includes('-open'));
-  if(qSit==='vs') scs = scs.filter(s=>!s.bid.includes('-open'));
-  if(!scs.length) scs = QZ_SC;
-
-  const allHands=[];
-  for(let i=0;i<13;i++) for(let j=0;j<13;j++) allHands.push(hl(i,j));
-
-  let pairs=[];
-  scs.forEach(sc=>{
-    allHands.forEach(h=>{
-      const k=sc.bid+'::'+h;
-      const code = k in edits ? edits[k] : sc.fn(h);
-      if(qHand==='border'){
-        // borderline = mains qui ont été modifiées ou qui ont une action non-vide
-        const modified = k in edits;
-        const nonEmpty = code !== '';
-        if(modified || nonEmpty) pairs.push({sc,h,code});
-      } else {
-        pairs.push({sc,h,code});
-      }
-    });
-  });
-
-  // Fallback if too few
-  if(pairs.length < 10){
-    pairs=[];
-    scs.forEach(sc=>allHands.forEach(h=>{
-      const k=sc.bid+'::'+h; const code=k in edits?edits[k]:sc.fn(h);
-      pairs.push({sc,h,code});
-    }));
-  }
-
-  // Shuffle
-  for(let i=pairs.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pairs[i],pairs[j]]=[pairs[j],pairs[i]]; }
-  qQ=pairs.slice(0,30); qTotal=qQ.length; qIdx=0; qOk=0; qKo=0; qStreak=0;
-
-  document.getElementById('quiz-config-screen').style.display='none';
-  document.getElementById('quiz-result-screen').classList.remove('open');
-  document.getElementById('quiz-play-screen').style.display='flex';
-  updateQStats(); showQHand();
-}
-
-function showQHand(){
-  if(qIdx>=qQ.length){ endQuiz(); return; }
-  qAnswered=false;
-  const {sc,h}=qQ[qIdx];
-  document.getElementById('qz-sc').textContent=sc.label;
-  const hEl=document.getElementById('qz-hand');
-  hEl.textContent=h; hEl.className='quiz-hand-display';
-  document.getElementById('qz-fb').textContent=''; document.getElementById('qz-fb').className='quiz-feedback';
-  document.getElementById('qz-next').style.opacity='0.3';
-  document.getElementById('qz-prog').style.width=(qIdx/qTotal*100)+'%';
-
-  // Build buttons — detect relevant actions for scenario
-  const btns=document.getElementById('qz-btns'); btns.innerHTML='';
-  let relevantCodes;
-  if(sc.bid.includes('-open')) relevantCodes=['','O','C','F'];
-  else if(sc.bid.startsWith('bb-')) relevantCodes=['','A','W','T','V'];
-  else relevantCodes=['','T','V'];
-
-  const acts = ACTIONS.filter(a=>relevantCodes.includes(a.code));
-  // ensure correct answer is in buttons
-  const k=sc.bid+'::'+h; const correct=k in edits?edits[k]:sc.fn(h);
-  const hasCorrect = acts.some(a=>a.code===correct);
-  const finalActs = hasCorrect ? acts : [...acts, getAction(correct)];
-
-  finalActs.forEach(a=>{
-    const b=document.createElement('div'); b.className='quiz-btn';
-    b.style.background=a.bg; b.style.borderColor=a.border||a.bg; b.style.color=a.text;
-    b.textContent=a.label; b.dataset.code=a.code;
-    b.addEventListener('click',()=>answerQ(a.code,sc,h));
-    btns.appendChild(b);
-  });
-}
-
-function answerQ(chosen,sc,h){
-  if(qAnswered)return; qAnswered=true;
-  const k=sc.bid+'::'+h; const correct=k in edits?edits[k]:sc.fn(h);
-  const ok=chosen===correct;
-  const hEl=document.getElementById('qz-hand'); const fb=document.getElementById('qz-fb');
-  if(ok){ qOk++; qStreak++; hEl.classList.add('flash-correct'); fb.textContent='✓ Correct !'; fb.className='quiz-feedback ok'; }
-  else { qKo++; qStreak=0; hEl.classList.add('flash-wrong'); fb.textContent='✗  Correct : '+getAction(correct).label; fb.className='quiz-feedback ko'; }
-  document.querySelectorAll('.quiz-btn').forEach(b=>{
-    if(b.dataset.code===correct) b.classList.add('correct-flash');
-    else if(b.dataset.code===chosen&&!ok) b.classList.add('wrong-flash');
-  });
-  qIdx++; updateQStats(); document.getElementById('qz-next').style.opacity='1';
-}
-
-function nextQ(){ if(!qAnswered&&qIdx<qQ.length){answerQ('__skip__',qQ[qIdx].sc,qQ[qIdx].h);return;} showQHand(); }
-function updateQStats(){ document.getElementById('qz-ok').textContent=qOk; document.getElementById('qz-ko').textContent=qKo; document.getElementById('qz-streak').textContent=qStreak; document.getElementById('qz-n').textContent=qIdx+'/'+qTotal; }
-function endQuiz(){
-  document.getElementById('quiz-play-screen').style.display='none';
-  document.getElementById('quiz-result-screen').classList.add('open');
-  const pct=Math.round(qOk/(qOk+qKo||1)*100);
-  document.getElementById('qz-score').textContent=pct+'%';
-  const m=pct>=90?'🔥 Parfait — ranges mémorisées !':pct>=75?'👍 Bon niveau — encore un peu':pct>=60?'📚 Correct — travaille les spots':'💪 À bosser — reviens sur les ranges';
-  document.getElementById('qz-msg').textContent=m;
-}
-
-// ════════════════════════════════
-// IO MODAL
-// ════════════════════════════════
-function openIOModal(){ document.getElementById('io-modal').classList.add('open'); }
-function closeIOModal(){ document.getElementById('io-modal').classList.remove('open'); }
-document.getElementById('io-modal').addEventListener('click',e=>{ if(e.target===document.getElementById('io-modal')) closeIOModal(); });
-
-function exportPio(){
-  const bid=activeTab+'-open'; const fn=blockFns[bid]; if(!fn){showToast('Range open seulement');return;}
-  let out=''; for(let i=0;i<13;i++) for(let j=0;j<13;j++){ const h=hl(i,j),c=getCode(bid,h,fn); if(c)out+=h+':1\n'; }
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'})); a.download=activeTab+'-pio.txt'; a.click(); showToast('PioSolver exporté ✓');
-}
-function exportGTO(){
-  const bid=activeTab+'-open'; const fn=blockFns[bid]; if(!fn){showToast('Range open seulement');return;}
-  let out='// GTO+ — '+activeTab.toUpperCase()+'\n';
-  ACTIONS.filter(a=>a.code).forEach(a=>{ out+='// '+a.label+'\n'; for(let i=0;i<13;i++) for(let j=0;j<13;j++){ const h=hl(i,j),c=getCode(bid,h,fn); if(c===a.code) out+=h+':1\n'; } });
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'})); a.download=activeTab+'-gto.txt'; a.click(); showToast('GTO+ exporté ✓');
-}
-function exportPT(){
-  let csv='hand,action,position\n';
-  ['utg','hj','co','btn','sb'].forEach(pos=>{
-    const bid=pos+'-open'; const fn=blockFns[bid]; if(!fn)return;
-    for(let i=0;i<13;i++) for(let j=0;j<13;j++){ const h=hl(i,j),c=getCode(bid,h,fn); csv+=h+','+getAction(c).label+','+pos.toUpperCase()+'\n'; }
-  });
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='ranges-pt.csv'; a.click(); showToast('PokerTracker CSV exporté ✓');
-}
-function importPioFile(input){
-  const file=input.files[0]; if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{ parsePio(e.target.result); input.value=''; };
-  reader.readAsText(file);
-}
-function importPasteText(){
-  const t=document.getElementById('io-ta').value.trim();
-  if(!t){showToast('Colle du texte d\'abord');return;}
-  parsePio(t); document.getElementById('io-ta').value='';
-}
-function parsePio(text){
-  const bid=document.getElementById('io-pos').value;
-  const code=document.getElementById('io-act').value;
-  let count=0;
-  const allH=new Set(); for(let i=0;i<13;i++) for(let j=0;j<13;j++) allH.add(hl(i,j));
-  text.split('\n').forEach(line=>{
-    line=line.trim(); if(!line||line.startsWith('//'))return;
-    const p=line.split(':'); if(p.length<2)return;
-    const h=p[0].trim(); const freq=parseFloat(p[1]);
-    if(!allH.has(h)||isNaN(freq))return;
-    edits[bid+'::'+h]=freq>=0.5?code:'';
-    count++;
-  });
-  saveEdits(); buildLegend(); buildPaintBar(); buildCtxItems(); buildPanels();
-  showToast(count+' mains importées → '+bid); closeIOModal();
-}
-
 // ════════════════════════════════
 // HAND LABELS
 // ════════════════════════════════
@@ -1739,7 +572,7 @@ const DEFAULT_ACTIONS = [
   { code:'W', label:'CALL (LARGE)', bg:'#365314', text:'#bef264', border:'#4d7c0f' },
 ];
 
-let ACTIONS = JSON.parse(localStorage.getItem('rm_actions') || 'null') || EMBEDDED_JSON.actions || DEFAULT_ACTIONS;
+let ACTIONS = JSON.parse(localStorage.getItem('rm_actions') || 'null') || DEFAULT_ACTIONS;
 
 function saveActions(){ localStorage.setItem('rm_actions', JSON.stringify(ACTIONS)); }
 function getAction(code){ return ACTIONS.find(a=>a.code===code) || ACTIONS[0]; }
@@ -1821,8 +654,8 @@ function bb(h,vs){
 // ════════════════════════════════
 // EDITS STORE (autosave)
 // ════════════════════════════════
-let edits = (()=>{ const k='rm_edits_'+(localStorage.getItem('rm_active_cat')||'6max-cash'); const s=localStorage.getItem(k)||localStorage.getItem('rm_edits'); return s?JSON.parse(s):{...EMBEDDED_JSON.edits}; })();
-function saveEdits(){ localStorage.setItem('rm_edits_'+activeCategory,JSON.stringify(edits)); localStorage.setItem('rm_edits',JSON.stringify(edits)); }
+let edits = JSON.parse(localStorage.getItem('rm_edits') || '{}');
+function saveEdits(){ localStorage.setItem('rm_edits', JSON.stringify(edits)); }
 function getCode(bid,hand,defFn){ const k=bid+'::'+hand; return k in edits?edits[k]:defFn(hand); }
 
 // ════════════════════════════════
@@ -2407,21 +1240,20 @@ function rebuildAll(){
   buildPaintBar();
   buildCtxItems();
   buildPanels();
-  buildCatBar();
 }
 
 // ════════════════════════════════
 // KEYBOARD
 // ════════════════════════════════
 document.addEventListener('keydown', e=>{
-  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.target.tagName==='INPUT') return;
   const order=['utg','hj','co','btn','sb','bb'], idx=order.indexOf(activeTab);
   if(e.key==='ArrowRight'&&idx<5) switchTab(order[idx+1]);
   if(e.key==='ArrowLeft' &&idx>0) switchTab(order[idx-1]);
   if(e.key>='1'&&e.key<='6') switchTab(order[+e.key-1]);
   if(e.key==='e'||e.key==='E') toggleEdit();
   if(e.key==='f'||e.key==='F') autoFit();
-  if(e.key==='q'||e.key==='Q') openQuiz(); if(e.key==='Escape'){ ctxMenu.classList.remove('open'); colorPanel.classList.remove('open'); closeQuiz(); closeIOModal(); if(editMode)toggleEdit(); }
+  if(e.key==='Escape'){ ctxMenu.classList.remove('open'); colorPanel.classList.remove('open'); if(editMode)toggleEdit(); }
   if((e.ctrlKey||e.metaKey)&&e.key==='z'){ e.preventDefault(); if(editMode) undo(); }
 });
 
@@ -2438,211 +1270,1144 @@ window.addEventListener('resize',()=>{ clearTimeout(window._rt); window._rt=setT
 // ════════════════════════════════
 rebuildAll();
 
-
-// ══════════════════════════════════════════
-// MOBILE LOGIC
-// ══════════════════════════════════════════
-const isMobile = () => window.innerWidth <= 768;
-
-// ── Mobile position (maps to desktop tab) ──
-let mActivePos = 'utg';
-let mActiveSit = null; // null = auto (first situation for pos)
-
-// Situations per position
-const M_SITS = {
-  utg:  [{bid:'utg-open', label:'Open'}],
-  hj:   [{bid:'hj-open',  label:'Open'}, {bid:'hj-vu', label:'vs UTG'}],
-  co:   [{bid:'co-open',  label:'Open'}, {bid:'co-vuh',label:'vs UTG/HJ'}],
-  btn:  [{bid:'btn-open', label:'Open'}, {bid:'btn-vuh',label:'vs UTG/HJ'}, {bid:'btn-vco',label:'vs CO'}],
-  sb:   [{bid:'sb-open',  label:'Open'}, {bid:'sb-vuh', label:'vs UTG/HJ'}, {bid:'sb-vco',label:'vs CO'}, {bid:'sb-vbt',label:'vs BTN'}],
-  bb:   [{bid:'bb-vuh',   label:'vs UTG/HJ'}, {bid:'bb-vco',label:'vs CO'}, {bid:'bb-vbt',label:'vs BTN'}, {bid:'bb-vsb',label:'vs SB'}],
+// ══════════════════════════════════════════════════════════
+// EMBEDDED JSON
+// ══════════════════════════════════════════════════════════
+const EMBEDDED_EDITS = {
+  "edits": {
+    "utg-open::K4s": "",
+    "utg-open::K3s": "",
+    "utg-open::Q2s": "",
+    "utg-open::Q3s": "",
+    "utg-open::AQs": "C",
+    "utg-open::QQ": "C",
+    "utg-open::KQo": "O",
+    "utg-open::AQo": "O",
+    "utg-open::KTs": "O",
+    "utg-open::QTs": "O",
+    "utg-open::K9s": "",
+    "utg-open::Q9s": "",
+    "utg-open::J9s": "",
+    "utg-open::T8s": "",
+    "utg-open::97s": "",
+    "utg-open::86s": "",
+    "utg-open::T9s": "O",
+    "utg-open::98s": "O",
+    "utg-open::87s": "O",
+    "utg-open::76s": "O",
+    "utg-open::65s": "",
+    "utg-open::A2s": "C",
+    "utg-open::A3s": "C",
+    "utg-open::A4s": "C",
+    "utg-open::A5s": "C",
+    "utg-open::A6s": "F",
+    "utg-open::A8s": "O",
+    "utg-open::A9s": "O",
+    "hj-open::A9o": "",
+    "hj-open::KTo": "O",
+    "hj-open::QTo": "O",
+    "hj-open::JTo": "",
+    "hj-open::KQo": "O",
+    "hj-open::AQo": "O",
+    "hj-open::AJo": "O",
+    "hj-open::A9s": "O",
+    "hj-open::QQ": "C",
+    "hj-open::JJ": "C",
+    "hj-open::KTs": "O",
+    "hj-open::QTs": "O",
+    "hj-open::K8s": "",
+    "hj-open::Q8s": "",
+    "hj-open::J8s": "",
+    "hj-open::T8s": "",
+    "hj-open::T7s": "",
+    "hj-open::97s": "",
+    "hj-open::96s": "",
+    "hj-open::86s": "",
+    "hj-open::85s": "",
+    "hj-open::75s": "",
+    "hj-open::65s": "",
+    "hj-open::64s": "",
+    "hj-open::54s": "",
+    "hj-open::T9s": "O",
+    "hj-open::J9s": "O",
+    "hj-open::AQs": "C",
+    "hj-open::A3s": "C",
+    "hj-open::A2s": "F",
+    "hj-open::A6s": "F",
+    "hj-vu::KQs": "T",
+    "hj-vu::AJs": "T",
+    "hj-vu::JTs": "T",
+    "hj-vu::T9s": "T",
+    "hj-vu::98s": "T",
+    "hj-vu::A4s": "T",
+    "hj-open::88": "C",
+    "hj-open::98s": "O",
+    "hj-open::87s": "O",
+    "hj-open::76s": "O",
+    "co-open::K7s": "",
+    "co-open::Q7s": "",
+    "co-open::J7s": "",
+    "co-open::T7s": "",
+    "co-open::T6s": "",
+    "co-open::96s": "",
+    "co-open::95s": "",
+    "co-open::85s": "",
+    "co-open::84s": "",
+    "co-open::74s": "",
+    "co-open::64s": "",
+    "co-open::63s": "",
+    "co-open::53s": "",
+    "co-open::54s": "",
+    "co-open::43s": "",
+    "co-open::A5o": "O",
+    "co-open::ATo": "O",
+    "co-open::AJo": "O",
+    "co-open::KQo": "O",
+    "co-open::KJo": "O",
+    "co-open::QJo": "O",
+    "co-open::JJ": "C",
+    "co-open::AQo": "C",
+    "co-open::AQs": "C",
+    "co-open::A8s": "C",
+    "co-open::A6s": "F",
+    "co-open::A7s": "F",
+    "co-open::A9s": "C",
+    "co-open::A2s": "F",
+    "co-open::K9s": "O",
+    "co-open::Q9s": "O",
+    "co-open::J9s": "O",
+    "co-open::J8s": "O",
+    "co-open::T8s": "O",
+    "co-open::QTs": "O",
+    "co-open::97s": "O",
+    "co-open::86s": "O",
+    "co-open::75s": "O",
+    "co-open::76s": "O",
+    "co-open::65s": "O",
+    "co-open::77": "C",
+    "co-open::T9o": "",
+    "co-vuh::QQ": "V",
+    "co-vuh::JTs": "T",
+    "co-vuh::T9s": "T",
+    "co-vuh::98s": "T",
+    "co-vuh::KQs": "T",
+    "co-vuh::AJs": "T",
+    "btn-open::Q6s": "O",
+    "btn-open::J6s": "O",
+    "btn-open::52s": "",
+    "btn-open::42s": "",
+    "btn-open::32s": "",
+    "btn-open::KJo": "O",
+    "btn-open::QJo": "O",
+    "btn-open::QTo": "O",
+    "btn-open::KTo": "O",
+    "btn-open::JTo": "O",
+    "btn-open::ATo": "O",
+    "btn-open::A9o": "O",
+    "btn-open::J8o": "O",
+    "btn-open::Q8o": "O",
+    "btn-open::K8o": "O",
+    "btn-open::K7o": "O",
+    "btn-open::A4o": "O",
+    "btn-open::A3o": "O",
+    "btn-open::A2o": "O",
+    "btn-open::76o": "O",
+    "btn-open::65o": "O",
+    "btn-open::53s": "O",
+    "btn-open::54s": "O",
+    "btn-open::64s": "O",
+    "btn-open::66": "C",
+    "btn-open::75s": "O",
+    "btn-open::74s": "O",
+    "btn-open::85s": "O",
+    "btn-open::86s": "O",
+    "btn-open::96s": "O",
+    "btn-open::97s": "O",
+    "btn-open::T7s": "O",
+    "btn-open::T8s": "O",
+    "btn-open::Q7s": "O",
+    "btn-open::J8s": "O",
+    "btn-open::Q8s": "O",
+    "btn-open::K8s": "O",
+    "btn-open::K4s": "O",
+    "btn-open::K3s": "O",
+    "btn-open::K2s": "O",
+    "btn-open::Q5s": "O",
+    "btn-open::Q4s": "O",
+    "btn-open::Q3s": "O",
+    "btn-open::Q2s": "O",
+    "btn-open::J5s": "O",
+    "btn-open::T5s": "",
+    "btn-open::94s": "",
+    "btn-vuh::QQ": "V",
+    "btn-vuh::KQs": "T",
+    "btn-vuh::AJs": "T",
+    "btn-vuh::ATs": "T",
+    "btn-vuh::A3s": "T",
+    "btn-vuh::A5s": "V",
+    "btn-vuh::JTs": "T",
+    "btn-vuh::TT": "",
+    "btn-vuh::T9s": "T",
+    "btn-vuh::98s": "T",
+    "btn-vuh::87s": "T",
+    "btn-vco::K9s": "",
+    "btn-vco::Q9s": "",
+    "btn-vco::J8s": "",
+    "btn-vco::T7s": "",
+    "btn-vco::96s": "",
+    "btn-vco::T8s": "",
+    "btn-vco::97s": "",
+    "btn-vco::86s": "",
+    "btn-vco::75s": "",
+    "btn-vco::65s": "",
+    "btn-vco::54s": "",
+    "btn-vco::ATs": "T",
+    "btn-vco::A9s": "T",
+    "btn-vco::KJs": "T",
+    "btn-vco::KQo": "T",
+    "btn-vco::T9s": "T",
+    "btn-vco::98s": "T",
+    "btn-vco::87s": "T",
+    "btn-vco::76s": "T",
+    "btn-vco::A5s": "V",
+    "btn-vco::JJ": "V",
+    "sb-open::63s": "O",
+    "sb-open::43s": "O",
+    "sb-open::K8o": "O",
+    "sb-open::A5o": "O",
+    "sb-open::A4o": "O",
+    "sb-open::A3o": "O",
+    "sb-open::A2o": "O",
+    "sb-open::AQs": "C",
+    "sb-open::T8s": "O",
+    "sb-open::97s": "O",
+    "sb-open::77": "C",
+    "sb-open::A5s": "F",
+    "sb-open::A4s": "F",
+    "sb-open::A3s": "F",
+    "sb-open::A2s": "F",
+    "sb-open::K5s": "O",
+    "sb-open::Q6s": "O",
+    "sb-open::Q4s": "O",
+    "sb-open::Q5s": "O",
+    "sb-open::K4s": "O",
+    "sb-open::K3s": "O",
+    "sb-open::Q3s": "O",
+    "sb-open::Q2s": "O",
+    "sb-open::K2s": "O",
+    "sb-open::J5s": "O",
+    "sb-open::J6s": "O",
+    "sb-open::95s": "",
+    "sb-open::87o": "O",
+    "sb-open::98o": "O",
+    "sb-vuh::QQ": "V",
+    "sb-vuh::KQs": "T",
+    "sb-vuh::KJs": "T",
+    "sb-vuh::QJs": "T",
+    "sb-vuh::AJs": "T",
+    "sb-vuh::ATs": "T",
+    "sb-vuh::JTs": "T",
+    "sb-vuh::T9s": "T",
+    "sb-vco::KJs": "T",
+    "sb-vco::KTs": "T",
+    "sb-vco::ATs": "T",
+    "sb-vco::QQ": "V",
+    "sb-vco::AQo": "T",
+    "sb-vco::T8s": "",
+    "sb-vco::97s": "",
+    "sb-vco::86s": "",
+    "sb-vco::75s": "",
+    "sb-vco::64s": "",
+    "sb-vco::53s": "",
+    "sb-vco::T9s": "T",
+    "sb-vco::99": "T",
+    "sb-vbt::QQ": "V",
+    "sb-vbt::KTs": "T",
+    "sb-vbt::A9s": "T",
+    "sb-vbt::K9s": "",
+    "sb-vbt::Q9s": "",
+    "sb-vbt::J8s": "",
+    "sb-vbt::T8s": "",
+    "sb-vbt::T7s": "",
+    "sb-vbt::97s": "",
+    "sb-vbt::96s": "",
+    "sb-vbt::86s": "",
+    "sb-vbt::75s": "",
+    "sb-vbt::65s": "",
+    "sb-vbt::54s": "",
+    "sb-vbt::A2s": "",
+    "sb-vbt::T9s": "T",
+    "sb-vbt::98s": "T",
+    "sb-vbt::88": "T",
+    "sb-vbt::87s": "T",
+    "bb-vuh::A4s": "O",
+    "bb-vuh::K7s": "O",
+    "bb-vuh::K2s": "W",
+    "bb-vuh::K3s": "W",
+    "bb-vuh::K4s": "W",
+    "bb-vuh::K5s": "W",
+    "bb-vuh::K6s": "W",
+    "bb-vuh::Q6s": "W",
+    "bb-vuh::Q5s": "W",
+    "bb-vuh::Q7s": "W",
+    "bb-vuh::J7s": "W",
+    "bb-vuh::T7s": "W",
+    "bb-vuh::96s": "W",
+    "bb-vuh::85s": "W",
+    "bb-vuh::74s": "W",
+    "bb-vuh::63s": "W",
+    "bb-vuh::53s": "W",
+    "bb-vuh::43s": "W",
+    "bb-vuh::32s": "W",
+    "bb-vuh::A9o": "W",
+    "bb-vuh::A8o": "W",
+    "bb-vuh::KTo": "W",
+    "bb-vuh::QTo": "W",
+    "bb-vuh::JTo": "W",
+    "bb-vuh::T9o": "W",
+    "bb-vuh::44": "O",
+    "bb-vuh::33": "O",
+    "bb-vuh::22": "O",
+    "bb-vco::ATs": "T",
+    "bb-vco::KJs": "T",
+    "bb-vco::KQo": "T",
+    "bb-vco::QJs": "O",
+    "bb-vco::T9s": "T",
+    "bb-vco::98s": "O",
+    "bb-vco::A4s": "O",
+    "bb-vco::A3s": "O",
+    "bb-vco::K4s": "O",
+    "bb-vco::K2s": "O",
+    "bb-vco::K3s": "O",
+    "bb-vco::Q5s": "O",
+    "bb-vco::22": "O",
+    "bb-vco::33": "O",
+    "bb-vco::44": "O",
+    "bb-vco::A2o": "W",
+    "bb-vco::A3o": "W",
+    "bb-vco::A4o": "W",
+    "bb-vco::K5o": "W",
+    "bb-vco::K6o": "W",
+    "bb-vco::K7o": "W",
+    "bb-vco::K8o": "W",
+    "bb-vco::J8o": "W",
+    "bb-vco::Q8o": "W",
+    "bb-vco::T8o": "W",
+    "bb-vco::97o": "W",
+    "bb-vco::T7o": "",
+    "bb-vco::87o": "W",
+    "bb-vco::86o": "W",
+    "bb-vco::76o": "W",
+    "bb-vco::75o": "W",
+    "bb-vco::65o": "W",
+    "bb-vco::64o": "W",
+    "bb-vco::54o": "W",
+    "bb-vco::43o": "W",
+    "bb-vco::32s": "W",
+    "bb-vco::42s": "W",
+    "bb-vco::52s": "W",
+    "bb-vco::62s": "W",
+    "bb-vco::72s": "W",
+    "bb-vco::82s": "W",
+    "bb-vco::92s": "W",
+    "bb-vco::T2s": "W",
+    "bb-vco::J2s": "W",
+    "bb-vco::Q2s": "W",
+    "bb-vco::Q3s": "W",
+    "bb-vco::Q4s": "W",
+    "bb-vco::J5s": "W",
+    "bb-vco::J6s": "W",
+    "bb-vco::T6s": "W",
+    "bb-vco::T5s": "W",
+    "bb-vco::95s": "W",
+    "bb-vco::84s": "W",
+    "bb-vco::73s": "W",
+    "bb-vco::83s": "W",
+    "bb-vco::93s": "W",
+    "bb-vco::94s": "W",
+    "bb-vco::T4s": "W",
+    "bb-vco::T3s": "W",
+    "bb-vco::J3s": "W",
+    "bb-vco::J4s": "W",
+    "bb-vco::A5o": "O",
+    "bb-vco::A6o": "O",
+    "bb-vco::J9o": "O",
+    "bb-vco::T9o": "O",
+    "bb-vco::98o": "O",
+    "bb-vbt::K7o": "W",
+    "bb-vbt::Q7o": "W",
+    "bb-vbt::Q6o": "",
+    "bb-vbt::K6o": "W",
+    "bb-vbt::Q5o": "",
+    "bb-vbt::K5o": "W",
+    "bb-vbt::K4o": "W",
+    "bb-vbt::Q4o": "",
+    "bb-vbt::Q3o": "",
+    "bb-vbt::K3o": "W",
+    "bb-vbt::K2o": "W",
+    "bb-vbt::Q2o": "",
+    "bb-vbt::J7o": "W",
+    "bb-vbt::J6o": "",
+    "bb-vbt::T7o": "W",
+    "bb-vbt::T6o": "",
+    "bb-vbt::97o": "W",
+    "bb-vbt::96o": "W",
+    "bb-vbt::86o": "W",
+    "bb-vbt::85o": "W",
+    "bb-vbt::75o": "W",
+    "bb-vbt::54o": "W",
+    "bb-vbt::64o": "W",
+    "bb-vbt::53o": "",
+    "bb-vbt::43o": "W",
+    "bb-vbt::32o": "",
+    "bb-vbt::32s": "W",
+    "bb-vbt::42s": "W",
+    "bb-vbt::52s": "W",
+    "bb-vbt::62s": "W",
+    "bb-vbt::72s": "W",
+    "bb-vbt::82s": "W",
+    "bb-vbt::83s": "W",
+    "bb-vbt::93s": "W",
+    "bb-vbt::94s": "W",
+    "bb-vbt::T4s": "W",
+    "bb-vbt::T5s": "W",
+    "bb-vbt::J4s": "O",
+    "bb-vbt::J3s": "W",
+    "bb-vbt::J2s": "W",
+    "bb-vbt::T2s": "W",
+    "bb-vbt::T3s": "W",
+    "bb-vbt::92s": "W",
+    "bb-vbt::74o": "W",
+    "bb-vbt::22": "O",
+    "bb-vbt::33": "O",
+    "bb-vbt::44": "O",
+    "bb-vbt::A2o": "O",
+    "bb-vbt::J9o": "O",
+    "bb-vbt::T9o": "O",
+    "bb-vbt::88": "O",
+    "bb-vbt::98o": "O",
+    "bb-vbt::87o": "O",
+    "bb-vbt::76o": "O",
+    "bb-vbt::65o": "O",
+    "bb-vbt::K8o": "W",
+    "bb-vbt::Q8o": "W",
+    "bb-vbt::J8o": "W",
+    "bb-vbt::T8o": "W",
+    "bb-vbt::54s": "O",
+    "bb-vbt::65s": "O",
+    "bb-vbt::75s": "O",
+    "bb-vbt::86s": "O",
+    "bb-vbt::97s": "O",
+    "bb-vbt::T8s": "O",
+    "bb-vbt::J8s": "O",
+    "bb-vbt::Q9s": "O",
+    "bb-vbt::A3s": "O",
+    "bb-vbt::A2s": "O",
+    "bb-vbt::Q2s": "O",
+    "bb-vbt::KTs": "T",
+    "bb-vbt::AJo": "T",
+    "bb-vbt::KQo": "T",
+    "bb-vbt::T9s": "T",
+    "bb-vbt::98s": "T",
+    "bb-vsb::A3s": "O",
+    "bb-vsb::A2s": "O",
+    "bb-vsb::A9s": "O",
+    "bb-vsb::Q9s": "O",
+    "bb-vsb::J9s": "O",
+    "bb-vsb::J8s": "O",
+    "bb-vsb::T8s": "O",
+    "bb-vsb::T7s": "O",
+    "bb-vsb::97s": "O",
+    "bb-vsb::96s": "O",
+    "bb-vsb::86s": "O",
+    "bb-vsb::75s": "O",
+    "bb-vsb::65s": "O",
+    "bb-vsb::54s": "O",
+    "bb-vsb::22": "O",
+    "bb-vsb::33": "O",
+    "bb-vsb::44": "O",
+    "bb-vsb::65o": "O",
+    "bb-vsb::76o": "O",
+    "bb-vsb::87o": "O",
+    "bb-vsb::98o": "O",
+    "bb-vsb::T9o": "O",
+    "bb-vsb::J9o": "O",
+    "bb-vsb::J3s": "W",
+    "bb-vsb::J2s": "W",
+    "bb-vsb::T2s": "W",
+    "bb-vsb::T3s": "W",
+    "bb-vsb::T4s": "W",
+    "bb-vsb::T5s": "W",
+    "bb-vsb::94s": "W",
+    "bb-vsb::84s": "O",
+    "bb-vsb::93s": "W",
+    "bb-vsb::83s": "W",
+    "bb-vsb::92s": "W",
+    "bb-vsb::82s": "W",
+    "bb-vsb::73s": "O",
+    "bb-vsb::72s": "W",
+    "bb-vsb::62s": "W",
+    "bb-vsb::52s": "W",
+    "bb-vsb::42s": "W",
+    "bb-vsb::32s": "W",
+    "bb-vsb::43o": "W",
+    "bb-vsb::54o": "W",
+    "bb-vsb::64o": "W",
+    "bb-vsb::74o": "",
+    "bb-vsb::75o": "W",
+    "bb-vsb::85o": "W",
+    "bb-vsb::86o": "W",
+    "bb-vsb::96o": "W",
+    "bb-vsb::97o": "W",
+    "bb-vsb::T7o": "W",
+    "bb-vsb::T8o": "O",
+    "bb-vsb::J8o": "O",
+    "bb-vsb::J7o": "W",
+    "bb-vsb::Q8o": "O",
+    "bb-vsb::Q7o": "W",
+    "bb-vsb::K8o": "O",
+    "bb-vsb::K7o": "W",
+    "bb-vsb::K6o": "W",
+    "bb-vsb::K5o": "W",
+    "bb-vsb::K4o": "W",
+    "bb-vsb::K3o": "W",
+    "bb-vsb::K2o": "W",
+    "bb-vsb::A2o": "O",
+    "bb-vsb::Q2s": "O",
+    "bb-vsb::88": "O",
+    "bb-vsb::98s": "T",
+    "bb-vsb::T9s": "T",
+    "bb-vsb::KQo": "T",
+    "bb-vsb::AJo": "T",
+    "bb-vsb::Q6o": "W",
+    "bb-vsb::J6o": "W",
+    "bb-vsb::T6o": "W",
+    "bb-vsb::Q5o": "W",
+    "bb-vsb::Q4o": "W",
+    "bb-vsb::Q3o": "W",
+    "bb-vsb::Q2o": "W",
+    "bb-vsb::53o": "W",
+    "bb-vsb::32o": "W",
+    "bb-vsb::J4s": "W",
+    "co-open::J5o": "",
+    "co-open::T5o": "",
+    "co-open::94o": "",
+    "co-open::T4o": "",
+    "co-open::95o": "",
+    "co-open::J4o": "",
+    "co-open::T3o": "",
+    "co-open::J3o": "",
+    "co-open::93o": ""
+  },
+  "_actions": [
+    {
+      "code": "",
+      "label": "FOLD",
+      "bg": "#181c22",
+      "text": "#4a5260",
+      "border": "#1e2430"
+    },
+    {
+      "code": "O",
+      "label": "OPEN",
+      "bg": "#1c5935",
+      "text": "#ffffff",
+      "border": "#1c5935"
+    },
+    {
+      "code": "C",
+      "label": "OPEN / CALL 3BET",
+      "bg": "#9c3816",
+      "text": "#ffffff",
+      "border": "#9c3816"
+    },
+    {
+      "code": "F",
+      "label": "4BET",
+      "bg": "#7f1d1d",
+      "text": "#ffffff",
+      "border": "#991b1b"
+    },
+    {
+      "code": "T",
+      "label": "3BET",
+      "bg": "#975912",
+      "text": "#ffffff",
+      "border": "#975912"
+    },
+    {
+      "code": "V",
+      "label": "5BET",
+      "bg": "#610000",
+      "text": "#ffffff",
+      "border": "#610000"
+    },
+    {
+      "code": "A",
+      "label": "CALL",
+      "bg": "#14532d",
+      "text": "#ffffff",
+      "border": "#166534"
+    },
+    {
+      "code": "W",
+      "label": "CALL 2x & 2.5x",
+      "bg": "#648e33",
+      "text": "#ffffff",
+      "border": "#648e33"
+    }
+  ],
+  "version": 2
 };
 
-function mSwitchPos(pos) {
-  if (!isMobile()) return;
-  mActivePos = pos;
-  mActiveSit = M_SITS[pos][0].bid; // default to first situation
-  // sync desktop tab
-  switchTab(pos);
-  // update mobile pos bar
-  document.querySelectorAll('.mpos-btn').forEach(b => b.classList.toggle('active', b.dataset.pos === pos));
-  // update sit bar
-  mBuildSitBar();
-  // scroll main to top
-  document.getElementById('main').scrollTop = 0;
-}
+// ══════════════════════════════════════════════════════════
+// CATEGORIES
+// ══════════════════════════════════════════════════════════
+const DEFAULT_CATS = [
+  {id:'6max-cash', name:'6-MAX CASH GAME', icon:'♠'},
+  {id:'mtt',       name:'MTT',             icon:'🏆'},
+  {id:'hu',        name:'HEADS-UP',        icon:'⚔️'},
+];
+let _categories = JSON.parse(localStorage.getItem('rm_cats')||'null') || DEFAULT_CATS;
+let _activeCat   = localStorage.getItem('rm_active_cat') || '6max-cash';
 
-function mSwitchSit(bid) {
-  if (!isMobile()) return;
-  mActiveSit = bid;
-  document.querySelectorAll('.msit-chip').forEach(c => c.classList.toggle('active', c.dataset.bid === bid));
-  // Show only the relevant block, hide others in this panel
-  const panel = document.getElementById('pnl-' + mActivePos);
-  if (!panel) return;
-  panel.querySelectorAll('.range-block').forEach(blk => {
-    blk.style.display = (!bid || blk.dataset.bid === bid) ? '' : 'none';
-  });
+function _saveEdits2(){
+  localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
+  localStorage.setItem('rm_edits', JSON.stringify(edits));
 }
+// Monkey-patch saveEdits
+const _origSaveEdits = saveEdits;
+saveEdits = function(){ _origSaveEdits(); _saveEdits2(); };
 
-function mBuildSitBar() {
-  const bar = document.getElementById('mobile-sit-bar');
-  bar.innerHTML = '';
-  const sits = M_SITS[mActivePos] || [];
-  if (sits.length <= 1) { bar.style.display = 'none'; return; }
-  bar.style.display = 'flex';
-  sits.forEach(s => {
+// Load correct edits on startup
+(function(){
+  const stored = localStorage.getItem('rm_edits_'+_activeCat) || localStorage.getItem('rm_edits');
+  if(stored){ edits = JSON.parse(stored); }
+  else if(EMBEDDED_EDITS && EMBEDDED_EDITS.edits){ edits = {...EMBEDDED_EDITS.edits}; }
+  // Also load embedded actions if nothing saved
+  if(!localStorage.getItem('rm_actions') && EMBEDDED_EDITS && EMBEDDED_EDITS._actions){
+    ACTIONS = EMBEDDED_EDITS._actions;
+  }
+})();
+
+function buildCatBar(){
+  const bar = document.getElementById('cat-bar');
+  if(!bar) return;
+  bar.innerHTML = '<span class="cat-label">CATÉGORIE :</span>';
+  _categories.forEach(cat=>{
     const chip = document.createElement('div');
-    chip.className = 'msit-chip' + (s.bid === mActiveSit ? ' active' : '');
-    chip.dataset.bid = s.bid;
-    chip.textContent = s.label;
-    chip.addEventListener('click', () => mSwitchSit(s.bid));
+    chip.className = 'cat-chip'+(cat.id===_activeCat?' active':'');
+    chip.textContent = cat.icon+' '+cat.name;
+    chip.addEventListener('click', ()=>_switchCat(cat.id));
     bar.appendChild(chip);
   });
-  // Apply filter
-  mSwitchSit(mActiveSit);
+  const add = document.createElement('div');
+  add.className='cat-chip-add'; add.textContent='＋ Nouvelle';
+  add.addEventListener('click', _addCat);
+  bar.appendChild(add);
+  const nm = document.getElementById('header-cat-name');
+  if(nm) nm.textContent='Range Manager · '+(_categories.find(c=>c.id===_activeCat)||{}).name;
 }
 
-function mBuildLegend() {
-  const leg = document.getElementById('mobile-legend');
-  leg.innerHTML = '';
-  ACTIONS.forEach(a => {
-    if (!a.code && a.label === 'FOLD') return;
-    const item = document.createElement('div'); item.className = 'mleg-item';
-    const dot = document.createElement('div'); dot.className = 'mleg-dot';
-    dot.style.background = a.bg;
-    item.appendChild(dot);
-    item.appendChild(document.createTextNode(a.label));
-    leg.appendChild(item);
-  });
-  // Fold
-  const fItem = document.createElement('div'); fItem.className = 'mleg-item';
-  const fDot = document.createElement('div'); fDot.className = 'mleg-dot';
-  fDot.style.background = 'var(--surface2)'; fDot.style.border = '1px solid var(--border)';
-  fItem.appendChild(fDot); fItem.appendChild(document.createTextNode('Fold'));
-  leg.appendChild(fItem);
+function _switchCat(id){
+  _activeCat = id;
+  localStorage.setItem('rm_active_cat', id);
+  const stored = localStorage.getItem('rm_edits_'+id);
+  edits = stored ? JSON.parse(stored) : (id==='6max-cash' && EMBEDDED_EDITS ? {...EMBEDDED_EDITS.edits} : {});
+  buildCatBar();
+  buildLegend(); buildPaintBar(); buildCtxItems(); buildPanels();
+  showToast('Catégorie : '+(_categories.find(c=>c.id===id)||{}).name);
 }
 
-// ── Bottom nav ──
-let mCurrentView = 'ranges';
+function _addCat(){
+  const name = prompt('Nom de la catégorie');
+  if(!name) return;
+  const icons=['♣','♥','♦','🎯','⚡','🎲'];
+  const id = 'cat_'+Date.now();
+  _categories.push({id, name:name.toUpperCase(), icon:icons[_categories.length%icons.length]});
+  localStorage.setItem('rm_cats', JSON.stringify(_categories));
+  _switchCat(id);
+}
 
-function mNavSwitch(view) {
-  if (!isMobile()) return;
-  mCurrentView = view;
-  document.querySelectorAll('.mnav-btn').forEach(b => {
-    b.classList.toggle('active', b.id === 'mnav-' + view);
+// ══════════════════════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════════════════════
+const QZ_SCENARIOS = [
+  {bid:'utg-open', label:'UTG — Open',      fn:h=>utg(h)},
+  {bid:'hj-open',  label:'HJ — Open',       fn:h=>hj(h)},
+  {bid:'hj-vu',    label:'HJ — vs UTG',     fn:h=>hj(h,'UTG')},
+  {bid:'co-open',  label:'CO — Open',       fn:h=>co(h)},
+  {bid:'co-vuh',   label:'CO — vs UTG/HJ',  fn:h=>co(h,'UTG')},
+  {bid:'btn-open', label:'BTN — Open',      fn:h=>btn(h)},
+  {bid:'btn-vuh',  label:'BTN — vs UTG/HJ', fn:h=>btn(h,'UTG')},
+  {bid:'btn-vco',  label:'BTN — vs CO',     fn:h=>btn(h,'CO')},
+  {bid:'sb-open',  label:'SB — Open',       fn:h=>sb(h)},
+  {bid:'sb-vuh',   label:'SB — vs UTG/HJ',  fn:h=>sb(h,'UTG')},
+  {bid:'sb-vco',   label:'SB — vs CO',      fn:h=>sb(h,'CO')},
+  {bid:'sb-vbt',   label:'SB — vs BTN',     fn:h=>sb(h,'BTN')},
+  {bid:'bb-vuh',   label:'BB — vs UTG/HJ',  fn:h=>bb(h,'UTG')},
+  {bid:'bb-vco',   label:'BB — vs CO',      fn:h=>bb(h,'CO')},
+  {bid:'bb-vbt',   label:'BB — vs BTN',     fn:h=>bb(h,'BTN')},
+  {bid:'bb-vsb',   label:'BB — vs SB',      fn:h=>bb(h,'SB')},
+];
+
+let _qQueue=[], _qIdx=0, _qOk=0, _qKo=0, _qStreak=0, _qTotal=0, _qAnswered=false;
+let _qPos='all', _qSit='all', _qHand='border';
+
+function openQuiz(){
+  document.getElementById('quiz-overlay').classList.add('open');
+  _qShowConfig();
+}
+function _closeQuiz(){ document.getElementById('quiz-overlay').classList.remove('open'); }
+function _qShowConfig(){
+  document.getElementById('qz-config').style.display='';
+  document.getElementById('qz-play').style.display='none';
+  document.getElementById('qz-result').classList.remove('open');
+}
+
+// Config chip clicks
+document.querySelectorAll('.quiz-config-chip').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    const f=el.dataset.qf;
+    document.querySelectorAll('[data-qf="'+f+'"]').forEach(e=>e.classList.remove('on'));
+    el.classList.add('on');
+    if(f==='pos') _qPos=el.dataset.val;
+    else if(f==='sit') _qSit=el.dataset.val;
+    else _qHand=el.dataset.val;
   });
-  if (view === 'quiz') {
-    openQuiz();
-    // reset nav back to ranges when quiz closes
-    setTimeout(() => {
-      if (!document.getElementById('quiz-overlay').classList.contains('open')) {
-        mNavSwitch('ranges');
+});
+document.getElementById('quiz-close-btn').addEventListener('click', _closeQuiz);
+document.getElementById('quiz-start-btn').addEventListener('click', _startQuiz);
+document.getElementById('quiz-replay-btn').addEventListener('click', _startQuiz);
+document.getElementById('quiz-reconfig-btn').addEventListener('click', _qShowConfig);
+document.getElementById('qz-next').addEventListener('click', _nextQ);
+
+function _startQuiz(){
+  const ALL_HANDS=[];
+  for(let i=0;i<13;i++) for(let j=0;j<13;j++) ALL_HANDS.push(hl(i,j));
+  let scs = QZ_SCENARIOS;
+  if(_qPos!=='all') scs=scs.filter(s=>s.bid.startsWith(_qPos));
+  if(_qSit==='open') scs=scs.filter(s=>s.bid.includes('-open'));
+  if(_qSit==='vs')   scs=scs.filter(s=>!s.bid.includes('-open'));
+  if(!scs.length) scs=QZ_SCENARIOS;
+  let pairs=[];
+  scs.forEach(sc=>{
+    ALL_HANDS.forEach(h=>{
+      const k=sc.bid+'::'+h;
+      const code = k in edits ? edits[k] : sc.fn(h);
+      if(_qHand==='border'){
+        if((k in edits) || code!=='') pairs.push({sc,h,code});
+      } else {
+        pairs.push({sc,h,code});
       }
-    }, 300);
-  } else if (view === 'cat') {
-    mOpenCatSheet();
-    mNavSwitch('ranges'); // reset nav visually
-  } else {
-    // ranges
-    document.getElementById('main').style.display = '';
+    });
+  });
+  if(pairs.length<10){
+    pairs=[];
+    scs.forEach(sc=>ALL_HANDS.forEach(h=>{
+      const k=sc.bid+'::'+h; const code=k in edits?edits[k]:sc.fn(h);
+      pairs.push({sc,h,code});
+    }));
   }
+  for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]];}
+  _qQueue=pairs.slice(0,30); _qTotal=_qQueue.length; _qIdx=0; _qOk=0; _qKo=0; _qStreak=0;
+  document.getElementById('qz-config').style.display='none';
+  document.getElementById('qz-result').classList.remove('open');
+  document.getElementById('qz-play').style.display='flex';
+  _qUpdateStats(); _qShowHand();
 }
 
-function mOpenCatSheet() {
-  const sheet = document.getElementById('mobile-cat-sheet');
-  const list = document.getElementById('mobile-cat-list');
-  list.innerHTML = '';
-  categories.forEach(cat => {
-    const item = document.createElement('div');
-    item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border2);cursor:pointer;background:'+(cat.id===activeCategory?'rgba(0,212,170,0.08)':'transparent')+';';
-    item.innerHTML = `<span style="font-size:20px">${cat.icon}</span><div style="flex:1"><div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:${cat.id===activeCategory?'var(--accent)':'var(--text)'};letter-spacing:0.08em">${cat.name}</div></div>${cat.id===activeCategory?'<div style=\'color:var(--accent);font-size:16px\'>✓</div>':''}`;
-    item.addEventListener('click', () => { switchCat(cat.id); mCloseCatSheet(); mSwitchPos(mActivePos); });
+function _qShowHand(){
+  if(_qIdx>=_qTotal){ _qEnd(); return; }
+  _qAnswered=false;
+  const {sc,h}=_qQueue[_qIdx];
+  document.getElementById('qz-sc').textContent=sc.label;
+  const hEl=document.getElementById('qz-hand');
+  hEl.textContent=h; hEl.className='quiz-hand-display';
+  document.getElementById('qz-fb').textContent=''; document.getElementById('qz-fb').className='quiz-feedback';
+  document.getElementById('qz-next').style.opacity='0.3';
+  document.getElementById('qz-prog').style.width=(_qIdx/_qTotal*100)+'%';
+  const btns=document.getElementById('qz-btns'); btns.innerHTML='';
+  let codes;
+  if(sc.bid.includes('-open')) codes=['','O','C','F'];
+  else if(sc.bid.startsWith('bb-')) codes=['','A','W','T','V'];
+  else codes=['','T','V'];
+  const k=sc.bid+'::'+h; const correct=k in edits?edits[k]:sc.fn(h);
+  let acts=ACTIONS.filter(a=>codes.includes(a.code));
+  if(!acts.some(a=>a.code===correct)) acts=[...acts, getAction(correct)];
+  acts.forEach(a=>{
+    const b=document.createElement('div'); b.className='quiz-btn';
+    b.style.cssText='background:'+a.bg+';border-color:'+(a.border||a.bg)+';color:'+a.text;
+    b.textContent=a.label; b.dataset.code=a.code;
+    b.addEventListener('click',()=>_qAnswer(a.code,sc,h));
+    btns.appendChild(b);
+  });
+}
+
+function _qAnswer(chosen,sc,h){
+  if(_qAnswered)return; _qAnswered=true;
+  const k=sc.bid+'::'+h; const correct=k in edits?edits[k]:sc.fn(h);
+  const ok=chosen===correct;
+  const hEl=document.getElementById('qz-hand'); const fb=document.getElementById('qz-fb');
+  if(ok){_qOk++;_qStreak++;hEl.classList.add('flash-ok');fb.textContent='✓ Correct !';fb.className='quiz-feedback ok';}
+  else{_qKo++;_qStreak=0;hEl.classList.add('flash-ko');fb.textContent='✗  Correct : '+getAction(correct).label;fb.className='quiz-feedback ko';}
+  document.querySelectorAll('.quiz-btn').forEach(b=>{
+    if(b.dataset.code===correct)b.classList.add('b-ok');
+    else if(b.dataset.code===chosen&&!ok)b.classList.add('b-ko');
+  });
+  _qIdx++; _qUpdateStats(); document.getElementById('qz-next').style.opacity='1';
+}
+function _nextQ(){ if(!_qAnswered&&_qIdx<_qTotal){_qAnswer('__skip__',_qQueue[_qIdx].sc,_qQueue[_qIdx].h);return;} _qShowHand(); }
+function _qUpdateStats(){ document.getElementById('qz-ok').textContent=_qOk; document.getElementById('qz-ko').textContent=_qKo; document.getElementById('qz-streak').textContent=_qStreak; document.getElementById('qz-n').textContent=_qIdx+'/'+_qTotal; }
+function _qEnd(){
+  document.getElementById('qz-play').style.display='none';
+  document.getElementById('qz-result').classList.add('open');
+  const pct=Math.round(_qOk/(_qOk+_qKo||1)*100);
+  document.getElementById('qz-score').textContent=pct+'%';
+  document.getElementById('qz-msg').textContent=pct>=90?'🔥 Parfait — ranges mémorisées !':pct>=75?'👍 Bon niveau — continue':pct>=60?'📚 Correct — retravaille les spots':'💪 À bosser — reviens sur les ranges';
+}
+
+// ══════════════════════════════════════════════════════════
+// IO MODAL
+// ══════════════════════════════════════════════════════════
+function openIOModal(){ document.getElementById('io-modal').classList.add('open'); }
+function _closeIO(){ document.getElementById('io-modal').classList.remove('open'); }
+document.getElementById('io-close-btn').addEventListener('click', _closeIO);
+document.getElementById('io-modal').addEventListener('click', e=>{ if(e.target===document.getElementById('io-modal')) _closeIO(); });
+document.getElementById('io-export-json').addEventListener('click', exportJSON);
+document.getElementById('io-export-png').addEventListener('click', exportPNG);
+document.getElementById('io-export-pio').addEventListener('click', _expPio);
+document.getElementById('io-export-gto').addEventListener('click', _expGTO);
+document.getElementById('io-export-pt').addEventListener('click', _expPT);
+document.getElementById('io-import-json-file').addEventListener('change', function(){ importJSON(this); });
+document.getElementById('io-import-pio-file').addEventListener('change', function(){ _impPioFile(this); });
+document.getElementById('io-paste-btn').addEventListener('click', _impPaste);
+
+function _expPio(){
+  const bid=activeTab+'-open'; const fn=blockFns[bid]; if(!fn){showToast('Range open seulement');return;}
+  let out=''; for(let i=0;i<13;i++) for(let j=0;j<13;j++){const h=hl(i,j),c=getCode(bid,h,fn);if(c)out+=h+':1\n';}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'}));a.download=activeTab+'-pio.txt';a.click();showToast('PioSolver exporté ✓');
+}
+function _expGTO(){
+  const bid=activeTab+'-open'; const fn=blockFns[bid]; if(!fn){showToast('Range open seulement');return;}
+  let out='// GTO+ — '+activeTab.toUpperCase()+'\n';
+  ACTIONS.filter(a=>a.code).forEach(a=>{out+='// '+a.label+'\n';for(let i=0;i<13;i++)for(let j=0;j<13;j++){const h=hl(i,j),c=getCode(bid,h,fn);if(c===a.code)out+=h+':1\n';}});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([out],{type:'text/plain'}));a.download=activeTab+'-gto.txt';a.click();showToast('GTO+ exporté ✓');
+}
+function _expPT(){
+  let csv='hand,action,position\n';
+  ['utg','hj','co','btn','sb'].forEach(pos=>{const bid=pos+'-open';const fn=blockFns[bid];if(!fn)return;for(let i=0;i<13;i++)for(let j=0;j<13;j++){const h=hl(i,j),c=getCode(bid,h,fn);csv+=h+','+getAction(c).label+','+pos.toUpperCase()+'\n';}});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='ranges-pt.csv';a.click();showToast('PokerTracker CSV exporté ✓');
+}
+function _impPioFile(input){ const file=input.files[0];if(!file)return;const r=new FileReader();r.onload=e=>{_parsePio(e.target.result);input.value='';};r.readAsText(file); }
+function _impPaste(){ const t=document.getElementById('io-ta').value.trim();if(!t){showToast('Colle du texte d\'abord');return;}_parsePio(t);document.getElementById('io-ta').value=''; }
+function _parsePio(text){
+  const bid=document.getElementById('io-pos').value;
+  const code=document.getElementById('io-act').value;
+  const allH=new Set();for(let i=0;i<13;i++)for(let j=0;j<13;j++)allH.add(hl(i,j));
+  let count=0;
+  text.split('\n').forEach(line=>{
+    line=line.trim();if(!line||line.startsWith('//'))return;
+    const p=line.split(':');if(p.length<2)return;
+    const h=p[0].trim();const freq=parseFloat(p[1]);
+    if(!allH.has(h)||isNaN(freq))return;
+    edits[bid+'::'+h]=freq>=0.5?code:'';count++;
+  });
+  saveEdits();buildLegend();buildPaintBar();buildCtxItems();buildPanels();
+  showToast(count+' mains importées → '+bid);_closeIO();
+}
+
+// ══════════════════════════════════════════════════════════
+// PATCH HEADER + rebuildAll
+// ══════════════════════════════════════════════════════════
+const _origRebuildAll = rebuildAll;
+rebuildAll = function(){
+  _origRebuildAll();
+  buildCatBar();
+  if(_isMobile()){ _mBuildLegend(); _mBuildSitBar(); _mAutoFit(); }
+};
+
+// Patch keyboard
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='q'||e.key==='Q') openQuiz();
+  if(e.key==='Escape') _closeQuiz();
+},{capture:true});
+
+// ══════════════════════════════════════════════════════════
+// MOBILE
+// ══════════════════════════════════════════════════════════
+const _isMobile = ()=>window.innerWidth<=768;
+let _mPos='utg', _mSit=null;
+const _M_SITS={
+  utg:[{bid:'utg-open',label:'Open'}],
+  hj: [{bid:'hj-open',label:'Open'},{bid:'hj-vu',label:'vs UTG'}],
+  co: [{bid:'co-open',label:'Open'},{bid:'co-vuh',label:'vs UTG/HJ'}],
+  btn:[{bid:'btn-open',label:'Open'},{bid:'btn-vuh',label:'vs UTG/HJ'},{bid:'btn-vco',label:'vs CO'}],
+  sb: [{bid:'sb-open',label:'Open'},{bid:'sb-vuh',label:'vs UTG/HJ'},{bid:'sb-vco',label:'vs CO'},{bid:'sb-vbt',label:'vs BTN'}],
+  bb: [{bid:'bb-vuh',label:'vs UTG/HJ'},{bid:'bb-vco',label:'vs CO'},{bid:'bb-vbt',label:'vs BTN'},{bid:'bb-vsb',label:'vs SB'}],
+};
+
+// Wire mobile pos buttons
+document.querySelectorAll('.mpos-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>_mSwitchPos(btn.dataset.pos));
+});
+
+// Wire mobile nav
+document.getElementById('mnav-ranges').addEventListener('click',()=>_mNav('ranges'));
+document.getElementById('mnav-quiz').addEventListener('click',()=>{ openQuiz(); });
+document.getElementById('mnav-cat').addEventListener('click',()=>_mOpenCatSheet());
+document.getElementById('m-cat-add').addEventListener('click',()=>{ _addCat(); _mCloseCatSheet(); });
+document.getElementById('m-cat-sheet').addEventListener('click',e=>{if(e.target===document.getElementById('m-cat-sheet'))_mCloseCatSheet();});
+
+function _mNav(v){
+  document.querySelectorAll('.mnav-btn').forEach(b=>b.classList.toggle('active',b.id==='mnav-'+v));
+}
+
+function _mSwitchPos(pos){
+  if(!_isMobile())return;
+  _mPos=pos; _mSit=(_M_SITS[pos]||[])[0]?.bid||null;
+  switchTab(pos);
+  document.querySelectorAll('.mpos-btn').forEach(b=>b.classList.toggle('active',b.dataset.pos===pos));
+  _mBuildSitBar();
+  document.getElementById('main').scrollTop=0;
+}
+
+function _mSwitchSit(bid){
+  _mSit=bid;
+  document.querySelectorAll('.msit-chip').forEach(c=>c.classList.toggle('active',c.dataset.bid===bid));
+  const panel=document.getElementById('pnl-'+_mPos);
+  if(!panel)return;
+  panel.querySelectorAll('.range-block').forEach(blk=>{
+    blk.style.display=(!bid||blk.dataset.bid===bid)?'':'none';
+  });
+}
+
+function _mBuildSitBar(){
+  const bar=document.getElementById('mobile-sit-bar');
+  if(!bar)return;
+  bar.innerHTML='';
+  const sits=_M_SITS[_mPos]||[];
+  if(sits.length<=1){bar.style.display='none';_mSwitchSit(_mSit);return;}
+  bar.style.display='flex';
+  sits.forEach(s=>{
+    const c=document.createElement('div');c.className='msit-chip'+(s.bid===_mSit?' active':'');
+    c.dataset.bid=s.bid;c.textContent=s.label;
+    c.addEventListener('click',()=>_mSwitchSit(s.bid));
+    bar.appendChild(c);
+  });
+  _mSwitchSit(_mSit);
+}
+
+function _mBuildLegend(){
+  const leg=document.getElementById('mobile-legend');if(!leg)return;
+  leg.innerHTML='';
+  ACTIONS.forEach(a=>{
+    if(!a.code&&a.label==='FOLD')return;
+    const item=document.createElement('div');item.className='mleg-item';
+    const dot=document.createElement('div');dot.className='mleg-dot';dot.style.background=a.bg;
+    item.appendChild(dot);item.appendChild(document.createTextNode(a.label));leg.appendChild(item);
+  });
+  const fi=document.createElement('div');fi.className='mleg-item';
+  const fd=document.createElement('div');fd.className='mleg-dot';fd.style.cssText='background:var(--surface2);border:1px solid var(--border)';
+  fi.appendChild(fd);fi.appendChild(document.createTextNode('Fold'));leg.appendChild(fi);
+}
+
+function _mAutoFit(){
+  if(!_isMobile())return;
+  const px=Math.max(20,Math.min(38,Math.floor((window.innerWidth-20)/13)));
+  document.documentElement.style.setProperty('--cell-size',px+'px');
+  document.documentElement.style.setProperty('--cell-font',Math.max(6,Math.round(px*.28))+'px');
+}
+
+// Touch tooltip
+document.addEventListener('touchstart',e=>{
+  if(!_isMobile())return;
+  const cell=e.target.closest('.cell');if(!cell)return;
+  const tip=document.getElementById('tooltip');
+  const a=getAction(cell.dataset.code);
+  tip.innerHTML='<span style="font-size:17px;font-weight:700">'+cell.dataset.hand+'</span> · <span style="color:'+(cell.dataset.code?'var(--accent)':'var(--text3)')+'">'+a.label+'</span>';
+  tip.style.display='block';
+  setTimeout(()=>tip.style.display='none',1400);
+},{passive:true});
+
+// Swipe to change position
+let _swipeX=0;
+document.getElementById('main').addEventListener('touchstart',e=>{_swipeX=e.touches[0].clientX;},{passive:true});
+document.getElementById('main').addEventListener('touchend',e=>{
+  if(!_isMobile())return;
+  const dx=e.changedTouches[0].clientX-_swipeX;
+  if(Math.abs(dx)<60)return;
+  const order=['utg','hj','co','btn','sb','bb'];
+  const idx=order.indexOf(_mPos);
+  if(dx<0&&idx<5)_mSwitchPos(order[idx+1]);
+  if(dx>0&&idx>0)_mSwitchPos(order[idx-1]);
+},{passive:true});
+
+function _mOpenCatSheet(){
+  const list=document.getElementById('m-cat-list');list.innerHTML='';
+  _categories.forEach(cat=>{
+    const item=document.createElement('div');
+    item.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border2);cursor:pointer;background:'+(cat.id===_activeCat?'rgba(0,212,170,.08)':'transparent');
+    item.innerHTML='<span style="font-size:20px">'+cat.icon+'</span><div style="flex:1;font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:'+(cat.id===_activeCat?'var(--accent)':'var(--text)')+';letter-spacing:.08em">'+cat.name+'</div>'+(cat.id===_activeCat?'<span style="color:var(--accent);font-size:18px">✓</span>':'');
+    item.addEventListener('click',()=>{_switchCat(cat.id);_mCloseCatSheet();_mSwitchPos(_mPos);});
     list.appendChild(item);
   });
-  sheet.style.display = 'flex';
+  document.getElementById('m-cat-sheet').style.display='flex';
 }
-function mCloseCatSheet() {
-  document.getElementById('mobile-cat-sheet').style.display = 'none';
-}
+function _mCloseCatSheet(){ document.getElementById('m-cat-sheet').style.display='none'; }
 
-// ── Mobile tooltip (touch) ──
-document.addEventListener('touchstart', e => {
-  const cell = e.target.closest('.cell');
-  if (!cell || !isMobile()) return;
-  const code = cell.dataset.code;
-  const a = getAction(code);
-  const tip = document.getElementById('tooltip');
-  tip.innerHTML = `<span style="font-size:18px;font-weight:700">${cell.dataset.hand}</span> · <span style="color:${code?'var(--accent)':'var(--text3)'}">${a.label}</span>`;
-  tip.style.display = 'block';
-  setTimeout(() => tip.style.display = 'none', 1500);
-}, { passive: true });
-
-// ── Mobile autoFit override ──
-const _origAutoFit = autoFit;
-function autoFit() {
-  if (!isMobile()) { _origAutoFit(); return; }
-  // On mobile: fit the grid of the current situation to screen width
-  const panel = document.querySelector('.tab-panel.active');
-  if (!panel) return;
-  const visibleBlock = panel.querySelector('.range-block:not([style*="display: none"])') || panel.querySelector('.range-block');
-  if (!visibleBlock) return;
-  const availW = window.innerWidth - 20;
-  const px = Math.max(20, Math.min(40, Math.floor((availW - 12*1) / 13)));
-  document.documentElement.style.setProperty('--cell-size', px + 'px');
-  document.documentElement.style.setProperty('--cell-font', Math.max(6, Math.round(px * .285)) + 'px');
-}
-
-// ── Override switchTab to also update mobile pos bar ──
-const _origSwitchTab = switchTab;
-function switchTab(id) {
-  _origSwitchTab(id);
-  if (isMobile()) {
-    document.querySelectorAll('.mpos-btn').forEach(b => b.classList.toggle('active', b.dataset.pos === id));
-    mActivePos = id;
-    mActiveSit = (M_SITS[id]||[])[0]?.bid || null;
-    mBuildSitBar();
+// ── Init ──
+// Patch header for desktop
+(function(){
+  const hdr = document.querySelector('header');
+  if(!hdr) return;
+  const logo = hdr.querySelector('.logo');
+  if(logo){ const span=document.createElement('span');span.id='header-cat-name';span.textContent='Range Manager · 6 Max';logo.innerHTML='';logo.appendChild(document.createElement('div')).className='logo-dot';logo.appendChild(span); }
+  // Add quiz + IO buttons to header-right
+  const hr = hdr.querySelector('.header-right');
+  if(hr){
+    const qBtn=document.createElement('button');qBtn.className='hbtn';qBtn.style.cssText='border-color:rgba(250,204,21,.35);color:#fde68a';qBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ';qBtn.addEventListener('click',openQuiz);hr.insertBefore(qBtn,hr.firstChild);
+    const ioBtn=document.createElement('button');ioBtn.className='hbtn';ioBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 16 12 21 17 16"/><line x1="12" y1="21" x2="12" y2="9"/><polyline points="7 8 12 3 17 8"/></svg>I/O';ioBtn.addEventListener('click',openIOModal);hr.insertBefore(ioBtn,hr.children[1]||hr.firstChild);
   }
-}
+})();
 
-// ── Override rebuildAll to also update mobile UI ──
-const _origRebuildAll = rebuildAll;
-function rebuildAll() {
-  _origRebuildAll();
-  if (isMobile()) {
-    mBuildLegend();
-    mBuildSitBar();
-    autoFit();
-  }
-}
-
-// ── Swipe left/right to change position on mobile ──
-let mTouchX = 0;
-document.getElementById('main').addEventListener('touchstart', e => {
-  mTouchX = e.touches[0].clientX;
-}, { passive: true });
-document.getElementById('main').addEventListener('touchend', e => {
-  if (!isMobile()) return;
-  const dx = e.changedTouches[0].clientX - mTouchX;
-  if (Math.abs(dx) < 60) return;
-  const order = ['utg','hj','co','btn','sb','bb'];
-  const idx = order.indexOf(mActivePos);
-  if (dx < 0 && idx < 5) mSwitchPos(order[idx+1]);
-  if (dx > 0 && idx > 0) mSwitchPos(order[idx-1]);
-}, { passive: true });
-
-// ── Init mobile on load ──
-window.addEventListener('load', () => {
-  if (isMobile()) {
-    mBuildLegend();
-    mSwitchPos('utg');
-    autoFit();
-  }
+window.addEventListener('load',()=>{
+  buildCatBar();
+  if(_isMobile()){ _mBuildLegend(); _mSwitchPos('utg'); _mAutoFit(); }
 });
-window.addEventListener('resize', () => {
-  if (isMobile()) { mBuildLegend(); autoFit(); }
-  else _origAutoFit();
+window.addEventListener('resize',()=>{
+  if(_isMobile()){ _mBuildLegend(); _mAutoFit(); }
+  else autoFit();
 });
 
 </script>
+
+<!-- CATEGORY BAR -->
+<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quiz-overlay">
+  <div class="quiz-box">
+    <div class="quiz-header">
+      <div class="quiz-title">⚡ QUIZ MODE</div>
+      <button class="quiz-close" id="quiz-close-btn">✕</button>
+    </div>
+    <div id="qz-config">
+      <div class="quiz-config">
+        <span class="quiz-config-label">POSITION :</span>
+        <div class="quiz-config-chip on" data-qf="pos" data-val="all">TOUT</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="utg">UTG</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="hj">HJ</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="co">CO</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="btn">BTN</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="sb">SB</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="bb">BB</div>
+      </div>
+      <div class="quiz-config" style="margin-top:8px">
+        <span class="quiz-config-label">SITUATION :</span>
+        <div class="quiz-config-chip on" data-qf="sit" data-val="all">TOUT</div>
+        <div class="quiz-config-chip" data-qf="sit" data-val="open">OPEN</div>
+        <div class="quiz-config-chip" data-qf="sit" data-val="vs">VS RAISE</div>
+      </div>
+      <div class="quiz-config" style="margin-top:8px">
+        <span class="quiz-config-label">MAINS :</span>
+        <div class="quiz-config-chip on" data-qf="hand" data-val="border">BORDERLINE</div>
+        <div class="quiz-config-chip" data-qf="hand" data-val="all">TOUTES</div>
+      </div>
+      <button class="quiz-start-btn" id="quiz-start-btn" style="margin-top:10px">▶ COMMENCER</button>
+    </div>
+    <div id="qz-play" style="display:none;flex-direction:column;gap:12px">
+      <div class="quiz-score-bar">
+        <div class="quiz-stat"><div class="quiz-stat-val green" id="qz-ok">0</div><div class="quiz-stat-lbl">BON</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-val red" id="qz-ko">0</div><div class="quiz-stat-lbl">ERREUR</div></div>
+        <div class="quiz-sep"></div>
+        <div class="quiz-stat"><div class="quiz-stat-val acc" id="qz-streak">0</div><div class="quiz-stat-lbl">STREAK</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-val" id="qz-n">0/0</div><div class="quiz-stat-lbl">TOTAL</div></div>
+      </div>
+      <div class="quiz-progress"><div class="quiz-progress-fill" id="qz-prog"></div></div>
+      <div class="quiz-scenario" id="qz-sc">—</div>
+      <div class="quiz-hand-display" id="qz-hand">??</div>
+      <div class="quiz-btns" id="qz-btns"></div>
+      <div class="quiz-feedback" id="qz-fb"></div>
+      <button id="qz-next" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
+    </div>
+    <div class="quiz-result-box" id="qz-result">
+      <div class="quiz-result-score" id="qz-score">—</div>
+      <div class="quiz-result-msg" id="qz-msg">—</div>
+      <button class="quiz-start-btn" id="quiz-replay-btn" style="max-width:200px">↺ REJOUER</button>
+      <button id="quiz-reconfig-btn" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer">CONFIG</button>
+    </div>
+  </div>
+</div>
+
+<!-- IO MODAL -->
+<div class="io-modal" id="io-modal">
+  <div class="io-box">
+    <div class="io-head">IMPORT / EXPORT <button class="io-close" id="io-close-btn">✕</button></div>
+    <div class="io-section">
+      <div class="io-section-title">EXPORTER</div>
+      <div class="io-row">
+        <button class="io-btn" id="io-export-json">↓ JSON</button>
+        <button class="io-btn" id="io-export-png">↓ PNG</button>
+        <button class="io-btn" id="io-export-pio">↓ PioSolver</button>
+        <button class="io-btn" id="io-export-gto">↓ GTO+</button>
+        <button class="io-btn" id="io-export-pt">↓ PokerTracker</button>
+      </div>
+      <div class="io-note">Export = position active (onglet ouvert).</div>
+    </div>
+    <div class="io-section">
+      <div class="io-section-title">IMPORTER</div>
+      <div class="io-row">
+        <label class="io-btn imp" style="cursor:pointer">↑ JSON<input type="file" id="io-import-json-file" accept=".json" style="display:none"></label>
+        <label class="io-btn imp" style="cursor:pointer">↑ PioSolver/GTO+<input type="file" id="io-import-pio-file" accept=".txt,.pio,.gto" style="display:none"></label>
+      </div>
+      <div class="io-note">Ou colle du texte PioSolver :</div>
+      <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
+      <div class="io-row" style="margin-top:8px">
+        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+          <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option>
+          <option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
+        </select>
+        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+          <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option>
+          <option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
+        </select>
+        <button class="io-btn" id="io-paste-btn">Appliquer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE DOM -->
+<div id="mobile-pos-bar">
+  <div class="mpos-btn active" data-pos="utg">UTG</div>
+  <div class="mpos-btn" data-pos="hj">HJ</div>
+  <div class="mpos-btn" data-pos="co">CO</div>
+  <div class="mpos-btn" data-pos="btn">BTN</div>
+  <div class="mpos-btn" data-pos="sb">SB</div>
+  <div class="mpos-btn" data-pos="bb">BB</div>
+</div>
+<div id="mobile-sit-bar"></div>
+<div id="mobile-legend"></div>
+<nav id="mobile-nav">
+  <button class="mnav-btn active" id="mnav-ranges">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>RANGES
+  </button>
+  <button class="mnav-btn mnav-quiz-btn" id="mnav-quiz">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ
+  </button>
+  <button class="mnav-btn" id="mnav-cat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>CATÉG.
+  </button>
+</nav>
+<div id="m-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.75);align-items:flex-end">
+  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2)">
+    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px">CATÉGORIE</div>
+    <div id="m-cat-list" style="display:flex;flex-direction:column;gap:10px"></div>
+    <button id="m-cat-add" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.08em;cursor:pointer">＋ NOUVELLE CATÉGORIE</button>
+  </div>
+</div>
+
 </body>
 </html>
