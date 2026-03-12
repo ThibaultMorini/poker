@@ -440,6 +440,226 @@
   textarea.io-ta { width:100%; height:80px; background:var(--surface2); border:1px solid var(--border2); border-radius:4px; color:var(--text); font-family:'IBM Plex Mono',monospace; font-size:10px; padding:8px; resize:vertical; outline:none; margin-top:6px; }
   textarea.io-ta:focus { border-color:var(--accent); }
 
+
+/* ══════════════════════════════════════════
+   MOBILE STYLES  (≤ 768px)
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Root tweaks */
+  :root {
+    --cell-size: 24px;
+    --cell-font: 7px;
+    --cell-gap: 1px;
+  }
+
+  /* Hide desktop-only elements */
+  .header-legend,
+  .cat-bar,
+  .hbtn:not(#m-show-quiz-hbtn),
+  .edit-banner,
+  .paint-bar,
+  .tab-bar,
+  .header-right { display: none !important; }
+
+  /* ── Mobile header ── */
+  header {
+    height: 52px; padding: 0 14px;
+    justify-content: space-between;
+  }
+  .logo { font-size: 13px; letter-spacing: 0.08em; }
+  .logo-dot { width: 6px; height: 6px; }
+
+  /* Legend pill row hidden — shown in mobile panel instead */
+
+  /* ── Body layout ── */
+  body {
+    height: 100dvh;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Main area scrollable ── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 80px; /* space for bottom nav */
+  }
+
+  /* ── Tab panels: vertical stack, single column ── */
+  .tab-panel {
+    display: none;
+    flex-direction: column;
+    padding: 10px 10px 16px;
+    gap: 14px;
+    min-height: 100%;
+    align-content: flex-start;
+  }
+  .tab-panel.active { display: flex; }
+
+  /* Sections row becomes vertical */
+  .sections-row {
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  /* ── Range block ── */
+  .range-block {
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+  .block-title { font-size: 11px; letter-spacing: 0.06em; }
+
+  /* ── Grid: centered, allow horizontal scroll within block ── */
+  .grid-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .cell {
+    border-radius: 2px;
+    touch-action: manipulation;
+  }
+  .cell:hover { transform: none; } /* disable hover scale on touch */
+  .cell:active { transform: scale(1.1); z-index: 10; }
+
+  /* ── Position header inside panel ── */
+  .pos-diag { display: none; } /* hide on mobile to save space */
+
+  /* ── Mobile tooltip (larger, positioned center) ── */
+  .tooltip {
+    font-size: 16px; padding: 12px 20px;
+    left: 50% !important; transform: translateX(-50%);
+    bottom: 90px; top: auto !important;
+    text-align: center;
+  }
+
+  /* ── Bottom navigation ── */
+  #mobile-nav {
+    display: flex !important;
+  }
+
+  /* ── Mobile position selector (replaces tab-bar) ── */
+  #mobile-pos-bar {
+    display: flex !important;
+  }
+
+  /* ── Mobile legend strip ── */
+  #mobile-legend {
+    display: flex !important;
+  }
+
+  /* Situation selector chips */
+  #mobile-sit-bar {
+    display: flex !important;
+  }
+}
+
+/* ── Always hidden on desktop ── */
+#mobile-nav,
+#mobile-pos-bar,
+#mobile-legend,
+#mobile-sit-bar { display: none; }
+
+/* ══ MOBILE NAV BAR ══ */
+#mobile-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  background: #0d1015;
+  border-top: 1px solid var(--border2);
+  align-items: stretch;
+  justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.mnav-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; flex: 1; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 600;
+  color: var(--text3); letter-spacing: 0.06em; border: none; background: none;
+  transition: color 0.15s; -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.mnav-btn svg { width: 20px; height: 20px; }
+.mnav-btn.active { color: var(--accent); }
+.mnav-btn.quiz-nav { color: #fde68a; }
+.mnav-btn.quiz-nav.active { color: #fde68a; }
+
+/* ══ MOBILE POSITION BAR ══ */
+#mobile-pos-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+  gap: 0;
+  overflow-x: auto;
+  height: 40px;
+  align-items: stretch;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#mobile-pos-bar::-webkit-scrollbar { display: none; }
+.mpos-btn {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  padding: 0 14px; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 800;
+  color: var(--text3); letter-spacing: 0.1em;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.mpos-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ══ MOBILE SITUATION BAR ══ */
+#mobile-sit-bar {
+  padding: 6px 10px;
+  gap: 6px;
+  overflow-x: auto;
+  align-items: center;
+  background: var(--bg);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+}
+#mobile-sit-bar::-webkit-scrollbar { display: none; }
+.msit-chip {
+  flex-shrink: 0; padding: 4px 12px; border-radius: 12px;
+  border: 1px solid var(--border2); background: transparent;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text3);
+  cursor: pointer; white-space: nowrap; letter-spacing: 0.04em;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+  transition: all 0.15s;
+}
+.msit-chip.active {
+  background: rgba(0,212,170,0.1); border-color: rgba(0,212,170,0.4); color: var(--accent);
+}
+
+/* ══ MOBILE LEGEND STRIP ══ */
+#mobile-legend {
+  padding: 6px 10px;
+  gap: 6px; overflow-x: auto; align-items: center;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  flex-wrap: nowrap; scrollbar-width: none;
+  flex-shrink: 0;
+}
+#mobile-legend::-webkit-scrollbar { display: none; }
+.mleg-item {
+  display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--text2);
+  white-space: nowrap; letter-spacing: 0.03em;
+}
+.mleg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+/* ══ MOBILE HEADER QUIZ BUTTON ══ */
+@media (max-width: 768px) {
+  #m-header-quiz {
+    display: flex !important;
+  }
+}
+#m-header-quiz { display: none; }
+
 </style>
 
 </head>
@@ -482,6 +702,50 @@
 <div class="tab-bar" id="tab-bar"></div>
 <div class="main" id="main"></div>
 <div class="tooltip" id="tooltip"></div>
+
+<!-- MOBILE: position bar + situation chips + legend strip -->
+<div id="mobile-pos-bar">
+  <div class="mpos-btn active" data-pos="utg" onclick="mSwitchPos('utg')">UTG</div>
+  <div class="mpos-btn" data-pos="hj"  onclick="mSwitchPos('hj')">HJ</div>
+  <div class="mpos-btn" data-pos="co"  onclick="mSwitchPos('co')">CO</div>
+  <div class="mpos-btn" data-pos="btn" onclick="mSwitchPos('btn')">BTN</div>
+  <div class="mpos-btn" data-pos="sb"  onclick="mSwitchPos('sb')">SB</div>
+  <div class="mpos-btn" data-pos="bb"  onclick="mSwitchPos('bb')">BB</div>
+</div>
+<div id="mobile-sit-bar"><!-- filled by JS --></div>
+<div id="mobile-legend"><!-- filled by JS --></div>
+
+<!-- MOBILE: bottom navigation -->
+<nav id="mobile-nav">
+  <button class="mnav-btn active" id="mnav-ranges" onclick="mNavSwitch('ranges')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+    </svg>RANGES
+  </button>
+  <button class="mnav-btn quiz-nav" id="mnav-quiz" onclick="mNavSwitch('quiz')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>QUIZ
+  </button>
+  <button class="mnav-btn" id="mnav-cat" onclick="mNavSwitch('cat')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+    </svg>CATÉG.
+  </button>
+</nav>
+
+<!-- MOBILE CATEGORY SHEET -->
+<div id="mobile-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,0.7);align-items:flex-end;" onclick="mCloseCatSheet()">
+  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2);" onclick="event.stopPropagation()">
+    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.12em;margin-bottom:16px;">CATÉGORIE</div>
+    <div id="mobile-cat-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+    <button onclick="addCat();mCloseCatSheet();" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:0.08em;cursor:pointer;">＋ NOUVELLE CATÉGORIE</button>
+  </div>
+</div>
+
 
 <!-- CONTEXT MENU -->
 <div class="ctx-menu" id="ctx-menu">
@@ -2173,6 +2437,211 @@ window.addEventListener('resize',()=>{ clearTimeout(window._rt); window._rt=setT
 // INIT
 // ════════════════════════════════
 rebuildAll();
+
+
+// ══════════════════════════════════════════
+// MOBILE LOGIC
+// ══════════════════════════════════════════
+const isMobile = () => window.innerWidth <= 768;
+
+// ── Mobile position (maps to desktop tab) ──
+let mActivePos = 'utg';
+let mActiveSit = null; // null = auto (first situation for pos)
+
+// Situations per position
+const M_SITS = {
+  utg:  [{bid:'utg-open', label:'Open'}],
+  hj:   [{bid:'hj-open',  label:'Open'}, {bid:'hj-vu', label:'vs UTG'}],
+  co:   [{bid:'co-open',  label:'Open'}, {bid:'co-vuh',label:'vs UTG/HJ'}],
+  btn:  [{bid:'btn-open', label:'Open'}, {bid:'btn-vuh',label:'vs UTG/HJ'}, {bid:'btn-vco',label:'vs CO'}],
+  sb:   [{bid:'sb-open',  label:'Open'}, {bid:'sb-vuh', label:'vs UTG/HJ'}, {bid:'sb-vco',label:'vs CO'}, {bid:'sb-vbt',label:'vs BTN'}],
+  bb:   [{bid:'bb-vuh',   label:'vs UTG/HJ'}, {bid:'bb-vco',label:'vs CO'}, {bid:'bb-vbt',label:'vs BTN'}, {bid:'bb-vsb',label:'vs SB'}],
+};
+
+function mSwitchPos(pos) {
+  if (!isMobile()) return;
+  mActivePos = pos;
+  mActiveSit = M_SITS[pos][0].bid; // default to first situation
+  // sync desktop tab
+  switchTab(pos);
+  // update mobile pos bar
+  document.querySelectorAll('.mpos-btn').forEach(b => b.classList.toggle('active', b.dataset.pos === pos));
+  // update sit bar
+  mBuildSitBar();
+  // scroll main to top
+  document.getElementById('main').scrollTop = 0;
+}
+
+function mSwitchSit(bid) {
+  if (!isMobile()) return;
+  mActiveSit = bid;
+  document.querySelectorAll('.msit-chip').forEach(c => c.classList.toggle('active', c.dataset.bid === bid));
+  // Show only the relevant block, hide others in this panel
+  const panel = document.getElementById('pnl-' + mActivePos);
+  if (!panel) return;
+  panel.querySelectorAll('.range-block').forEach(blk => {
+    blk.style.display = (!bid || blk.dataset.bid === bid) ? '' : 'none';
+  });
+}
+
+function mBuildSitBar() {
+  const bar = document.getElementById('mobile-sit-bar');
+  bar.innerHTML = '';
+  const sits = M_SITS[mActivePos] || [];
+  if (sits.length <= 1) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  sits.forEach(s => {
+    const chip = document.createElement('div');
+    chip.className = 'msit-chip' + (s.bid === mActiveSit ? ' active' : '');
+    chip.dataset.bid = s.bid;
+    chip.textContent = s.label;
+    chip.addEventListener('click', () => mSwitchSit(s.bid));
+    bar.appendChild(chip);
+  });
+  // Apply filter
+  mSwitchSit(mActiveSit);
+}
+
+function mBuildLegend() {
+  const leg = document.getElementById('mobile-legend');
+  leg.innerHTML = '';
+  ACTIONS.forEach(a => {
+    if (!a.code && a.label === 'FOLD') return;
+    const item = document.createElement('div'); item.className = 'mleg-item';
+    const dot = document.createElement('div'); dot.className = 'mleg-dot';
+    dot.style.background = a.bg;
+    item.appendChild(dot);
+    item.appendChild(document.createTextNode(a.label));
+    leg.appendChild(item);
+  });
+  // Fold
+  const fItem = document.createElement('div'); fItem.className = 'mleg-item';
+  const fDot = document.createElement('div'); fDot.className = 'mleg-dot';
+  fDot.style.background = 'var(--surface2)'; fDot.style.border = '1px solid var(--border)';
+  fItem.appendChild(fDot); fItem.appendChild(document.createTextNode('Fold'));
+  leg.appendChild(fItem);
+}
+
+// ── Bottom nav ──
+let mCurrentView = 'ranges';
+
+function mNavSwitch(view) {
+  if (!isMobile()) return;
+  mCurrentView = view;
+  document.querySelectorAll('.mnav-btn').forEach(b => {
+    b.classList.toggle('active', b.id === 'mnav-' + view);
+  });
+  if (view === 'quiz') {
+    openQuiz();
+    // reset nav back to ranges when quiz closes
+    setTimeout(() => {
+      if (!document.getElementById('quiz-overlay').classList.contains('open')) {
+        mNavSwitch('ranges');
+      }
+    }, 300);
+  } else if (view === 'cat') {
+    mOpenCatSheet();
+    mNavSwitch('ranges'); // reset nav visually
+  } else {
+    // ranges
+    document.getElementById('main').style.display = '';
+  }
+}
+
+function mOpenCatSheet() {
+  const sheet = document.getElementById('mobile-cat-sheet');
+  const list = document.getElementById('mobile-cat-list');
+  list.innerHTML = '';
+  categories.forEach(cat => {
+    const item = document.createElement('div');
+    item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border2);cursor:pointer;background:'+(cat.id===activeCategory?'rgba(0,212,170,0.08)':'transparent')+';';
+    item.innerHTML = `<span style="font-size:20px">${cat.icon}</span><div style="flex:1"><div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:${cat.id===activeCategory?'var(--accent)':'var(--text)'};letter-spacing:0.08em">${cat.name}</div></div>${cat.id===activeCategory?'<div style=\'color:var(--accent);font-size:16px\'>✓</div>':''}`;
+    item.addEventListener('click', () => { switchCat(cat.id); mCloseCatSheet(); mSwitchPos(mActivePos); });
+    list.appendChild(item);
+  });
+  sheet.style.display = 'flex';
+}
+function mCloseCatSheet() {
+  document.getElementById('mobile-cat-sheet').style.display = 'none';
+}
+
+// ── Mobile tooltip (touch) ──
+document.addEventListener('touchstart', e => {
+  const cell = e.target.closest('.cell');
+  if (!cell || !isMobile()) return;
+  const code = cell.dataset.code;
+  const a = getAction(code);
+  const tip = document.getElementById('tooltip');
+  tip.innerHTML = `<span style="font-size:18px;font-weight:700">${cell.dataset.hand}</span> · <span style="color:${code?'var(--accent)':'var(--text3)'}">${a.label}</span>`;
+  tip.style.display = 'block';
+  setTimeout(() => tip.style.display = 'none', 1500);
+}, { passive: true });
+
+// ── Mobile autoFit override ──
+const _origAutoFit = autoFit;
+function autoFit() {
+  if (!isMobile()) { _origAutoFit(); return; }
+  // On mobile: fit the grid of the current situation to screen width
+  const panel = document.querySelector('.tab-panel.active');
+  if (!panel) return;
+  const visibleBlock = panel.querySelector('.range-block:not([style*="display: none"])') || panel.querySelector('.range-block');
+  if (!visibleBlock) return;
+  const availW = window.innerWidth - 20;
+  const px = Math.max(20, Math.min(40, Math.floor((availW - 12*1) / 13)));
+  document.documentElement.style.setProperty('--cell-size', px + 'px');
+  document.documentElement.style.setProperty('--cell-font', Math.max(6, Math.round(px * .285)) + 'px');
+}
+
+// ── Override switchTab to also update mobile pos bar ──
+const _origSwitchTab = switchTab;
+function switchTab(id) {
+  _origSwitchTab(id);
+  if (isMobile()) {
+    document.querySelectorAll('.mpos-btn').forEach(b => b.classList.toggle('active', b.dataset.pos === id));
+    mActivePos = id;
+    mActiveSit = (M_SITS[id]||[])[0]?.bid || null;
+    mBuildSitBar();
+  }
+}
+
+// ── Override rebuildAll to also update mobile UI ──
+const _origRebuildAll = rebuildAll;
+function rebuildAll() {
+  _origRebuildAll();
+  if (isMobile()) {
+    mBuildLegend();
+    mBuildSitBar();
+    autoFit();
+  }
+}
+
+// ── Swipe left/right to change position on mobile ──
+let mTouchX = 0;
+document.getElementById('main').addEventListener('touchstart', e => {
+  mTouchX = e.touches[0].clientX;
+}, { passive: true });
+document.getElementById('main').addEventListener('touchend', e => {
+  if (!isMobile()) return;
+  const dx = e.changedTouches[0].clientX - mTouchX;
+  if (Math.abs(dx) < 60) return;
+  const order = ['utg','hj','co','btn','sb','bb'];
+  const idx = order.indexOf(mActivePos);
+  if (dx < 0 && idx < 5) mSwitchPos(order[idx+1]);
+  if (dx > 0 && idx > 0) mSwitchPos(order[idx-1]);
+}, { passive: true });
+
+// ── Init mobile on load ──
+window.addEventListener('load', () => {
+  if (isMobile()) {
+    mBuildLegend();
+    mSwitchPos('utg');
+    autoFit();
+  }
+});
+window.addEventListener('resize', () => {
+  if (isMobile()) { mBuildLegend(); autoFit(); }
+  else _origAutoFit();
+});
 
 </script>
 </body>
