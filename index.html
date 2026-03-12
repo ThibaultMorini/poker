@@ -518,7 +518,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
         localStorage.setItem('rm_edits', JSON.stringify(edits));
         if(typeof _activeCat !== 'undefined') localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
         if(typeof buildPanels === 'function') buildPanels();
-        _showToast('↓ Ranges synchronisées depuis le cloud');
+        _showToast('↓ Ranges importées depuis le cloud');
       });
     }
 
@@ -536,9 +536,29 @@ textarea.io-ta:focus{border-color:var(--accent)}
         }
       }
       try {
+        // Build full snapshot: all bids x all hands (default fn + edits override)
+        const ALL_BIDS = [
+          {bid:'utg-open', fn:h=>utg(h)},
+          {bid:'hj-open',  fn:h=>hj(h)},    {bid:'hj-vu',  fn:h=>hj(h,'UTG')},
+          {bid:'co-open',  fn:h=>co(h)},    {bid:'co-vuh', fn:h=>co(h,'UTG')},
+          {bid:'btn-open', fn:h=>btn(h)},   {bid:'btn-vuh',fn:h=>btn(h,'UTG')}, {bid:'btn-vco',fn:h=>btn(h,'CO')},
+          {bid:'sb-open',  fn:h=>sb(h)},    {bid:'sb-vuh', fn:h=>sb(h,'UTG')}, {bid:'sb-vco',fn:h=>sb(h,'CO')}, {bid:'sb-vbt',fn:h=>sb(h,'BTN')},
+          {bid:'bb-vuh',   fn:h=>bb(h,'UTG')}, {bid:'bb-vco',fn:h=>bb(h,'CO')}, {bid:'bb-vbt',fn:h=>bb(h,'BTN')}, {bid:'bb-vsb',fn:h=>bb(h,'SB')},
+        ];
+        const fullRanges = {};
+        const RANKS = ['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
+        function hlLocal(i,j){ if(i===j)return RANKS[i]+RANKS[j]; if(j>i)return RANKS[i]+RANKS[j]+'s'; return RANKS[j]+RANKS[i]+'o'; }
+        ALL_BIDS.forEach(({bid, fn})=>{
+          fullRanges[bid] = {};
+          for(let i=0;i<13;i++) for(let j=0;j<13;j++){
+            const h = hlLocal(i,j);
+            const k = bid+'::'+h;
+            fullRanges[bid][h] = k in edits ? edits[k] : fn(h);
+          }
+        });
         const ref = db.collection('users').doc(_fbUid).collection('data').doc('ranges');
-        await ref.set({ edits: edits, updatedAt: new Date().toISOString() });
-        _showToast('↑ Ranges sauvegardées dans le cloud ✓');
+        await ref.set({ edits: edits, fullRanges: fullRanges, updatedAt: new Date().toISOString() });
+        _showToast('↑ Ranges complètes sauvegardées ✓');
       } catch(e){
         console.error(e);
         _showToast('Erreur sync: ' + e.message);
@@ -598,6 +618,9 @@ textarea.io-ta:focus{border-color:var(--accent)}
   <span class="paint-label">PEINDRE :</span>
   <div id="paint-actions"></div>
 </div>
+
+<!-- CATEGORY BAR -->
+<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
 
 <div class="tab-bar" id="tab-bar"></div>
 
@@ -660,9 +683,6 @@ textarea.io-ta:focus{border-color:var(--accent)}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-
-<!-- CATEGORY BAR -->
-<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
 
 <!-- QUIZ OVERLAY -->
 <div class="quiz-overlay" id="quiz-overlay">
