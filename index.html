@@ -2436,6 +2436,7 @@ function _mSwitchSit(bid){
   panel.querySelectorAll('.range-block').forEach(blk=>{
     blk.style.display=(!bid||blk.dataset.bid===bid)?'':'none';
   });
+  _mAutoFit();
 }
 
 function _mBuildSitBar(){
@@ -2470,9 +2471,20 @@ function _mBuildLegend(){
 
 function _mAutoFit(){
   if(!_isMobile())return;
-  const px=Math.max(20,Math.min(38,Math.floor((window.innerWidth-20)/13)));
-  document.documentElement.style.setProperty('--cell-size',px+'px');
-  document.documentElement.style.setProperty('--cell-font',Math.max(6,Math.round(px*.28))+'px');
+  // Calculate cell size to perfectly fill screen width
+  // 13 cells + 12 gaps (1px each) + 2x10px padding of range-block
+  const gap = 1;
+  const pad = 20; // total horizontal padding
+  const available = window.innerWidth - pad;
+  const px = Math.max(18, Math.floor((available - gap*12) / 13));
+  document.documentElement.style.setProperty('--cell-size', px+'px');
+  document.documentElement.style.setProperty('--cell-font', Math.max(5, Math.round(px*.27))+'px');
+  document.documentElement.style.setProperty('--cell-gap', gap+'px');
+  // Apply to each grid-wrap individually so all grids are same width
+  document.querySelectorAll('.grid-wrap').forEach(gw=>{
+    const totalW = px*13 + gap*12;
+    gw.style.width = totalW+'px';
+  });
 }
 
 // Touch tooltip
