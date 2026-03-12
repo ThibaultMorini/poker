@@ -82,7 +82,7 @@
     border: 1px solid var(--border2); border-radius: 3px; padding: 3px 8px;
   }
   .hbtn {
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: 5px;
     padding: 4px 10px; background: transparent;
     border: 1px solid var(--border2); border-radius: 4px;
     color: var(--text2); font-family: 'IBM Plex Mono', monospace;
@@ -386,7 +386,7 @@
 .quiz-config-label{font-size:12px;color:var(--text3);letter-spacing:.06em;flex-shrink:0}
 .quiz-config-chip{padding:5px 13px;border-radius:10px;border:1px solid var(--border2);font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s;letter-spacing:.05em}
 .quiz-config-chip.on{background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.4);color:var(--accent)}
-.quiz-start-btn{width:100%;padding:13px;border-radius:5px;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .15s}
+.quiz-start-btn{width:100%;padding:10px;border-radius:5px;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .15s}
 .quiz-start-btn:hover{background:rgba(0,212,170,.22)}
 .quiz-result-box{display:none;flex-direction:column;gap:14px;align-items:center}
 .quiz-result-box.open{display:flex}
@@ -406,8 +406,8 @@
 .io-btn:hover{border-color:var(--accent);color:var(--accent)}
 .io-btn.imp{border-color:rgba(250,204,21,.4);color:#fde68a}
 .io-note{font-size:12px;color:var(--text3);line-height:1.6;margin-top:4px}
-textarea.io-ta{width:100%;height:110px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px;resize:vertical;outline:none;margin-top:6px}
-textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
+textarea.io-ta{width:100%;height:80px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px;resize:vertical;outline:none;margin-top:6px}
+textarea.io-ta:focus{border-color:var(--accent)}
 
 /* ─── MOBILE ─── */
 #mobile-nav,#mobile-pos-bar,#mobile-sit-bar,#mobile-legend{display:none}
@@ -453,123 +453,109 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
 .mleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 </style>
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script>
+  (function(){
+    const firebaseConfig = {
+      apiKey: "AIzaSyCArDoFDlTynQgXyNNtjBKgHi4rEgK8QXA",
+      authDomain: "poker-b3744.firebaseapp.com",
+      projectId: "poker-b3744",
+      storageBucket: "poker-b3744.firebasestorage.app",
+      messagingSenderId: "325200510938",
+      appId: "1:325200510938:web:77e149570612c354548ae3"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    let _fbUid = null;
+    let _fbListener = null;
 
-  <!-- Firebase SDK -->
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCArDoFDlTynQgXyNNtjBKgHi4rEgK8QXA",
-    authDomain: "poker-b3744.firebaseapp.com",
-    projectId: "poker-b3744",
-    storageBucket: "poker-b3744.firebasestorage.app",
-    messagingSenderId: "325200510938",
-    appId: "1:325200510938:web:77e149570612c354548ae3"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-
-  let _fbUid = null;
-  let _fbListener = null;
-
-  // Auth state
-  onAuthStateChanged(auth, user => {
-    if(user){
-      _fbUid = user.uid;
-      _updateSyncBtn(true, user.displayName);
-      _startListener();
-    } else {
-      _fbUid = null;
-      _updateSyncBtn(false, null);
-      if(_fbListener){ _fbListener(); _fbListener=null; }
-    }
-  });
-
-  function _updateSyncBtn(loggedIn, name){
-    const btn = document.getElementById('fb-sync-btn');
-    const status = document.getElementById('fb-sync-status');
-    if(!btn) return;
-    if(loggedIn){
-      btn.textContent = '↑ PUSH';
-      btn.style.borderColor = 'rgba(0,212,170,.4)';
-      btn.style.color = 'var(--accent)';
-      if(status) status.textContent = '● ' + (name||'connecté');
-    } else {
-      btn.textContent = '🔗 SYNC';
-      btn.style.borderColor = 'var(--border2)';
-      btn.style.color = 'var(--text2)';
-      if(status) status.textContent = 'non connecté';
-    }
-  }
-
-  // Listen for remote changes (pull)
-  function _startListener(){
-    if(!_fbUid) return;
-    if(_fbListener){ _fbListener(); }
-    const ref = doc(db, 'users', _fbUid, 'data', 'ranges');
-    _fbListener = onSnapshot(ref, snap => {
-      if(!snap.exists()) return;
-      const data = snap.data();
-      if(!data || !data.edits) return;
-      // Only apply if different from local (avoid loop)
-      const remote = JSON.stringify(data.edits);
-      const local = JSON.stringify(edits);
-      if(remote === local) return;
-      edits = data.edits;
-      // Also save to localStorage
-      localStorage.setItem('rm_edits', JSON.stringify(edits));
-      if(typeof _activeCat !== 'undefined') localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
-      // Rebuild UI
-      if(typeof buildPanels === 'function') buildPanels();
-      _showToast('↓ Ranges synchronisées depuis le cloud');
+    auth.onAuthStateChanged(user => {
+      if(user){
+        _fbUid = user.uid;
+        _updateSyncBtn(true, user.displayName);
+        _startListener();
+      } else {
+        _fbUid = null;
+        _updateSyncBtn(false, null);
+        if(_fbListener){ _fbListener(); _fbListener=null; }
+      }
     });
-  }
 
-  // Push to Firebase
-  window._fbPush = async function(){
-    if(!_fbUid){
-      try {
-        await signInWithPopup(auth, provider);
-      } catch(e){
-        console.error('Auth error:', e.code, e.message);
-        if(e.code === 'auth/popup-blocked') {
-          _showToast('⚠ Autorise les popups pour ce site');
-        } else if(e.code === 'auth/unauthorized-domain') {
-          _showToast('⚠ Domaine non autorisé dans Firebase');
-        } else if(e.code === 'auth/popup-closed-by-user') {
-          _showToast('Connexion annulée');
-        } else {
-          _showToast('Erreur: ' + e.code);
-        }
-        return;
+    function _updateSyncBtn(loggedIn, name){
+      const btn = document.getElementById('fb-sync-btn');
+      const status = document.getElementById('fb-sync-status');
+      if(!btn) return;
+      if(loggedIn){
+        btn.textContent = '↑ PUSH';
+        btn.style.borderColor = 'rgba(0,212,170,.4)';
+        btn.style.color = 'var(--accent)';
+        if(status) status.textContent = '● ' + (name||'connecté');
+      } else {
+        btn.textContent = '🔗 SYNC';
+        btn.style.borderColor = 'var(--border2)';
+        btn.style.color = 'var(--text2)';
+        if(status) status.textContent = 'non connecté';
       }
     }
-    try {
-      const ref = doc(db, 'users', _fbUid, 'data', 'ranges');
-      await setDoc(ref, { edits: edits, updatedAt: new Date().toISOString() });
-      _showToast('↑ Ranges sauvegardées dans le cloud ✓');
-    } catch(e){
-      console.error(e);
-      _showToast('Erreur sync Firebase');
+
+    function _startListener(){
+      if(!_fbUid) return;
+      if(_fbListener){ _fbListener(); }
+      const ref = db.collection('users').doc(_fbUid).collection('data').doc('ranges');
+      _fbListener = ref.onSnapshot(snap => {
+        if(!snap.exists) return;
+        const data = snap.data();
+        if(!data || !data.edits) return;
+        const remote = JSON.stringify(data.edits);
+        const local = JSON.stringify(edits);
+        if(remote === local) return;
+        edits = data.edits;
+        localStorage.setItem('rm_edits', JSON.stringify(edits));
+        if(typeof _activeCat !== 'undefined') localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
+        if(typeof buildPanels === 'function') buildPanels();
+        _showToast('↓ Ranges synchronisées depuis le cloud');
+      });
     }
-  };
 
-  window._fbSignOut = async function(){
-    await signOut(auth);
-    _showToast('Déconnecté');
-  };
+    window._fbPush = async function(){
+      if(!_fbUid){
+        try {
+          await auth.signInWithPopup(provider);
+        } catch(e){
+          console.error('Auth error:', e.code, e.message);
+          if(e.code === 'auth/popup-blocked') _showToast('⚠ Autorise les popups pour ce site');
+          else if(e.code === 'auth/unauthorized-domain') _showToast('⚠ Domaine non autorisé dans Firebase');
+          else if(e.code === 'auth/popup-closed-by-user') _showToast('Connexion annulée');
+          else _showToast('Erreur: ' + e.code);
+          return;
+        }
+      }
+      try {
+        const ref = db.collection('users').doc(_fbUid).collection('data').doc('ranges');
+        await ref.set({ edits: edits, updatedAt: new Date().toISOString() });
+        _showToast('↑ Ranges sauvegardées dans le cloud ✓');
+      } catch(e){
+        console.error(e);
+        _showToast('Erreur sync: ' + e.message);
+      }
+    };
 
-  function _showToast(msg){
-    if(typeof showToast === 'function') showToast(msg);
-    else console.log(msg);
-  }
+    window._fbSignOut = function(){
+      auth.signOut().then(()=>_showToast('Déconnecté'));
+    };
+    window._fbUidGetter = ()=>_fbUid;
+
+    function _showToast(msg){
+      if(typeof showToast === 'function') showToast(msg);
+      else console.log(msg);
+    }
+  })();
   </script>
-
 </head>
 <body>
 
@@ -586,7 +572,10 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
 
 
 
-
+    <label class="hbtn" title="Import JSON" style="cursor:pointer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP
+      <input type="file" accept=".json" style="display:none" onchange="importJSON(this)">
+    </label>
 
 
 
@@ -719,13 +708,13 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
       <div class="quiz-hand-display" id="qz-hand">??</div>
       <div class="quiz-btns" id="qz-btns"></div>
       <div class="quiz-feedback" id="qz-fb"></div>
-      <button id="qz-next" style="padding:10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
+      <button id="qz-next" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
     </div>
     <div class="quiz-result-box" id="qz-result">
       <div class="quiz-result-score" id="qz-score">—</div>
       <div class="quiz-result-msg" id="qz-msg">—</div>
       <button class="quiz-start-btn" id="quiz-replay-btn" style="max-width:200px">↺ REJOUER</button>
-      <button id="quiz-reconfig-btn" style="padding:9px 18px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:12px;cursor:pointer">CONFIG</button>
+      <button id="quiz-reconfig-btn" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer">CONFIG</button>
     </div>
   </div>
 </div>
@@ -754,11 +743,11 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
       <div class="io-note">Ou colle du texte PioSolver :</div>
       <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
       <div class="io-row" style="margin-top:8px">
-        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none">
+        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
           <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option>
           <option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
         </select>
-        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none">
+        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
           <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option>
           <option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
         </select>
@@ -769,9 +758,9 @@ textarea.io-ta{font-size:11px}textarea.io-ta:focus{border-color:var(--accent)}
     <div class="io-section">
       <div class="io-section-title">☁ CLOUD SYNC</div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <button class="io-btn" id="fb-sync-btn" onclick="window._fbPush&&window._fbPush()" style="border-color:var(--border2);color:var(--text2)">🔗 SYNC</button>
+        <button class="io-btn" id="fb-sync-btn" onclick="window._fbPush&&window._fbPush()">🔗 SYNC</button>
         <span id="fb-sync-status" style="font-family:IBM Plex Mono,monospace;font-size:12px;color:var(--text3)">non connecté</span>
-        <button class="io-btn" onclick="window._fbSignOut&&window._fbSignOut()" style="font-size:12px;padding:7px 12px;opacity:.5">déco</button>
+        <button class="io-btn" onclick="window._fbSignOut&&window._fbSignOut()" style="opacity:.6">déco</button>
       </div>
       <div class="io-note">Connecte-toi avec Google → tes ranges se synchronisent automatiquement entre PC et mobile.</div>
     </div>
