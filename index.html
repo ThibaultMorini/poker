@@ -503,6 +503,18 @@ textarea.io-ta:focus{border-color:var(--accent)}
 </div>
 
 <div class="tab-bar" id="tab-bar"></div>
+
+<!-- MOBILE DOM -->
+<div id="mobile-pos-bar">
+  <div class="mpos-btn active" data-pos="utg">UTG</div>
+  <div class="mpos-btn" data-pos="hj">HJ</div>
+  <div class="mpos-btn" data-pos="co">CO</div>
+  <div class="mpos-btn" data-pos="btn">BTN</div>
+  <div class="mpos-btn" data-pos="sb">SB</div>
+  <div class="mpos-btn" data-pos="bb">BB</div>
+</div>
+<div id="mobile-sit-bar"></div>
+<div id="mobile-legend"></div>
 <div class="main" id="main"></div>
 <div class="tooltip" id="tooltip"></div>
 
@@ -550,6 +562,124 @@ textarea.io-ta:focus{border-color:var(--accent)}
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
+
+
+<!-- CATEGORY BAR -->
+<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quiz-overlay">
+  <div class="quiz-box">
+    <div class="quiz-header">
+      <div class="quiz-title">⚡ QUIZ MODE</div>
+      <button class="quiz-close" id="quiz-close-btn">✕</button>
+    </div>
+    <div id="qz-config">
+      <div class="quiz-config">
+        <span class="quiz-config-label">POSITION :</span>
+        <div class="quiz-config-chip on" data-qf="pos" data-val="all">TOUT</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="utg">UTG</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="hj">HJ</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="co">CO</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="btn">BTN</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="sb">SB</div>
+        <div class="quiz-config-chip" data-qf="pos" data-val="bb">BB</div>
+      </div>
+      <div class="quiz-config" style="margin-top:8px">
+        <span class="quiz-config-label">SITUATION :</span>
+        <div class="quiz-config-chip on" data-qf="sit" data-val="all">TOUT</div>
+        <div class="quiz-config-chip" data-qf="sit" data-val="open">OPEN</div>
+        <div class="quiz-config-chip" data-qf="sit" data-val="vs">VS RAISE</div>
+      </div>
+      <div class="quiz-config" style="margin-top:8px">
+        <span class="quiz-config-label">MAINS :</span>
+        <div class="quiz-config-chip on" data-qf="hand" data-val="border">BORDERLINE</div>
+        <div class="quiz-config-chip" data-qf="hand" data-val="all">TOUTES</div>
+      </div>
+      <button class="quiz-start-btn" id="quiz-start-btn" style="margin-top:10px">▶ COMMENCER</button>
+    </div>
+    <div id="qz-play" style="display:none;flex-direction:column;gap:12px">
+      <div class="quiz-score-bar">
+        <div class="quiz-stat"><div class="quiz-stat-val green" id="qz-ok">0</div><div class="quiz-stat-lbl">BON</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-val red" id="qz-ko">0</div><div class="quiz-stat-lbl">ERREUR</div></div>
+        <div class="quiz-sep"></div>
+        <div class="quiz-stat"><div class="quiz-stat-val acc" id="qz-streak">0</div><div class="quiz-stat-lbl">STREAK</div></div>
+        <div class="quiz-stat"><div class="quiz-stat-val" id="qz-n">0/0</div><div class="quiz-stat-lbl">TOTAL</div></div>
+      </div>
+      <div class="quiz-progress"><div class="quiz-progress-fill" id="qz-prog"></div></div>
+      <div class="quiz-scenario" id="qz-sc">—</div>
+      <div class="quiz-hand-display" id="qz-hand">??</div>
+      <div class="quiz-btns" id="qz-btns"></div>
+      <div class="quiz-feedback" id="qz-fb"></div>
+      <button id="qz-next" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
+    </div>
+    <div class="quiz-result-box" id="qz-result">
+      <div class="quiz-result-score" id="qz-score">—</div>
+      <div class="quiz-result-msg" id="qz-msg">—</div>
+      <button class="quiz-start-btn" id="quiz-replay-btn" style="max-width:200px">↺ REJOUER</button>
+      <button id="quiz-reconfig-btn" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer">CONFIG</button>
+    </div>
+  </div>
+</div>
+
+<!-- IO MODAL -->
+<div class="io-modal" id="io-modal">
+  <div class="io-box">
+    <div class="io-head">IMPORT / EXPORT <button class="io-close" id="io-close-btn">✕</button></div>
+    <div class="io-section">
+      <div class="io-section-title">EXPORTER</div>
+      <div class="io-row">
+        <button class="io-btn" id="io-export-json">↓ JSON</button>
+        <button class="io-btn" id="io-export-png">↓ PNG</button>
+        <button class="io-btn" id="io-export-pio">↓ PioSolver</button>
+        <button class="io-btn" id="io-export-gto">↓ GTO+</button>
+        <button class="io-btn" id="io-export-pt">↓ PokerTracker</button>
+      </div>
+      <div class="io-note">Export = position active (onglet ouvert).</div>
+    </div>
+    <div class="io-section">
+      <div class="io-section-title">IMPORTER</div>
+      <div class="io-row">
+        <label class="io-btn imp" style="cursor:pointer">↑ JSON<input type="file" id="io-import-json-file" accept=".json" style="display:none"></label>
+        <label class="io-btn imp" style="cursor:pointer">↑ PioSolver/GTO+<input type="file" id="io-import-pio-file" accept=".txt,.pio,.gto" style="display:none"></label>
+      </div>
+      <div class="io-note">Ou colle du texte PioSolver :</div>
+      <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
+      <div class="io-row" style="margin-top:8px">
+        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+          <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option>
+          <option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
+        </select>
+        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
+          <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option>
+          <option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
+        </select>
+        <button class="io-btn" id="io-paste-btn">Appliquer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav id="mobile-nav">
+  <button class="mnav-btn active" id="mnav-ranges">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>RANGES
+  </button>
+  <button class="mnav-btn mnav-quiz-btn" id="mnav-quiz">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ
+  </button>
+  <button class="mnav-btn" id="mnav-cat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>CATÉG.
+  </button>
+</nav>
+<div id="m-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.75);align-items:flex-end">
+  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2)">
+    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px">CATÉGORIE</div>
+    <div id="m-cat-list" style="display:flex;flex-direction:column;gap:10px"></div>
+    <button id="m-cat-add" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.08em;cursor:pointer">＋ NOUVELLE CATÉGORIE</button>
+  </div>
+</div>
+
+
 
 <script>
 // ════════════════════════════════
@@ -2282,132 +2412,6 @@ window.addEventListener('resize',()=>{
 });
 
 </script>
-
-<!-- CATEGORY BAR -->
-<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
-
-<!-- QUIZ OVERLAY -->
-<div class="quiz-overlay" id="quiz-overlay">
-  <div class="quiz-box">
-    <div class="quiz-header">
-      <div class="quiz-title">⚡ QUIZ MODE</div>
-      <button class="quiz-close" id="quiz-close-btn">✕</button>
-    </div>
-    <div id="qz-config">
-      <div class="quiz-config">
-        <span class="quiz-config-label">POSITION :</span>
-        <div class="quiz-config-chip on" data-qf="pos" data-val="all">TOUT</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="utg">UTG</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="hj">HJ</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="co">CO</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="btn">BTN</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="sb">SB</div>
-        <div class="quiz-config-chip" data-qf="pos" data-val="bb">BB</div>
-      </div>
-      <div class="quiz-config" style="margin-top:8px">
-        <span class="quiz-config-label">SITUATION :</span>
-        <div class="quiz-config-chip on" data-qf="sit" data-val="all">TOUT</div>
-        <div class="quiz-config-chip" data-qf="sit" data-val="open">OPEN</div>
-        <div class="quiz-config-chip" data-qf="sit" data-val="vs">VS RAISE</div>
-      </div>
-      <div class="quiz-config" style="margin-top:8px">
-        <span class="quiz-config-label">MAINS :</span>
-        <div class="quiz-config-chip on" data-qf="hand" data-val="border">BORDERLINE</div>
-        <div class="quiz-config-chip" data-qf="hand" data-val="all">TOUTES</div>
-      </div>
-      <button class="quiz-start-btn" id="quiz-start-btn" style="margin-top:10px">▶ COMMENCER</button>
-    </div>
-    <div id="qz-play" style="display:none;flex-direction:column;gap:12px">
-      <div class="quiz-score-bar">
-        <div class="quiz-stat"><div class="quiz-stat-val green" id="qz-ok">0</div><div class="quiz-stat-lbl">BON</div></div>
-        <div class="quiz-stat"><div class="quiz-stat-val red" id="qz-ko">0</div><div class="quiz-stat-lbl">ERREUR</div></div>
-        <div class="quiz-sep"></div>
-        <div class="quiz-stat"><div class="quiz-stat-val acc" id="qz-streak">0</div><div class="quiz-stat-lbl">STREAK</div></div>
-        <div class="quiz-stat"><div class="quiz-stat-val" id="qz-n">0/0</div><div class="quiz-stat-lbl">TOTAL</div></div>
-      </div>
-      <div class="quiz-progress"><div class="quiz-progress-fill" id="qz-prog"></div></div>
-      <div class="quiz-scenario" id="qz-sc">—</div>
-      <div class="quiz-hand-display" id="qz-hand">??</div>
-      <div class="quiz-btns" id="qz-btns"></div>
-      <div class="quiz-feedback" id="qz-fb"></div>
-      <button id="qz-next" style="padding:7px;border-radius:4px;background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer;letter-spacing:.06em;opacity:.3">SUIVANT →</button>
-    </div>
-    <div class="quiz-result-box" id="qz-result">
-      <div class="quiz-result-score" id="qz-score">—</div>
-      <div class="quiz-result-msg" id="qz-msg">—</div>
-      <button class="quiz-start-btn" id="quiz-replay-btn" style="max-width:200px">↺ REJOUER</button>
-      <button id="quiz-reconfig-btn" style="padding:6px 16px;border-radius:4px;background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:IBM Plex Mono,monospace;font-size:10px;cursor:pointer">CONFIG</button>
-    </div>
-  </div>
-</div>
-
-<!-- IO MODAL -->
-<div class="io-modal" id="io-modal">
-  <div class="io-box">
-    <div class="io-head">IMPORT / EXPORT <button class="io-close" id="io-close-btn">✕</button></div>
-    <div class="io-section">
-      <div class="io-section-title">EXPORTER</div>
-      <div class="io-row">
-        <button class="io-btn" id="io-export-json">↓ JSON</button>
-        <button class="io-btn" id="io-export-png">↓ PNG</button>
-        <button class="io-btn" id="io-export-pio">↓ PioSolver</button>
-        <button class="io-btn" id="io-export-gto">↓ GTO+</button>
-        <button class="io-btn" id="io-export-pt">↓ PokerTracker</button>
-      </div>
-      <div class="io-note">Export = position active (onglet ouvert).</div>
-    </div>
-    <div class="io-section">
-      <div class="io-section-title">IMPORTER</div>
-      <div class="io-row">
-        <label class="io-btn imp" style="cursor:pointer">↑ JSON<input type="file" id="io-import-json-file" accept=".json" style="display:none"></label>
-        <label class="io-btn imp" style="cursor:pointer">↑ PioSolver/GTO+<input type="file" id="io-import-pio-file" accept=".txt,.pio,.gto" style="display:none"></label>
-      </div>
-      <div class="io-note">Ou colle du texte PioSolver :</div>
-      <textarea class="io-ta" id="io-ta" placeholder="AA:1&#10;KK:1&#10;AKs:0.75&#10;..."></textarea>
-      <div class="io-row" style="margin-top:8px">
-        <select id="io-pos" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
-          <option value="utg-open">UTG Open</option><option value="hj-open">HJ Open</option>
-          <option value="co-open">CO Open</option><option value="btn-open">BTN Open</option><option value="sb-open">SB Open</option>
-        </select>
-        <select id="io-act" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text2);font-family:IBM Plex Mono,monospace;font-size:10px;padding:5px 8px;border-radius:4px;outline:none">
-          <option value="O">→ OPEN</option><option value="C">→ CALL 3BET</option>
-          <option value="T">→ 3BET</option><option value="F">→ 4BET</option><option value="V">→ 5BET</option>
-        </select>
-        <button class="io-btn" id="io-paste-btn">Appliquer</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MOBILE DOM -->
-<div id="mobile-pos-bar">
-  <div class="mpos-btn active" data-pos="utg">UTG</div>
-  <div class="mpos-btn" data-pos="hj">HJ</div>
-  <div class="mpos-btn" data-pos="co">CO</div>
-  <div class="mpos-btn" data-pos="btn">BTN</div>
-  <div class="mpos-btn" data-pos="sb">SB</div>
-  <div class="mpos-btn" data-pos="bb">BB</div>
-</div>
-<div id="mobile-sit-bar"></div>
-<div id="mobile-legend"></div>
-<nav id="mobile-nav">
-  <button class="mnav-btn active" id="mnav-ranges">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>RANGES
-  </button>
-  <button class="mnav-btn mnav-quiz-btn" id="mnav-quiz">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>QUIZ
-  </button>
-  <button class="mnav-btn" id="mnav-cat">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>CATÉG.
-  </button>
-</nav>
-<div id="m-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.75);align-items:flex-end">
-  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2)">
-    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px">CATÉGORIE</div>
-    <div id="m-cat-list" style="display:flex;flex-direction:column;gap:10px"></div>
-    <button id="m-cat-add" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.08em;cursor:pointer">＋ NOUVELLE CATÉGORIE</button>
-  </div>
-</div>
 
 </body>
 </html>
