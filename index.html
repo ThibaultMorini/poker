@@ -347,14 +347,7 @@
   /* ── LAYOUT ── */
   .sections-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; width:100%; }
 
-/* ─── CATEGORY BAR ─── */
-.cat-bar{display:flex;align-items:center;height:30px;background:#0d1015;border-bottom:1px solid var(--border);flex-shrink:0;padding:0 14px;gap:6px;overflow-x:auto;}
-.cat-bar::-webkit-scrollbar{height:2px}.cat-bar::-webkit-scrollbar-thumb{background:var(--border2)}
-.cat-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:.08em;margin-right:4px;flex-shrink:0}
-.cat-chip{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;border:1px solid var(--border2);color:var(--text3);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;letter-spacing:.05em}
-.cat-chip:hover,.cat-chip-add:hover{border-color:var(--accent);color:var(--accent)}
-.cat-chip.active{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.5);color:var(--accent)}
-.cat-chip-add{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:10px;border:1px dashed var(--border2);color:var(--text3);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
+
 
 /* ─── QUIZ OVERLAY ─── */
 .quiz-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:13000;display:none;flex-direction:column;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
@@ -413,7 +406,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
 #mobile-nav,#mobile-pos-bar,#mobile-sit-bar,#mobile-legend{display:none}
 @media(max-width:768px){
   :root{--cell-size:24px;--cell-font:7px;--cell-gap:1px}
-  .header-legend,.cat-bar,.edit-banner,.paint-bar,.tab-bar{display:none!important}
+  .header-legend,.edit-banner,.paint-bar,.tab-bar{display:none!important}
   .header-right .hbtn{display:none!important}
   header{height:52px;padding:0 14px}
   .logo{font-size:13px}
@@ -516,7 +509,6 @@ textarea.io-ta:focus{border-color:var(--accent)}
         if(remote === local) return;
         edits = data.edits;
         localStorage.setItem('rm_edits', JSON.stringify(edits));
-        if(typeof _activeCat !== 'undefined') localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
         if(typeof buildPanels === 'function') buildPanels();
         _showToast('↓ Ranges importées depuis le cloud');
       });
@@ -587,10 +579,12 @@ textarea.io-ta:focus{border-color:var(--accent)}
   </div>
 
   <div class="header-right">
-
-
-
-
+    <button class="hbtn" style="border-color:rgba(250,204,21,.35);color:#fde68a" onclick="openQuiz()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>QUIZ
+    </button>
+    <button class="hbtn" onclick="openIOModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP/EXP
+    </button>
 
 
 
@@ -616,8 +610,6 @@ textarea.io-ta:focus{border-color:var(--accent)}
   <div id="paint-actions"></div>
 </div>
 
-<!-- CATEGORY BAR -->
-<div class="cat-bar" id="cat-bar"><span class="cat-label">CATÉGORIE :</span></div>
 
 <div class="tab-bar" id="tab-bar"></div>
 
@@ -792,17 +784,7 @@ textarea.io-ta:focus{border-color:var(--accent)}
   <button class="mnav-btn mnav-quiz-btn" id="mnav-quiz">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>QUIZ
   </button>
-  <button class="mnav-btn" id="mnav-cat">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>CATÉG.
-  </button>
 </nav>
-<div id="m-cat-sheet" style="display:none;position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.75);align-items:flex-end">
-  <div style="background:var(--surface);border-radius:16px 16px 0 0;width:100%;padding:20px 16px 40px;border-top:1px solid var(--border2)">
-    <div style="font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:16px">CATÉGORIE</div>
-    <div id="m-cat-list" style="display:flex;flex-direction:column;gap:10px"></div>
-    <button id="m-cat-add" style="margin-top:16px;width:100%;padding:12px;border-radius:8px;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);color:var(--accent);font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.08em;cursor:pointer">＋ NOUVELLE CATÉGORIE</button>
-  </div>
-</div>
 
 
 
@@ -831,14 +813,7 @@ let ACTIONS = JSON.parse(localStorage.getItem('rm_actions') || 'null') || DEFAUL
 
 function saveActions(){ localStorage.setItem('rm_actions', JSON.stringify(ACTIONS)); }
 function getAction(code){ return ACTIONS.find(a=>a.code===code) || ACTIONS[0]; }
-function getLabel(code){ return getAction(code).label; }
 
-function applyActionStyle(el, code) {
-  const a = getAction(code);
-  el.style.background = a.bg;
-  el.style.color = a.text;
-  el.style.borderColor = a.border || a.bg;
-}
 
 // ════════════════════════════════
 // RANGE DATA
@@ -1329,11 +1304,29 @@ addModal.addEventListener('click', e=>{ if(e.target===addModal) closeAddModal();
 // EXPORT / IMPORT
 // ════════════════════════════════
 function exportJSON(){
-  const data = { edits, actions: ACTIONS, version: 2 };
+  // Build full resolved ranges: base GTO function + edits override per hand
+  const ALL_BIDS = [
+    {bid:'utg-open', fn:h=>utg(h)},
+    {bid:'hj-open',  fn:h=>hj(h)},    {bid:'hj-vu',  fn:h=>hj(h,'UTG')},
+    {bid:'co-open',  fn:h=>co(h)},    {bid:'co-vuh', fn:h=>co(h,'UTG')},
+    {bid:'btn-open', fn:h=>btn(h)},   {bid:'btn-vuh',fn:h=>btn(h,'UTG')}, {bid:'btn-vco',fn:h=>btn(h,'CO')},
+    {bid:'sb-open',  fn:h=>sb(h)},    {bid:'sb-vuh', fn:h=>sb(h,'UTG')}, {bid:'sb-vco',fn:h=>sb(h,'CO')}, {bid:'sb-vbt',fn:h=>sb(h,'BTN')},
+    {bid:'bb-vuh',   fn:h=>bb(h,'UTG')}, {bid:'bb-vco',fn:h=>bb(h,'CO')}, {bid:'bb-vbt',fn:h=>bb(h,'BTN')}, {bid:'bb-vsb',fn:h=>bb(h,'SB')},
+  ];
+  const fullEdits = {};
+  for(let i=0;i<13;i++) for(let j=0;j<13;j++){
+    const h = hl(i,j);
+    ALL_BIDS.forEach(({bid, fn})=>{
+      const k = bid+'::'+h;
+      const resolved = k in edits ? edits[k] : fn(h);
+      fullEdits[k] = resolved;
+    });
+  }
+  const data = { edits: fullEdits, actions: ACTIONS, version: 2 };
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
   a.download='ranges.json'; a.click();
-  showToast('JSON exporté');
+  showToast('JSON exporté (complet)');
 }
 
 function importJSON(input){
@@ -2054,7 +2047,7 @@ const EMBEDDED_EDITS = {
     "co-open::J3o": "",
     "co-open::93o": ""
   },
-  "_actions": [
+  "actions": [
     {
       "code": "",
       "label": "FOLD",
@@ -2116,73 +2109,16 @@ const EMBEDDED_EDITS = {
 };
 
 // ══════════════════════════════════════════════════════════
-// CATEGORIES
+// STARTUP — load edits from localStorage or embedded JSON
 // ══════════════════════════════════════════════════════════
-const DEFAULT_CATS = [
-  {id:'6max-cash', name:'6-MAX CASH GAME', icon:'♠'},
-  {id:'mtt',       name:'MTT',             icon:'🏆'},
-  {id:'hu',        name:'HEADS-UP',        icon:'⚔️'},
-];
-let _categories = JSON.parse(localStorage.getItem('rm_cats')||'null') || DEFAULT_CATS;
-let _activeCat   = localStorage.getItem('rm_active_cat') || '6max-cash';
-
-function _saveEdits2(){
-  localStorage.setItem('rm_edits_'+_activeCat, JSON.stringify(edits));
-  localStorage.setItem('rm_edits', JSON.stringify(edits));
-}
-// Monkey-patch saveEdits
-const _origSaveEdits = saveEdits;
-saveEdits = function(){ _origSaveEdits(); _saveEdits2(); };
-
-// Load correct edits on startup
 (function(){
-  const stored = localStorage.getItem('rm_edits_'+_activeCat) || localStorage.getItem('rm_edits');
+  const stored = localStorage.getItem('rm_edits');
   if(stored){ edits = JSON.parse(stored); }
   else if(EMBEDDED_EDITS && EMBEDDED_EDITS.edits){ edits = {...EMBEDDED_EDITS.edits}; }
-  // Also load embedded actions if nothing saved
-  if(!localStorage.getItem('rm_actions') && EMBEDDED_EDITS && EMBEDDED_EDITS._actions){
-    ACTIONS = EMBEDDED_EDITS._actions;
+  if(!localStorage.getItem('rm_actions') && EMBEDDED_EDITS){
+    ACTIONS = EMBEDDED_EDITS._actions || EMBEDDED_EDITS.actions || ACTIONS;
   }
 })();
-
-function buildCatBar(){
-  const bar = document.getElementById('cat-bar');
-  if(!bar) return;
-  bar.innerHTML = '<span class="cat-label">CATÉGORIE :</span>';
-  _categories.forEach(cat=>{
-    const chip = document.createElement('div');
-    chip.className = 'cat-chip'+(cat.id===_activeCat?' active':'');
-    chip.textContent = cat.icon+' '+cat.name;
-    chip.addEventListener('click', ()=>_switchCat(cat.id));
-    bar.appendChild(chip);
-  });
-  const add = document.createElement('div');
-  add.className='cat-chip-add'; add.textContent='＋ Nouvelle';
-  add.addEventListener('click', _addCat);
-  bar.appendChild(add);
-  const nm = document.getElementById('header-cat-name');
-  if(nm) nm.textContent='Range Manager · '+(_categories.find(c=>c.id===_activeCat)||{}).name;
-}
-
-function _switchCat(id){
-  _activeCat = id;
-  localStorage.setItem('rm_active_cat', id);
-  const stored = localStorage.getItem('rm_edits_'+id);
-  edits = stored ? JSON.parse(stored) : (id==='6max-cash' && EMBEDDED_EDITS ? {...EMBEDDED_EDITS.edits} : {});
-  buildCatBar();
-  buildLegend(); buildPaintBar(); buildCtxItems(); buildPanels();
-  showToast('Catégorie : '+(_categories.find(c=>c.id===id)||{}).name);
-}
-
-function _addCat(){
-  const name = prompt('Nom de la catégorie');
-  if(!name) return;
-  const icons=['♣','♥','♦','🎯','⚡','🎲'];
-  const id = 'cat_'+Date.now();
-  _categories.push({id, name:name.toUpperCase(), icon:icons[_categories.length%icons.length]});
-  localStorage.setItem('rm_cats', JSON.stringify(_categories));
-  _switchCat(id);
-}
 
 // ══════════════════════════════════════════════════════════
 // QUIZ
@@ -2373,12 +2309,11 @@ function _parsePio(text){
 }
 
 // ══════════════════════════════════════════════════════════
-// PATCH HEADER + rebuildAll
+// PATCH rebuildAll — mobile support
 // ══════════════════════════════════════════════════════════
 const _origRebuildAll = rebuildAll;
 rebuildAll = function(){
   _origRebuildAll();
-  buildCatBar();
   if(_isMobile()){ _mBuildLegend(); _mBuildSitBar(); _mAutoFit(); }
 };
 
@@ -2411,9 +2346,6 @@ document.querySelectorAll('.mpos-btn').forEach(btn=>{
 // Wire mobile nav
 document.getElementById('mnav-ranges').addEventListener('click',()=>_mNav('ranges'));
 document.getElementById('mnav-quiz').addEventListener('click',()=>{ openQuiz(); });
-document.getElementById('mnav-cat').addEventListener('click',()=>_mOpenCatSheet());
-document.getElementById('m-cat-add').addEventListener('click',()=>{ _addCat(); _mCloseCatSheet(); });
-document.getElementById('m-cat-sheet').addEventListener('click',e=>{if(e.target===document.getElementById('m-cat-sheet'))_mCloseCatSheet();});
 
 function _mNav(v){
   document.querySelectorAll('.mnav-btn').forEach(b=>b.classList.toggle('active',b.id==='mnav-'+v));
@@ -2542,36 +2474,8 @@ document.getElementById('main').addEventListener('touchend',e=>{
   }
 },{passive:true});
 
-function _mOpenCatSheet(){
-  const list=document.getElementById('m-cat-list');list.innerHTML='';
-  _categories.forEach(cat=>{
-    const item=document.createElement('div');
-    item.style.cssText='display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;border:1px solid var(--border2);cursor:pointer;background:'+(cat.id===_activeCat?'rgba(0,212,170,.08)':'transparent');
-    item.innerHTML='<span style="font-size:20px">'+cat.icon+'</span><div style="flex:1;font-family:IBM Plex Mono,monospace;font-size:11px;font-weight:700;color:'+(cat.id===_activeCat?'var(--accent)':'var(--text)')+';letter-spacing:.08em">'+cat.name+'</div>'+(cat.id===_activeCat?'<span style="color:var(--accent);font-size:18px">✓</span>':'');
-    item.addEventListener('click',()=>{_switchCat(cat.id);_mCloseCatSheet();_mSwitchPos(_mPos);});
-    list.appendChild(item);
-  });
-  document.getElementById('m-cat-sheet').style.display='flex';
-}
-function _mCloseCatSheet(){ document.getElementById('m-cat-sheet').style.display='none'; }
-
-// ── Init ──
-// Patch header for desktop
-(function(){
-  const hdr = document.querySelector('header');
-  if(!hdr) return;
-  const logo = hdr.querySelector('.logo');
-  if(logo){ const span=document.createElement('span');span.id='header-cat-name';span.textContent='Range Manager · 6 Max';logo.innerHTML='';logo.appendChild(document.createElement('div')).className='logo-dot';logo.appendChild(span); }
-  // Add quiz + IO buttons to header-right
-  const hr = hdr.querySelector('.header-right');
-  if(hr){
-    const qBtn=document.createElement('button');qBtn.className='hbtn';qBtn.style.cssText='border-color:rgba(250,204,21,.35);color:#fde68a';qBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>QUIZ';qBtn.addEventListener('click',openQuiz);hr.insertBefore(qBtn,hr.firstChild);
-    const ioBtn=document.createElement('button');ioBtn.className='hbtn';ioBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>IMP/EXP';ioBtn.addEventListener('click',openIOModal);hr.insertBefore(ioBtn,hr.children[1]||hr.firstChild);
-  }
-})();
 
 window.addEventListener('load',()=>{
-  buildCatBar();
   if(_isMobile()){ _mBuildLegend(); _mSwitchPos('utg'); _mAutoFit(); }
 });
 window.addEventListener('resize',()=>{
